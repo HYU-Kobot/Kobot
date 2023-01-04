@@ -77,7 +77,7 @@ const PopularCard = ({ isLoading }) => {
             })
             .catch(function (error) {
                 console.error(error);
-            })
+            });
     };
 
     const GetCoinInfo = (coin) => {
