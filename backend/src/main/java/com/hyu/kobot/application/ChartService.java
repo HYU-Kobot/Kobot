@@ -1,16 +1,16 @@
 package com.hyu.kobot.application;
 
-import com.hyu.kobot.domain.OneMinuteChart;
-import com.hyu.kobot.domain.repository.OneChartRepository;
+import com.hyu.kobot.domain.Chart;
+import com.hyu.kobot.domain.repository.ChartRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ChartService {
 
-    private OneChartRepository oneChartRepository;
+    private ChartRepository chartRepository;
 
     public void save() {
-        new OneMinuteChart();
+        new Chart();
     }
 
 }
