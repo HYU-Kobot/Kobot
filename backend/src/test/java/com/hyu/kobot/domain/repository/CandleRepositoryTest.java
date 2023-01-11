@@ -21,28 +21,18 @@ class CandleRepositoryTest {
 
     @Test
     void 캔들을_조회할_수_있다() {
-        Exchange expectedExchange = Exchange.UPBIT;
-        Market expectedMarket = Market.KRW_BTC;
-        TimeUnit expectedTimeUnit = TimeUnit.DAY;
-        LocalDateTime expectedDateTimeKST = LocalDateTime.of(2023, 1, 1, 1, 1, 1);
-        BigDecimal expectedOpeningPrice = BigDecimal.valueOf(1000);
-        BigDecimal expectedHighPrice = BigDecimal.valueOf(1000);
-        BigDecimal expectedLowPrice = BigDecimal.valueOf(1000);
-        BigDecimal expectedTradePrice = BigDecimal.valueOf(1000);
-        BigDecimal expectedAccTradePrice = BigDecimal.valueOf(1000);
-        BigDecimal expectedAccTradeVolume = BigDecimal.valueOf(1000);
         Candle candle = candleRepository.save(
                 new Candle(
-                        expectedExchange,
-                        expectedMarket,
-                        expectedTimeUnit,
-                        expectedDateTimeKST,
-                        expectedOpeningPrice,
-                        expectedHighPrice,
-                        expectedLowPrice,
-                        expectedTradePrice,
-                        expectedAccTradePrice,
-                        expectedAccTradeVolume
+                        Exchange.UPBIT,
+                        Market.KRW_BTC,
+                        TimeUnit.DAY,
+                        LocalDateTime.of(2023, 1, 1, 1, 1, 1),
+                        BigDecimal.valueOf(1000),
+                        BigDecimal.valueOf(1000),
+                        BigDecimal.valueOf(1000),
+                        BigDecimal.valueOf(1000),
+                        BigDecimal.valueOf(1000),
+                        BigDecimal.valueOf(1000)
                 )
         );
 

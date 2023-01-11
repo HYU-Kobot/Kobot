@@ -83,4 +83,16 @@ public class Candle {
                 accTradeVolume
         );
     }
+
+    public String getExchange() {
+        return exchange.name();
+    }
+
+    public String getMarket() {
+        return market.name();
+    }
+
+    public String getTimeUnit() {
+        return timeUnit.name();
+    }
 }
