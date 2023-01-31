@@ -28,6 +28,7 @@ const PopularCard = ({ isLoading }) => {
     const [anchorEl, setAnchorEl] = useState(null);
 
     const [coinCode, setCoinCode] = useState([]);
+    const coinTicker = [{market: 'KRW-BTC', korean_name: '비트코인'}, {market: 'KRW-ETH', korean_name: '이더리움'}, {market: 'KRW-XRP', korean_name: '리플'}, {market: 'KRW-DOGE', korean_name: '도지코인'}, {market: 'KRW-ADA', korean_name: '에이다'}, {market: 'KRW-MATIC', korean_name: '폴리곤'}, {market: 'KRW-DOT', korean_name: '폴카닷'}, {market: 'KRW-TRX', korean_name: '트론'}, {market: 'KRW-SOL', korean_name: '솔라나'}, {market: 'KRW-AVAX', korean_name: '아발란체'}];
     const [coinInfo, setCoinInfo] = useState([]);
 
     const HandleClick = (event) => {
@@ -57,76 +58,40 @@ const PopularCard = ({ isLoading }) => {
     }
 
 
-    const GetCoinCode = () => {
-        const codeOptions = {
-            method: 'GET',
-            url: 'https://api.upbit.com/v1/market/all?isDetails=true',
-            headers: {accept: 'application/json'}
-        };
-        axios
-            .request(codeOptions)
-            .then(function (response) {
-                let coinCodeArr = [];
-                for (let i = 0; i < response.data.length; ++i){
-                    let marketTemp = response.data[i].market;
-                    if(marketTemp.indexOf('KRW') !== -1){
-                        coinCodeArr = [...coinCodeArr, response.data[i]];
-                    }
-                }
-                setCoinCode(coinCodeArr);
-            })
-            .catch(function (error) {
-                console.error(error);
-            });
+    const GetCoinCode = async () => {
+        const response = await axios.get('https://api.upbit.com/v1/market/all?isDetails=true');
+        let coinCodeArr = [];
+        for (let i = 0; i < response.data.length; ++i){
+            let marketTemp = response.data[i].market;
+            if(marketTemp.indexOf('KRW') !== -1 && (marketTemp === 'KRW-BTC' || marketTemp === 'KRW-ETH' || marketTemp === 'KRW-XRP' || marketTemp === 'KRW-DOGE' || marketTemp === 'KRW-ADA' || marketTemp === 'KRW-MATIC' || marketTemp === 'KRW-DOT' || marketTemp === 'KRW-AVAX' || marketTemp === 'KRW-TRX' || marketTemp === 'KRW-SOL')){
+                coinCodeArr = [...coinCodeArr, response.data[i]];
+            }
+        }
+        setCoinCode(coinCodeArr);
+
     };
 
-    const GetCoinInfo = (coin) => {
+    const GetCoinInfo = async (coin) => {
         let coinInfoArr = [];
-        for(let i = 0; i < 5; ++i){
-            const coinInfoOptions = {
-                method: 'GET',
-                url: 'https://api.upbit.com/v1/ticker?markets='+coin[i].market,
-                headers: {accept: 'application/json'}
-            };
-            axios
-                .request(coinInfoOptions)
-                .then(function (response) {
-                    let temp = response.data[0];
-                    temp.korean_name = coin[i].korean_name;
-                    coinInfoArr = [...coinInfoArr, temp];
-                })
-                .catch(function (error) {
-                    console.error(error);
-                })
-                .then(function () {
-                    setCoinInfo(coinInfoArr);
-                })
+        for(let i = 0; i < 10; ++i){
+            const response = await axios.get('https://api.upbit.com/v1/ticker?markets='+coin[i].market);
+            let temp = response.data[0];
+            temp.korean_name = coin[i].korean_name;
+            coinInfoArr = [...coinInfoArr, temp];
         }
-        //웹소켓을 이용해야 가능 그러지 않고는 10개만 가능
-        // console.log(...url)
-        // axios.all([...url])
-        //     .then(axios.spread((res1, res2, res3) => {
-        //         console.log(res1.data);
-        //         console.log(res2.data);
-        //         console.log(res3.data);
-        //     }))
-        //     .catch(function (error) {
-        //         console.error(error);
-        //     });
-
+        setCoinInfo(coinInfoArr);
     }
 
+
     useEffect(() => {
-        GetCoinCode();
+        // GetCoinCode();
+        GetCoinInfo(coinTicker);
     },[])
 
-    useEffect(() => {
-        if(coinCode.length > 0) GetCoinInfo(coinCode);
-    },[coinCode])
 
     useInterval(() => {
-        if(coinCode.length > 0) GetCoinInfo(coinCode);
-    },10000)
+        GetCoinInfo(coinTicker);
+    },2000)
 
     return (
         <>
@@ -139,40 +104,40 @@ const PopularCard = ({ isLoading }) => {
                             <Grid item xs={12}>
                                 <Grid container alignContent="center" justifyContent="space-between">
                                     <Grid item>
-                                        <Typography variant="h4">Popular Stocks</Typography>
+                                        <Typography variant="h3">코인 시세</Typography>
                                     </Grid>
-                                    <Grid item>
-                                        <MoreHorizOutlinedIcon
-                                            fontSize="small"
-                                            sx={{
-                                                color: theme.palette.primary[200],
-                                                cursor: 'pointer'
-                                            }}
-                                            aria-controls="menu-popular-card"
-                                            aria-haspopup="true"
-                                            onClick={HandleClick}
-                                        />
-                                        <Menu
-                                            id="menu-popular-card"
-                                            anchorEl={anchorEl}
-                                            keepMounted
-                                            open={Boolean(anchorEl)}
-                                            onClose={HandleClose}
-                                            variant="selectedMenu"
-                                            anchorOrigin={{
-                                                vertical: 'bottom',
-                                                horizontal: 'right'
-                                            }}
-                                            transformOrigin={{
-                                                vertical: 'top',
-                                                horizontal: 'right'
-                                            }}
-                                        >
-                                            <MenuItem onClick={HandleClose}> Today</MenuItem>
-                                            <MenuItem onClick={HandleClose}> This Month</MenuItem>
-                                            <MenuItem onClick={HandleClose}> This Year </MenuItem>
-                                        </Menu>
-                                    </Grid>
+                                    {/*<Grid item>*/}
+                                    {/*    <MoreHorizOutlinedIcon*/}
+                                    {/*        fontSize="small"*/}
+                                    {/*        sx={{*/}
+                                    {/*            color: theme.palette.primary[200],*/}
+                                    {/*            cursor: 'pointer'*/}
+                                    {/*        }}*/}
+                                    {/*        aria-controls="menu-popular-card"*/}
+                                    {/*        aria-haspopup="true"*/}
+                                    {/*        onClick={HandleClick}*/}
+                                    {/*    />*/}
+                                    {/*    <Menu*/}
+                                    {/*        id="menu-popular-card"*/}
+                                    {/*        anchorEl={anchorEl}*/}
+                                    {/*        keepMounted*/}
+                                    {/*        open={Boolean(anchorEl)}*/}
+                                    {/*        onClose={HandleClose}*/}
+                                    {/*        variant="selectedMenu"*/}
+                                    {/*        anchorOrigin={{*/}
+                                    {/*            vertical: 'bottom',*/}
+                                    {/*            horizontal: 'right'*/}
+                                    {/*        }}*/}
+                                    {/*        transformOrigin={{*/}
+                                    {/*            vertical: 'top',*/}
+                                    {/*            horizontal: 'right'*/}
+                                    {/*        }}*/}
+                                    {/*    >*/}
+                                    {/*        <MenuItem onClick={HandleClose}> Today</MenuItem>*/}
+                                    {/*        <MenuItem onClick={HandleClose}> This Month</MenuItem>*/}
+                                    {/*        <MenuItem onClick={HandleClose}> This Year </MenuItem>*/}
+                                    {/*    </Menu>*/}
+                                    {/*</Grid>*/}
                                 </Grid>
                             </Grid>
                             {/*<Grid item xs={12} sx={{ pt: '16px !important' }}>*/}
@@ -181,16 +146,16 @@ const PopularCard = ({ isLoading }) => {
                             <Grid item xs={12}>
                                 {coinInfo &&
                                     coinInfo.map((coin, index) =>
-                                        <CoinCardCompnent coin={coin}/>
+                                        <CoinCardCompnent coin={coin} key={index}/>
                                     )}
                             </Grid>
                         </Grid>
                     </CardContent>
                     <CardActions sx={{ p: 1.25, pt: 0, justifyContent: 'center' }}>
-                        <Button size="small" disableElevation>
-                            View All
-                            <ChevronRightOutlinedIcon />
-                        </Button>
+                        {/*<Button size="small" disableElevation>*/}
+                        {/*    View All*/}
+                        {/*    <ChevronRightOutlinedIcon />*/}
+                        {/*</Button>*/}
                     </CardActions>
                 </MainCard>
             )}
