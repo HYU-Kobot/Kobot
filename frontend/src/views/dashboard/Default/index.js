@@ -32,7 +32,7 @@ const Dashboard = () => {
                     {/*    <TotalOrderLineChartCard isLoading={isLoading} />*/}
                     {/*</Grid>*/}
                     <Grid item xs={12} md={12}>
-                        <CoinChartCard/>
+                        <CoinChartCard chartHeight={750}/>
                     </Grid>
                 </Grid>
             </Grid>

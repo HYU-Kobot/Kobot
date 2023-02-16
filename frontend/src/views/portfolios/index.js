@@ -16,7 +16,7 @@ let totalRealizedPNL = 3242
 let netProfit = 23423
 let botname = 'Bot 1'
 
-const Typography = () => {
+const Index = () => {
 
     const [botList, setBotList] = React.useState([
         {
@@ -170,4 +170,4 @@ const Typography = () => {
     )
 }
 
-export default Typography;
+export default Index;

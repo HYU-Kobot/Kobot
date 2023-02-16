@@ -1,5 +1,3 @@
-import TradingViewWidget from 'react-tradingview-widget';
-
 import MainCard from 'ui-component/cards/MainCard';
 
 
@@ -7,7 +5,7 @@ import React, { useEffect, useRef } from 'react';
 
 let tvScriptLoadingPromise;
 
-const CoinChartCard = () => {
+const CoinChartCard = ({ chartHeight }) => {
     const onLoadScriptRef = useRef();
 
     useEffect(
@@ -34,7 +32,7 @@ const CoinChartCard = () => {
                 if (document.getElementById('tradingview_7ff00') && 'TradingView' in window) {
                     new window.TradingView.widget({
                         width: "100%",
-                        height: 750,
+                        height: chartHeight,
                         symbol: "UPBIT:BTCKRW",
                         interval: "D",
                         timezone: "Etc/UTC",
