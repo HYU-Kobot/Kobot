@@ -1,5 +1,3 @@
-import TradingViewWidget from 'react-tradingview-widget';
-
 import MainCard from 'ui-component/cards/MainCard';
 
 
