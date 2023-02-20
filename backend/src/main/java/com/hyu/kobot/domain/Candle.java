@@ -84,6 +84,18 @@ public class Candle {
         );
     }
 
+    public BigDecimal calculateTruePrice() {
+        return (highPrice.add(lowPrice).add(tradePrice)).divide(BigDecimal.valueOf(3));
+    }
+
+    public boolean HasDateTimeAfter(LocalDateTime localDateTime) {
+        return this.dateTimeKST.isAfter(localDateTime);
+    }
+
+    public boolean isGreaterThan(BigDecimal price) {
+        return this.tradePrice.compareTo(price) > 0;
+    }
+
     public String getExchange() {
         return exchange.name();
     }
