@@ -9,7 +9,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 class TimeUnitTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"minutes, 1, MINUTE_1", "minutes, 5, MINUTE_5", "minutes, 15, MINUTE_15", "minutes, 30, MINUTE_30",
+    @CsvSource(value = {"minutes, 1, MINUTE_1", "minutes, 5, MINUTE_5", "minutes, 15, MINUTE_15",
+            "minutes, 30, MINUTE_30",
             "hours, 1, HOUR_1", "hours, 4, HOUR_4", "days, 1, DAY", "weeks, 1, WEEK", "months, 1, MONTH"})
     void 타임_프레임을_찾을_수_있다(String unit, int time, TimeUnit expected) {
         TimeUnit actual = TimeUnit.of(unit, time);
