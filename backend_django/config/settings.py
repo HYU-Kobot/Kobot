@@ -1,15 +1,29 @@
 from pathlib import Path
+import my_settings
 import pymysql
+import os, json
+from django.core.exceptions import ImproperlyConfigured
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-SECRET_KEY = "django-insecure-fln+bzt78j=+9_-4ip6po3iu!(00hc*2ayobx597lm@1b)-qxi"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
+secret_file = os.path.join(BASE_DIR, 'secret.json')
+
+with open(secret_file) as f:
+    secrets = json.loads(f.read())
+
+def get_secret(setting, secrets=secrets):
+    try:
+        return secrets[setting]
+    except KeyError:
+        error_msg = "Set the {} environment variable".format(setting)
+        raise ImproperlyConfigured(error_msg)
+
+SECRET_KEY = get_secret("SECRET_KEY")
 
 # Application definition
 
@@ -68,18 +82,8 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 pymysql.install_as_MySQLdb()
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": 'UpbitDB',
-        "USER": 'root',
-        "PASSWORD": 'qq151mw00@@',
-        "HOST": 'localhost',
-        "PORT": '3306',
-    }
-}
-SECRET_KEY = "django-insecure-=+tw#+p#g*$2f2d!b_9yp29(p164a@*b$z*$=%vxo=n#8l3*_j"
-
+DATABASES = my_settings.DATABASES
+SECRET_KEY = my_settings.SECRET_KEY
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
