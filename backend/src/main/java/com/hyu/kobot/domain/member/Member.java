@@ -26,23 +26,23 @@ public class Member {
     private Long id;
 
     @Embedded
-    private Name name;
+    private Nickname nickname;
 
     @Embedded
-    private Account account;
+    private Username username;
 
     @Embedded
     private Password password;
 
     @CreatedDate
-    @Column(updatable = false)
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-    public Member(Name name, Account account, Password password) {
-        this(null, name, account, password, null);
+    public Member(Nickname nickname, Username username, Password password) {
+        this(null, nickname, username, password, null);
     }
 
     public Member(String name, String account, String password, EncryptorInterface encryptor) {
-        this(null, new Name(name), new Account(account), Password.of(encryptor, password), null);
+        this(null, new Nickname(name), new Username(account), Password.of(encryptor, password), null);
     }
 }

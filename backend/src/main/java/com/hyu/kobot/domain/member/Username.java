@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
-public class Account {
+public class Username {
 
-    @Column(name = "account", nullable = false)
+    @Column(name = "username", nullable = false, unique = true)
     private String value;
 
-    public Account(String value) {
+    public Username(String value) {
         validateNull(value);
         validateLength(value);
         this.value = value;

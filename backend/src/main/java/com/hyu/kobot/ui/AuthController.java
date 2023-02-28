@@ -1,6 +1,6 @@
 package com.hyu.kobot.ui;
 
-import com.hyu.kobot.application.MemberService;
+import com.hyu.kobot.application.AuthService;
 import com.hyu.kobot.ui.dto.SignUpRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api")
-public class MemberController {
+public class AuthController {
 
-    private final MemberService memberService;
+    private final AuthService authService;
 
     @PostMapping("/member")
     public ResponseEntity<Void> signUp(@RequestBody SignUpRequest signUpRequest) {
-        memberService.create(signUpRequest);
+        authService.create(signUpRequest);
         return ResponseEntity.ok().build();
     }
 }
