@@ -1,5 +1,6 @@
 package com.hyu.kobot.domain.member;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Embeddable
 public class Account {
 
+    @Column(name = "account", nullable = false)
     private String value;
 
     public Account(String value) {

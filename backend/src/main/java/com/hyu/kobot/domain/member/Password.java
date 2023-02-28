@@ -1,6 +1,7 @@
 package com.hyu.kobot.domain.member;
 
 import com.hyu.kobot.domain.auth.Encryptor;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Embeddable
 public class Password {
 
+    @Column(name = "password", nullable = false)
     private String value;
 
     private Password(String value) {

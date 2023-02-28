@@ -43,7 +43,7 @@ class PasswordTest {
     @Test
     void 비밀번호를_암호화_할_수_있다() {
         Encryptor encryptor = new Encryptor();
-        Password password = Password.of(encryptor,"qwer1234");
+        Password password = Password.of(encryptor, "qwer1234");
 
         assertThat(password).isNotNull();
     }

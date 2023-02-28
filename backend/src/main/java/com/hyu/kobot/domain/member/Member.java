@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,10 +12,12 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EntityListeners(AuditingEntityListener.class)
 @Entity
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
-@NoArgsConstructor
 public class Member {
 
     @Id
@@ -31,6 +34,6 @@ public class Member {
     private Password password;
 
     @CreatedDate
-    @Column(updatable = false)
+    @Column(insertable = false, updatable = false)
     private LocalDateTime createdAt;
 }
