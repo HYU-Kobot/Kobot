@@ -1,6 +1,5 @@
 package com.hyu.kobot.domain.member;
 
-import com.hyu.kobot.domain.auth.Encryptor;
 import com.hyu.kobot.domain.auth.EncryptorInterface;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

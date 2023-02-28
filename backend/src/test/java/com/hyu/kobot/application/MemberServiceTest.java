@@ -3,7 +3,7 @@ package com.hyu.kobot.application;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.hyu.kobot.domain.member.Member;
-import com.hyu.kobot.domain.member.repository.MemberRepository;
+import com.hyu.kobot.repository.MemberRepository;
 import com.hyu.kobot.ui.dto.SignUpRequest;
 import java.util.List;
 import org.junit.jupiter.api.Test;

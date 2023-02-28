@@ -1,4 +1,4 @@
-package com.hyu.kobot.domain.member.repository;
+package com.hyu.kobot.repository;
 
 import com.hyu.kobot.domain.member.Member;
 import org.springframework.data.jpa.repository.JpaRepository;

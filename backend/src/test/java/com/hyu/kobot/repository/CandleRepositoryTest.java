@@ -1,4 +1,4 @@
-package com.hyu.kobot.domain.candle.repository;
+package com.hyu.kobot.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -1,4 +1,4 @@
-package com.hyu.kobot.domain.candle.repository;
+package com.hyu.kobot.repository;
 
 import com.hyu.kobot.domain.candle.Candle;
 import com.hyu.kobot.domain.candle.Exchange;

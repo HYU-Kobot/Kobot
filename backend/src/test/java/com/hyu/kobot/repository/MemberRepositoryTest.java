@@ -1,7 +1,6 @@
-package com.hyu.kobot.domain.member.repository;
+package com.hyu.kobot.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import com.hyu.kobot.domain.auth.Encryptor;
 import com.hyu.kobot.domain.member.Member;
@@ -14,6 +13,7 @@ class MemberRepositoryTest {
 
     @Autowired
     private MemberRepository memberRepository;
+
     @Test
     void 회원을_저장할_수_있다() {
         Member member = new Member("조형래", "jhr1111", "qwer1234", new Encryptor());
