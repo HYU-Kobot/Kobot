@@ -22,7 +22,7 @@ public class Candle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(name = "exchange", nullable = false)
     @Enumerated(value = EnumType.STRING)
