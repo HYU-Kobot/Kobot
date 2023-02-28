@@ -5,8 +5,9 @@ import React, { useEffect, useRef } from 'react';
 
 let tvScriptLoadingPromise;
 
-const CoinChartCard = ({ chartHeight }) => {
+const CoinChartCard = ({ chartHeight, market, pair, timeframe }) => {
     const onLoadScriptRef = useRef();
+
 
     useEffect(
         () => {
@@ -33,9 +34,9 @@ const CoinChartCard = ({ chartHeight }) => {
                     new window.TradingView.widget({
                         width: "100%",
                         height: chartHeight,
-                        symbol: "UPBIT:BTCKRW",
-                        interval: "D",
-                        timezone: "Etc/UTC",
+                        symbol: market+":"+pair,
+                        interval: timeframe,
+                        timezone: "Asia/Seoul",
                         theme: "light",
                         style: "1",
                         locale: "en",
@@ -46,7 +47,7 @@ const CoinChartCard = ({ chartHeight }) => {
                 }
             }
         },
-        []
+        [chartHeight, market, pair, timeframe]
     );
 
 

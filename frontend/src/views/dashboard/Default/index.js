@@ -32,7 +32,7 @@ const Dashboard = () => {
                     {/*    <TotalOrderLineChartCard isLoading={isLoading} />*/}
                     {/*</Grid>*/}
                     <Grid item xs={12} md={12}>
-                        <CoinChartCard chartHeight={750}/>
+                        <CoinChartCard chartHeight={750} market={"UPBIT"} pair={"BTCKRW"} timeframe={"D"}/>
                     </Grid>
                 </Grid>
             </Grid>

@@ -20,34 +20,6 @@ const OrderHistoryTableCard = () => {
         { id: 5, trade_date: '2023-02-09 20:48:26', coin_category: 'BTC', category: 'BUY' },
         { id: 1, trade_date: '2023-02-09 20:48:26', coin_category: 'BTC', category: 'BUY' },
     ]);
-    const columns = [
-        { field: 'trade_date', headerName: '체결시간', width: 150 },
-        { field: 'coin_category', headerName: '코인명', width: 100 },
-        { field: 'category', headerName: '종류', width: 100 },
-        { field: 'amount', headerName: '거래수량', width: 100 },
-
-    ];
-
-    const rows = [
-        { id: 1, trade_date: '2023-02-09 20:48:26', coin_category: 'BTC', category: 'BUY' },
-        { id: 2, trade_date: '2023-02-09 20:48:26', coin_category: 'BTC', category: 'BUY' },
-        { id: 3, trade_date: '2023-02-09 20:48:26', coin_category: 'BTC', category: 'BUY' },
-        { id: 4, trade_date: '2023-02-09 20:48:26', coin_category: 'BTC', category: 'SELL' },
-        { id: 5, trade_date: '2023-02-09 20:48:26', coin_category: 'BTC', category: 'BUY' },
-        { id: 1, trade_date: '2023-02-09 20:48:26', coin_category: 'BTC', category: 'BUY' },
-        { id: 1, trade_date: '2023-02-09 20:48:26', coin_category: 'BTC', category: 'BUY' },
-        { id: 2, trade_date: '2023-02-09 20:48:26', coin_category: 'BTC', category: 'BUY' },
-        { id: 3, trade_date: '2023-02-09 20:48:26', coin_category: 'BTC', category: 'BUY' },
-        { id: 4, trade_date: '2023-02-09 20:48:26', coin_category: 'BTC', category: 'SELL' },
-        { id: 5, trade_date: '2023-02-09 20:48:26', coin_category: 'BTC', category: 'BUY' },
-        { id: 1, trade_date: '2023-02-09 20:48:26', coin_category: 'BTC', category: 'BUY' },
-        { id: 1, trade_date: '2023-02-09 20:48:26', coin_category: 'BTC', category: 'BUY' },
-        { id: 2, trade_date: '2023-02-09 20:48:26', coin_category: 'BTC', category: 'BUY' },
-        { id: 3, trade_date: '2023-02-09 20:48:26', coin_category: 'BTC', category: 'BUY' },
-        { id: 4, trade_date: '2023-02-09 20:48:26', coin_category: 'BTC', category: 'SELL' },
-        { id: 5, trade_date: '2023-02-09 20:48:26', coin_category: 'BTC', category: 'BUY' },
-        { id: 1, trade_date: '2023-02-09 20:48:26', coin_category: 'BTC', category: 'BUY' },
-    ];
 
     return(
         <MainCard title={"거래 내역"} >

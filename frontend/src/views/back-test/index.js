@@ -8,6 +8,8 @@ import BackTestParameterCard from "./BackTestParameterCard";
 import MainCard from "../../ui-component/cards/MainCard";
 import ProfitChartCard from "./ProfitChartCard";
 import OrderHistoryTableCard from "./OrderHistoryTableCard";
+import {useState} from "react";
+import BackTestContext from "./BackTestContext";
 
 let plotData = [
     {
@@ -68,28 +70,36 @@ let plotData = [
 
 const BackTest = () => {
 
+    const [market, setMarket] = useState("UPBIT");
+    const [pair, setPair] = useState("BTCKRW");
+    const [timeframe, setTimeframe] = useState("D");
+
+    const backTestState = {market, setMarket, pair, setPair, timeframe, setTimeframe};
+
     return (
         <Grid container spacing={gridSpacing}>
-            <Grid item xs={3.5}>
-                <Grid container spacing={gridSpacing}>
-                    <Grid item xs={12} md={12}>
-                        <BackTestParameterCard/>
+            <BackTestContext.Provider value={backTestState}>
+                <Grid item xs={3.5}>
+                    <Grid container spacing={gridSpacing}>
+                        <Grid item xs={12} md={12}>
+                            <BackTestParameterCard/>
+                        </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
-            <Grid item xs={8.5}>
-                <Grid container spacing={gridSpacing}>
-                    <Grid item xs={12} md={12}>
-                        <CoinChartCard chartHeight={550}/>
-                    </Grid>
-                    <Grid item lg={6} md={6} sm={6} xs={12}>
-                        <ProfitChartCard/>
-                    </Grid>
-                    <Grid item lg={6} md={6} sm={6} xs={12}>
-                        <OrderHistoryTableCard/>
+                <Grid item xs={8.5}>
+                    <Grid container spacing={gridSpacing}>
+                        <Grid item xs={12} md={12}>
+                            <CoinChartCard chartHeight={550} market={market} pair={pair} timeframe={timeframe} />
+                        </Grid>
+                        <Grid item lg={6} md={6} sm={6} xs={12}>
+                            <ProfitChartCard/>
+                        </Grid>
+                        <Grid item lg={6} md={6} sm={6} xs={12}>
+                            <OrderHistoryTableCard/>
+                        </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
+            </BackTestContext.Provider>
         </Grid>
     );
 }
