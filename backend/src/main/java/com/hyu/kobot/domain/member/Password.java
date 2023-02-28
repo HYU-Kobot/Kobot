@@ -35,4 +35,8 @@ public class Password {
             throw new IllegalArgumentException("비밀번호의 길이는 8자 이상 20자 이하이어야합니다.");
         }
     }
+
+    public boolean isSame(Password other) {
+        return this.value.equals(other.value);
+    }
 }

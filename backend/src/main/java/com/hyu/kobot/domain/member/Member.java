@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -18,6 +19,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
+@Getter
 @Entity
 public class Member {
 
@@ -42,7 +44,11 @@ public class Member {
         this(null, nickname, username, password, null);
     }
 
-    public Member(String name, String account, String password, EncryptorInterface encryptor) {
-        this(null, new Nickname(name), new Username(account), Password.of(encryptor, password), null);
+    public Member(String name, String username, String password, EncryptorInterface encryptor) {
+        this(null, new Nickname(name), new Username(username), Password.of(encryptor, password), null);
+    }
+
+    public boolean hasPassword(Password password) {
+        return this.password.isSame(password);
     }
 }
