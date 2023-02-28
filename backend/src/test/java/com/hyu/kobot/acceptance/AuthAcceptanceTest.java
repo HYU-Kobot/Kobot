@@ -1,5 +1,7 @@
 package com.hyu.kobot.acceptance;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.hyu.kobot.ui.dto.AccessTokenResponse;
 import com.hyu.kobot.ui.dto.ErrorMessageResponse;
 import com.hyu.kobot.ui.dto.SignInRequest;
@@ -8,8 +10,6 @@ import io.restassured.RestAssured;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class AuthAcceptanceTest extends AcceptanceTest {
 
