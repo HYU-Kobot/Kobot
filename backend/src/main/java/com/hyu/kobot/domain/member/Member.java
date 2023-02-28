@@ -1,8 +1,7 @@
-package com.hyu.kobot.domain;
+package com.hyu.kobot.domain.member;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

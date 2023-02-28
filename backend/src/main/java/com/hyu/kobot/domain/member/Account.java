@@ -1,4 +1,4 @@
-package com.hyu.kobot.domain;
+package com.hyu.kobot.domain.member;
 
 import javax.persistence.Embeddable;
 import lombok.AccessLevel;
@@ -6,11 +6,11 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
-public class Name {
+public class Account {
 
     private String value;
 
-    public Name(String value) {
+    public Account(String value) {
         validateNull(value);
         validateLength(value);
         this.value = value;

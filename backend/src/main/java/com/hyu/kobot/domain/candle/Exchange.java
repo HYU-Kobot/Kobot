@@ -1,4 +1,4 @@
-package com.hyu.kobot.domain;
+package com.hyu.kobot.domain.candle;
 
 import java.util.Arrays;
 

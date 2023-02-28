@@ -1,5 +1,6 @@
-package com.hyu.kobot.domain;
+package com.hyu.kobot.domain.member;
 
+import com.hyu.kobot.domain.auth.Encryptor;
 import javax.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

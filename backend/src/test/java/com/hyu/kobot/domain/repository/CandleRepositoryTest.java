@@ -2,10 +2,6 @@ package com.hyu.kobot.domain.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.hyu.kobot.domain.Candle;
-import com.hyu.kobot.domain.Exchange;
-import com.hyu.kobot.domain.Market;
-import com.hyu.kobot.domain.TimeUnit;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
