@@ -1,6 +1,7 @@
 package com.hyu.kobot.domain.member;
 
 import com.hyu.kobot.domain.auth.Encryptor;
+import com.hyu.kobot.domain.auth.EncryptorInterface;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import lombok.AccessLevel;
@@ -17,7 +18,7 @@ public class Password {
         this.value = value;
     }
 
-    public static Password of(Encryptor encryptor, String value) {
+    public static Password of(EncryptorInterface encryptor, String value) {
         validateNull(value);
         validateLength(value);
         return new Password(encryptor.encrypt(value));

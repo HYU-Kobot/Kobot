@@ -1,5 +1,6 @@
 package com.hyu.kobot.domain.member;
 
+import com.hyu.kobot.domain.auth.EncryptorInterface;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -34,6 +35,14 @@ public class Member {
     private Password password;
 
     @CreatedDate
-    @Column(insertable = false, updatable = false)
+    @Column(updatable = false)
     private LocalDateTime createdAt;
+
+    public Member(Name name, Account account, Password password) {
+        this(null, name, account, password, null);
+    }
+
+    public Member(String name, String account, String password, EncryptorInterface encryptor) {
+        this(null, new Name(name), new Account(account), Password.of(encryptor, password), null);
+    }
 }
