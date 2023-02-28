@@ -5,8 +5,9 @@ import java.security.NoSuchAlgorithmException;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Encryptor {
+public class Encryptor implements EncryptorInterface {
 
+    @Override
     public String encrypt(String text) {
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
