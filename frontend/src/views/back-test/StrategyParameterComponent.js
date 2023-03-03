@@ -7,10 +7,11 @@ import {useState} from "react";
 
 const StrategyParameterComponent = (strategy) => {
 
-    const [period_buy, setPeriod_buy] = useState();
-    const [period_sell, setPeriod_sell] = useState();
-    const [standardDeviation_buy, setStandardDeviation_buy] = useState();
-    const [standardDeviation_sell, setStandardDeviation_sell] = useState();
+    const [bollinger_period_buy, setBollinger_period_buy] = useState(50);
+    const [bollinger_period_sell, setBollinger_period_sell] = useState(50);
+    const [bollinger_standardDeviation_buy, setBollinger_standardDeviation_buy] = useState(0.1);
+    const [bollinger_standardDeviation_sell, setBollinger_standardDeviation_sell] = useState(0.1);
+    const [bollinger_risk, setBollinger_risk] = useState(2);
 
     switch (strategy.strategy){
         case "볼린저밴드":
@@ -25,8 +26,13 @@ const StrategyParameterComponent = (strategy) => {
                             </Grid>
                             <Grid xs={7.5} sm={7.5}>
                                 <TextField
+                                    style={{textAlign:"right"}}
+                                    value={bollinger_period_buy}
                                     fullWidth
+                                    type={"number"}
+                                    inputProps={{style:{textAlign:"right"}}}
                                     margin={"normal"}
+                                    onChange={(e)=>{setBollinger_period_buy(e.target.value)}}
                                 />
                             </Grid>
                         </Grid>
@@ -37,8 +43,12 @@ const StrategyParameterComponent = (strategy) => {
                             </Grid>
                             <Grid xs={7.5} sm={7.5}>
                                 <TextField
+                                    value={bollinger_standardDeviation_buy}
                                     fullWidth
+                                    type={"number"}
+                                    inputProps={{step:0.1, style:{textAlign:"right"}}}
                                     margin={"normal"}
+                                    onChange={(e)=>{setBollinger_standardDeviation_buy(e.target.value)}}
                                 />
                             </Grid>
                         </Grid>
@@ -55,8 +65,13 @@ const StrategyParameterComponent = (strategy) => {
                             </Grid>
                             <Grid xs={7.5} sm={7.5}>
                                 <TextField
+                                    style={{textAlign:"right"}}
+                                    value={bollinger_period_sell}
                                     fullWidth
+                                    inputProps={{style:{textAlign:"right"}}}
+                                    type={"number"}
                                     margin={"normal"}
+                                    onChange={(e)=>{setBollinger_period_sell(e.target.value)}}
                                 />
                             </Grid>
                         </Grid>
@@ -68,8 +83,12 @@ const StrategyParameterComponent = (strategy) => {
                             </Grid>
                             <Grid xs={7.5} sm={7.5}>
                                 <TextField
+                                    value={bollinger_standardDeviation_sell}
                                     fullWidth
+                                    type={"number"}
+                                    inputProps={{step:0.1, style:{textAlign:"right"}}}
                                     margin={"normal"}
+                                    onChange={(e)=>{setBollinger_standardDeviation_sell(e.target.value)}}
                                 />
                             </Grid>
                         </Grid>
@@ -87,8 +106,12 @@ const StrategyParameterComponent = (strategy) => {
                             </Grid>
                             <Grid xs={6} sm={6}>
                                 <TextField
+                                    value={bollinger_risk}
                                     fullWidth
+                                    type={"number"}
+                                    inputProps={{step:0.1, style:{textAlign:"right"}}}
                                     margin={"normal"}
+                                    onChange={(e)=>{setBollinger_risk(e.target.value)}}
                                 />
                             </Grid>
                         </Grid>
