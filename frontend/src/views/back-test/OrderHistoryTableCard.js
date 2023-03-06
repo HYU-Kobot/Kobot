@@ -1,10 +1,7 @@
 import MainCard from "../../ui-component/cards/MainCard";
-import { DataGrid } from '@mui/x-data-grid';
 
 import * as React from 'react';
 import {CardContent, Grid, Typography} from "@mui/material";
-import {gridSpacing} from "../../store/constant";
-import CoinCardCompnent from "../dashboard/Default/CoinCardComponent";
 import {useEffect, useState} from "react";
 import OrderHistoryComponent from "./OrderHistoryComponent";
 import {Pagination} from "@mui/lab";
