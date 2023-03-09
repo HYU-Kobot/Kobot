@@ -1,4 +1,4 @@
-package com.hyu.kobot.domain;
+package com.hyu.kobot.domain.candle;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
