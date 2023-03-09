@@ -17,7 +17,8 @@ const backtest = {
             type: 'item',
             url: '/back-test',
             icon: icons.IconChartInfographic,
-            breadcrumbs: false
+            breadcrumbs: false,
+            modal: false
         }
     ]
 };

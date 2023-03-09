@@ -8,8 +8,8 @@ const icons = {
 
 // ==============================|| EXTRA PAGES MENU ITEMS ||============================== //
 
-const pages = {
-    id: 'pages',
+const authentication = {
+    id: 'authentication',
     title: 'Pages',
     caption: 'Pages Caption',
     type: 'group',
@@ -25,19 +25,21 @@ const pages = {
                     id: 'login3',
                     title: 'Login',
                     type: 'item',
-                    url: '/pages/login/login3',
-                    target: true
+                    url: '/authentication/login/login3',
+                    target: true,
+                    modal: true
                 },
                 {
                     id: 'register3',
                     title: 'Register',
                     type: 'item',
-                    url: '/pages/register/register3',
-                    target: true
+                    url: '/authentication/register/register3',
+                    target: true,
+                    modal: true
                 }
             ]
         }
     ]
 };
 
-export default pages;
+export default authentication;
