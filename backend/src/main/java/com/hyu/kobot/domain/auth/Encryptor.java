@@ -14,7 +14,7 @@ public class Encryptor implements EncryptorInterface {
             messageDigest.update(text.getBytes());
             return bytesToHex(messageDigest.digest());
         } catch (NoSuchAlgorithmException e) {
-            throw new IllegalStateException("알고리즘이 존재하지 않스비낟.");
+            throw new IllegalStateException("알고리즘이 존재하지 않습니다.");
         }
     }
 
