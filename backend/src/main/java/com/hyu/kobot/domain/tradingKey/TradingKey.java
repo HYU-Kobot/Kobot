@@ -1,10 +1,12 @@
-package com.hyu.kobot.domain;
+package com.hyu.kobot.domain.tradingKey;
 
+import com.hyu.kobot.domain.candle.Market;
+import com.hyu.kobot.domain.member.Member;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
+import javax.persistence.Id;
 
 import javax.persistence.*;
 
@@ -12,7 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Key {
+public class TradingKey {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,11 +26,10 @@ public class Key {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    @Embedded
     private Member member;
 
-    @Column(name = "api_key", nullable = false)
-    private String apiKey;
+    @Column(name = "access_key", nullable = false)
+    private String accessKey;
 
     @Column(name = "secret_key", nullable = false)
     private String secretKey;
@@ -36,18 +37,18 @@ public class Key {
     @Column(name = "other")
     private String other;
 
-    public Key(
-            Market market,
+    public TradingKey(
+            String market,
             Member member,
-            String apiKey,
+            String accessKey,
             String secretKey,
             String other
     ) {
         this(
                 null,
-                market,
+                Market.of(market),
                 member,
-                apiKey,
+                accessKey,
                 secretKey,
                 other
         );
