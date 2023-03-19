@@ -15,6 +15,7 @@ import AuthenticationContext from "../../../../../views/pages/authentication/Aut
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import * as React from "react";
 import Login from "../../../../../views/pages/authentication/authentication3/Login3";
+import Register from "../../../../../views/pages/authentication/authentication3/Register3";
 
 // ==============================|| SIDEBAR MENU LIST ITEMS ||============================== //
 
@@ -58,12 +59,16 @@ const NavItem = ({ item, level }) => {
     }
 
     const itemHandler = (id, modal) => {
-        if(modal){
-            setLoginOpen(true);
-        } else{
-            dispatch({ type: MENU_OPEN, id });
-            if (matchesSM) dispatch({ type: SET_MENU, opened: false });
+        if(modal === 'register'){
+            setRegisterOpen(true);
         }
+        if(modal === 'login'){
+            setLoginOpen(true);
+        }
+
+        dispatch({ type: MENU_OPEN, id });
+        if (matchesSM) dispatch({ type: SET_MENU, opened: false });
+
     };
 
     // active menu item on page load
@@ -121,6 +126,9 @@ const NavItem = ({ item, level }) => {
             </ListItemButton>
             <AuthenticationContext.Provider value={authenticationModalState}>
                 <Login/>
+            </AuthenticationContext.Provider>
+            <AuthenticationContext.Provider value={authenticationModalState}>
+                <Register/>
             </AuthenticationContext.Provider>
         </>
     );

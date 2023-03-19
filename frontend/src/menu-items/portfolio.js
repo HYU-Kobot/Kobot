@@ -22,7 +22,6 @@ const portfolio = {
             type: 'item',
             url: '/portfolios/portfolio-typography',
             breadcrumbs: false,
-            modal: false
         }
     ]
 };

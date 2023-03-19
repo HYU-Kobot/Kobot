@@ -27,7 +27,7 @@ const authentication = {
                     type: 'item',
                     url: '/authentication/login/login3',
                     target: true,
-                    modal: true
+                    modal: 'login'
                 },
                 {
                     id: 'register3',
@@ -35,7 +35,7 @@ const authentication = {
                     type: 'item',
                     url: '/authentication/register/register3',
                     target: true,
-                    modal: true
+                    modal: 'register'
                 }
             ]
         }
