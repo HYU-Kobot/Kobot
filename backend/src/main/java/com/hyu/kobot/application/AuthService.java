@@ -2,10 +2,10 @@
 package com.hyu.kobot.application;
 
 import com.hyu.kobot.domain.auth.EncryptorInterface;
-import com.hyu.kobot.domain.auth.JwtTokenProvider;
 import com.hyu.kobot.domain.member.Member;
 import com.hyu.kobot.domain.member.Password;
 import com.hyu.kobot.domain.member.Username;
+import com.hyu.kobot.infra.JwtTokenProvider;
 import com.hyu.kobot.repository.MemberRepository;
 import com.hyu.kobot.ui.dto.AccessTokenResponse;
 import com.hyu.kobot.ui.dto.SignInRequest;

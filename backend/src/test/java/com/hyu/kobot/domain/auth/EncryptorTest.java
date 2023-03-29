@@ -16,5 +16,4 @@ class EncryptorTest {
         String secondEncryptedPassword = encryptor.encrypt(password);
         assertThat(encryptedPassword).isEqualTo(secondEncryptedPassword);
     }
-
 }

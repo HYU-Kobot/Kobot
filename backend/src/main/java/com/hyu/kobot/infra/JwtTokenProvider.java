@@ -1,5 +1,6 @@
-package com.hyu.kobot.domain.auth;
+package com.hyu.kobot.infra;
 
+import com.hyu.kobot.application.TokenProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
@@ -13,7 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class JwtTokenProvider {
+public class JwtTokenProvider implements TokenProvider {
 
     private final SecretKey key;
     private final long validityInMilliseconds;
@@ -24,6 +25,7 @@ public class JwtTokenProvider {
         this.validityInMilliseconds = validityInMilliseconds;
     }
 
+    @Override
     public String createToken(String payload) {
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
@@ -36,6 +38,7 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+    @Override
     public String getPayload(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -45,6 +48,7 @@ public class JwtTokenProvider {
                 .getSubject();
     }
 
+    @Override
     public boolean validateToken(String token) {
         try {
             Jws<Claims> claims = Jwts.parserBuilder()
