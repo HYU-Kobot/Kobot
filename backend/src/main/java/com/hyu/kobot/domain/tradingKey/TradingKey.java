@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.Id;
 
 import javax.persistence.*;
@@ -29,9 +30,11 @@ public class TradingKey {
     private Member member;
 
     @Column(name = "access_key", nullable = false)
+    @Convert(converter = TradingKeyEncryptor.class)
     private String accessKey;
 
     @Column(name = "secret_key", nullable = false)
+    @Convert(converter = TradingKeyEncryptor.class)
     private String secretKey;
 
     @Column(name = "other")

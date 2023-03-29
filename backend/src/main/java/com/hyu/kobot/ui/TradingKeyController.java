@@ -18,7 +18,7 @@ public class TradingKeyController {
 
     private final TradingKeyService tradingKeyService;
     @GetMapping("/key")
-    public ResponseEntity<Void> checkTradingKey(@RequestBody TradingKeyRequest tradingKeyRequest) throws IOException, InterruptedException {
+    public ResponseEntity<Void> addTradingKey(@RequestBody TradingKeyRequest tradingKeyRequest) throws IOException, InterruptedException {
         boolean validTradingKey = tradingKeyService.lookup(tradingKeyRequest);
         if (validTradingKey) {
             tradingKeyService.create(tradingKeyRequest);
