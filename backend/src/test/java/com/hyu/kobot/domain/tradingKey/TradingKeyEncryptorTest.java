@@ -34,25 +34,18 @@ class TradingKeyEncryptorTest {
     @Value("${security.aes.encryption.test.keystring}")
     private String test_keystring;
 
-    @Value("${security.aes.encryption.test.keystring}")
+    @Value("${security.aes.encryption.test.encrypted}")
     private String test_encrypted;
+
     @Test
-    void AES256_암호화(){
-        //미완
-        System.out.println(tradingKeyEncryptor.convertToDatabaseColumn(test_keystring));
+    void AES256_암호화() {
+        Assertions.assertThat(tradingKeyEncryptor.convertToDatabaseColumn(test_keystring))
+                .isEqualTo(test_encrypted);
     }
+
     @Test
-    void 암호화에_성공한다() throws IOException, InterruptedException {
-        Member member = new Member("정지혁", "jihyeok1234", "qwer1234", new Encryptor());
-        memberRepository.save(member);
-        TradingKeyRequest tradingKeyRequest = new TradingKeyRequest("KRW_BTC","jihyeok1234","XU0V9uMGegWVRxjxfErD6v2RIx2MN9QI9IvI4Pjk","GdWQOYxaBpInHVqM19CxQFf7yNpDhfMzxa0LOZLf",null);
-        tradingKeyService.create(tradingKeyRequest);
-
-        TradingKey tradingKey = tradingKeyRepository.findByMember(member).get();
-
-        System.out.print(tradingKey.getAccessKey());
-        //Assertions.assertThat(tradingKey.).isSameAs();
-        //미완
-
+    void AES256_복호화() {
+        Assertions.assertThat(tradingKeyEncryptor.convertToEntityAttribute(test_encrypted))
+                .isEqualTo(test_keystring);
     }
 }

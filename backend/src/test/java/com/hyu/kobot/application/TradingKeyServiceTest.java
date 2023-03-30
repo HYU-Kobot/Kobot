@@ -57,8 +57,6 @@ class TradingKeyServiceTest {
         tradingKeyService.create(tradingKeyRequest);
 
         List<TradingKey> tradingKeys = tradingKeyRepository.findAll();
-
         Assertions.assertThat(tradingKeys).hasSize(1);
-
     }
 }
