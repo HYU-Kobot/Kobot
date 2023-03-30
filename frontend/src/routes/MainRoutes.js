@@ -3,19 +3,20 @@ import { lazy } from 'react';
 // project imports
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
+import BackTest from "../views/back-test";
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
 
 // portfolios routing
-const PortfolioTypography = Loadable(lazy(() => import('views/portfolios/Typography')));
+const PortfolioTypography = Loadable(lazy(() => import('views/portfolios')));
 const UtilsColor = Loadable(lazy(() => import('views/portfolios/Color')));
 const UtilsShadow = Loadable(lazy(() => import('views/portfolios/Shadow')));
 const UtilsMaterialIcons = Loadable(lazy(() => import('views/portfolios/MaterialIcons')));
 const UtilsTablerIcons = Loadable(lazy(() => import('views/portfolios/TablerIcons')));
 
 // sample page routing
-const SamplePage = Loadable(lazy(() => import('views/sample-page')));
+const SamplePage = Loadable(lazy(() => import('views/back-test')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -82,8 +83,8 @@ const MainRoutes = {
             ]
         },
         {
-            path: 'sample-page',
-            element: <SamplePage />
+            path: 'back-test',
+            element: <BackTest />
         }
     ]
 };
