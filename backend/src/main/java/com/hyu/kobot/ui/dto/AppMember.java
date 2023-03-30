@@ -5,17 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public class TradingKeyRequest {
+public abstract class AppMember {
 
-    private String market;
+    private Long payload;
 
-    private String accessKey;
-
-    private String secretKey;
-
-    private String other;
+    public abstract boolean isGuest();
 }

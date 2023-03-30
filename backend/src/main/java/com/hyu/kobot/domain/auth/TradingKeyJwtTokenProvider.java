@@ -1,29 +1,25 @@
 package com.hyu.kobot.domain.auth;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
-import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.UUID;
+import javax.crypto.SecretKey;
+import org.springframework.beans.factory.annotation.Value;
 
-@Component
 public class TradingKeyJwtTokenProvider {
 
-    private SecretKey key;
+    private final SecretKey key;
     private final long validityInMilliseconds;
 
-    public TradingKeyJwtTokenProvider(@Value("${security.jwt.token.secret-key}") final String secretKey,
-                                      @Value("${security.jwt.token.expire-length}") final long validityInMilliseconds) {
-        this.key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
-        this.validityInMilliseconds = validityInMilliseconds;
-    }
-
-    public void ChangeTypeOfJwtTokenProvider(String secretKey){
-        this.key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+    public TradingKeyJwtTokenProvider(String key) {
+        this.key = Keys.hmacShaKeyFor(key.getBytes(StandardCharsets.UTF_8));
+        this.validityInMilliseconds = 1800000;
     }
 
     public String createToken(String payload) {
@@ -33,7 +29,7 @@ public class TradingKeyJwtTokenProvider {
         return Jwts.builder()
                 .setIssuedAt(now)
                 .setExpiration(validity)
-                .claim("access_key",payload)
+                .claim("access_key", payload)
                 .claim("nonce", UUID.randomUUID().toString())
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
@@ -61,4 +57,3 @@ public class TradingKeyJwtTokenProvider {
         }
     }
 }
-    
