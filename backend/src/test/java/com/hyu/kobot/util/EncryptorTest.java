@@ -1,4 +1,4 @@
-package com.hyu.kobot.domain.auth;
+package com.hyu.kobot.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

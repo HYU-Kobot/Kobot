@@ -1,7 +1,6 @@
 
 package com.hyu.kobot.application;
 
-import com.hyu.kobot.domain.auth.EncryptorInterface;
 import com.hyu.kobot.domain.member.Member;
 import com.hyu.kobot.domain.member.Password;
 import com.hyu.kobot.domain.member.Username;
@@ -10,6 +9,7 @@ import com.hyu.kobot.repository.MemberRepository;
 import com.hyu.kobot.ui.dto.AccessTokenResponse;
 import com.hyu.kobot.ui.dto.SignInRequest;
 import com.hyu.kobot.ui.dto.SignUpRequest;
+import com.hyu.kobot.util.EncryptorInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -2,7 +2,7 @@ package com.hyu.kobot.domain.member;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.hyu.kobot.domain.auth.Encryptor;
+import com.hyu.kobot.util.Encryptor;
 import org.junit.jupiter.api.Test;
 
 class MemberTest {

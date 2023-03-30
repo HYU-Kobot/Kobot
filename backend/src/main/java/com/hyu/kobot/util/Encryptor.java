@@ -1,4 +1,4 @@
-package com.hyu.kobot.domain.auth;
+package com.hyu.kobot.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

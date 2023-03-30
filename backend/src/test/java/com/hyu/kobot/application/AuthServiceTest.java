@@ -3,12 +3,12 @@ package com.hyu.kobot.application;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.hyu.kobot.domain.auth.Encryptor;
 import com.hyu.kobot.domain.member.Member;
 import com.hyu.kobot.repository.MemberRepository;
 import com.hyu.kobot.ui.dto.AccessTokenResponse;
 import com.hyu.kobot.ui.dto.SignInRequest;
 import com.hyu.kobot.ui.dto.SignUpRequest;
+import com.hyu.kobot.util.Encryptor;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

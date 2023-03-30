@@ -1,6 +1,6 @@
 package com.hyu.kobot.domain.member;
 
-import com.hyu.kobot.domain.auth.EncryptorInterface;
+import com.hyu.kobot.util.EncryptorInterface;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
