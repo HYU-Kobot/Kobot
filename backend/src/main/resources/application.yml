@@ -12,3 +12,8 @@ spring:
         format_sql: true
         show_sql: true
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+security:
+  jwt:
+    token:
+      secret-key: 05b87ded4f471df23ce1c804b9a9b4180d5a4cf46c7e94752cb6dfdf8a7370952fdad2f84e1cd2c18b128e209153eec3ef868e583d5452f50ddafb199fe09f4f
+      expire-length: 1800000

@@ -1,9 +1,9 @@
-package com.hyu.kobot.domain.repository;
+package com.hyu.kobot.repository;
 
-import com.hyu.kobot.domain.Candle;
-import com.hyu.kobot.domain.Exchange;
-import com.hyu.kobot.domain.Market;
-import com.hyu.kobot.domain.TimeUnit;
+import com.hyu.kobot.domain.candle.Candle;
+import com.hyu.kobot.domain.candle.Exchange;
+import com.hyu.kobot.domain.candle.Market;
+import com.hyu.kobot.domain.candle.TimeUnit;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,4 +1,4 @@
-package com.hyu.kobot.domain;
+package com.hyu.kobot.domain.candle;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,14 +15,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
-@NoArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Candle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(name = "exchange", nullable = false)
     @Enumerated(value = EnumType.STRING)
