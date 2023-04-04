@@ -11,6 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Component
 public class UPBITClient {
 
@@ -25,7 +28,11 @@ public class UPBITClient {
     public void lookup(TradingKey tradingKey) {
         TradingKeyJwtTokenProvider tradingKeyToken = new TradingKeyJwtTokenProvider(
                 tradingKey.getSecretKey());
-        String token = tradingKeyToken.createToken(tradingKey.getAccessKey());
+
+        Map<String,Object> claims = new HashMap<>();
+        claims.put("access_key",tradingKey.getAccessKey());
+
+        String token = tradingKeyToken.createToken(claims);
 
         HttpHeaders header = new HttpHeaders();
         header.setBearerAuth(token);

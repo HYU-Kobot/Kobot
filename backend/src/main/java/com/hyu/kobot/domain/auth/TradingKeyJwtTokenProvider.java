@@ -1,13 +1,10 @@
 package com.hyu.kobot.domain.auth;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.Map;
 import java.util.UUID;
 import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,17 +19,18 @@ public class TradingKeyJwtTokenProvider {
         this.validityInMilliseconds = 1800000;
     }
 
-    public String createToken(String payload) {
+    public String createToken(Map<String,Object> claims) {
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
 
-        return Jwts.builder()
+        JwtBuilder jwtBuilder = Jwts.builder()
                 .setIssuedAt(now)
                 .setExpiration(validity)
-                .claim("access_key", payload)
-                .claim("nonce", UUID.randomUUID().toString())
-                .signWith(key, SignatureAlgorithm.HS256)
-                .compact();
+                .claim("nonce", UUID.randomUUID().toString());
+        for(Map.Entry<String,Object>entry : claims.entrySet()){
+            jwtBuilder.claim(entry.getKey(),entry.getValue());
+        }
+        return jwtBuilder.signWith(key, SignatureAlgorithm.HS256).compact();
     }
 
     public String getPayload(String token) {
