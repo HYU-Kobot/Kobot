@@ -23,7 +23,7 @@ public class TradingKeyService {
 
     private final UPBITClient upbitClient;
 
-    public void register(AppMember appMember, TradingKeyRequest tradingKeyRequest) {
+    public void register(AppMember appMember, TradingKeyRequest tradingKeyRequest){
         Member member = memberRepository.findById(appMember.getPayload())
                 .orElseThrow(() -> new IllegalStateException("DB에서 유저네임을 조회할 수 없습니다."));
 
