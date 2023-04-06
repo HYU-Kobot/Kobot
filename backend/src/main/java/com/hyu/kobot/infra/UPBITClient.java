@@ -1,28 +1,41 @@
 package com.hyu.kobot.infra;
 
+import com.hyu.kobot.config.UpbitConfig;
 import com.hyu.kobot.domain.auth.TradingKeyJwtTokenProvider;
 import com.hyu.kobot.domain.tradingKey.TradingKey;
 import com.hyu.kobot.ui.dto.AccountResponse;
+import lombok.Builder;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
+@Transactional
 public class UPBITClient {
 
     public static final String UPBIT_URL = "https://api.upbit.com/v1/accounts";
 
     private final RestTemplate restTemplate;
+    private final UpbitConfig upbitConfig;
 
-    public UPBITClient(RestTemplate restTemplate) {
+    @Autowired
+    public UPBITClient(RestTemplate restTemplate, UpbitConfig upbitConfig) {
         this.restTemplate = restTemplate;
+        this.upbitConfig = upbitConfig;
     }
 
     public void lookup(TradingKey tradingKey) {
