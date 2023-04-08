@@ -23,7 +23,7 @@ security:
       expire-length: 1800000
   aes:
     encryption:
-      key: ${AES256_KEY}
+      key: Vkobot1234567890KOBOT1234567890V
       test:
-        keystring: ${AES256_TEST_KEYSTRING}
-        encrypted: ${AES256_TEST_ENCRYPTED}
+        keystring: $$$auto@trading!kobot$$$
+        encrypted: Ds64qEbCCjxsG32Tk3vcpw8CvaConbSpKqikuDVCh+s=

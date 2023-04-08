@@ -20,6 +20,3 @@ security:
   aes:
     encryption:
       key: ${AES256_KEY}
-      test:
-        keystring: ${AES256_TEST_KEYSTRING}
-        encrypted: ${AES256_TEST_ENCRYPTED}

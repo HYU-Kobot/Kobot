@@ -14,6 +14,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+@Transactional
 @SpringBootTest
 class TradingKeyServiceTest {
     @Autowired
@@ -36,7 +38,7 @@ class TradingKeyServiceTest {
     //register test
     @Test
     void 존재하지_않는_회원이면_예외가_발생한다() {
-        Member member = new Member("정지혁", "jihyeok123", "qwer1234", new Encryptor());
+        Member member = new Member("정지혁", "jihyeok1234", "qwer1234", new Encryptor());
         memberRepository.save(member);
         Member member2 = new Member("김민수", "minsu1234", "skap1321", new Encryptor());
         memberRepository.save(member2);
