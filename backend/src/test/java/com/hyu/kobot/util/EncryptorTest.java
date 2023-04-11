@@ -1,4 +1,4 @@
-package com.hyu.kobot.domain.auth;
+package com.hyu.kobot.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,5 +16,4 @@ class EncryptorTest {
         String secondEncryptedPassword = encryptor.encrypt(password);
         assertThat(encryptedPassword).isEqualTo(secondEncryptedPassword);
     }
-
 }

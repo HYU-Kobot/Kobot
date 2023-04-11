@@ -1,6 +1,6 @@
 package com.hyu.kobot.config;
 
-import com.hyu.kobot.domain.auth.JwtTokenProvider;
+import com.hyu.kobot.infra.JwtTokenProvider;
 import com.hyu.kobot.ui.AuthenticationArgumentResolver;
 import com.hyu.kobot.ui.AuthenticationInterceptor;
 import java.util.List;

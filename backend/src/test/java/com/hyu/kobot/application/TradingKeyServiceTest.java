@@ -1,6 +1,7 @@
 package com.hyu.kobot.application;
 
-import com.hyu.kobot.domain.auth.Encryptor;
+import com.hyu.kobot.util.Encryptor;
+import com.hyu.kobot.util.EncryptorInterface;
 import com.hyu.kobot.domain.member.Member;
 import com.hyu.kobot.domain.tradingKey.TradingKey;
 import com.hyu.kobot.infra.UPBITClient;
@@ -38,7 +39,8 @@ class TradingKeyServiceTest {
     //register test
     @Test
     void 존재하지_않는_회원이면_예외가_발생한다() {
-        Member member = new Member("정지혁", "jihyeok1234", "qwer1234", new Encryptor());
+        EncryptorInterface encryptor = new Encryptor();
+        Member member = new Member("정지혁", "jihyeok1234", "qwer1234", encryptor);
         memberRepository.save(member);
         Member member2 = new Member("김민수", "minsu1234", "skap1321", new Encryptor());
         memberRepository.save(member2);

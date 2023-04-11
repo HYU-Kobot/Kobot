@@ -1,4 +1,4 @@
-package com.hyu.kobot.domain.auth;
+package com.hyu.kobot.infra;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;

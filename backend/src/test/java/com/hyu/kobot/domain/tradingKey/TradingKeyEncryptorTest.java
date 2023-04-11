@@ -1,7 +1,7 @@
 package com.hyu.kobot.domain.tradingKey;
 
 import com.hyu.kobot.application.TradingKeyService;
-import com.hyu.kobot.domain.auth.Encryptor;
+import com.hyu.kobot.util.Encryptor;
 import com.hyu.kobot.domain.member.Member;
 import com.hyu.kobot.domain.member.Username;
 import com.hyu.kobot.repository.MemberRepository;

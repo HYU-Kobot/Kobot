@@ -2,7 +2,7 @@ package com.hyu.kobot.ui;
 
 import static org.hibernate.validator.internal.metadata.core.ConstraintHelper.PAYLOAD;
 
-import com.hyu.kobot.domain.auth.JwtTokenProvider;
+import com.hyu.kobot.infra.JwtTokenProvider;
 import com.hyu.kobot.util.TokenExtractor;
 import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;

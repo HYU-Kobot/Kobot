@@ -1,7 +1,6 @@
 package com.hyu.kobot.infra;
 
 import com.hyu.kobot.config.RestTemplateConfig;
-import com.hyu.kobot.domain.auth.TradingKeyJwtTokenProvider;
 import com.hyu.kobot.domain.tradingKey.TradingKey;
 import com.hyu.kobot.ui.dto.AccountResponse;
 import org.springframework.beans.factory.annotation.Autowired;
