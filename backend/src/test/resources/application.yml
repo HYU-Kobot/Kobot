@@ -24,6 +24,3 @@ security:
   aes:
     encryption:
       key: Vkobot1234567890KOBOT1234567890V
-      test:
-        keystring: $$$auto@trading!kobot$$$
-        encrypted: Ds64qEbCCjxsG32Tk3vcpw8CvaConbSpKqikuDVCh+s=

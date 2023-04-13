@@ -25,6 +25,7 @@ public class UPBITClient {
     public static final String UPBIT_URL = "https://api.upbit.com/v1/accounts";
 
     private final RestTemplate restTemplate;
+
     private final RestTemplateConfig upbitConfig;
 
     @Autowired

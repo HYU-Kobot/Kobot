@@ -7,11 +7,11 @@ import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 import javax.crypto.SecretKey;
-import org.springframework.beans.factory.annotation.Value;
 
 public class TradingKeyJwtTokenProvider {
 
     private final SecretKey key;
+
     private final long validityInMilliseconds;
 
     public TradingKeyJwtTokenProvider(String key) {

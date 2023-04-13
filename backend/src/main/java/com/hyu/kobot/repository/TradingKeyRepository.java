@@ -4,7 +4,6 @@ import com.hyu.kobot.domain.candle.Market;
 import com.hyu.kobot.domain.tradingKey.TradingKey;
 import com.hyu.kobot.domain.member.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.Optional;
 

@@ -1,6 +1,5 @@
 package com.hyu.kobot.domain.tradingKey;
 
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +17,7 @@ public class TradingKeyEncryptor implements AttributeConverter<String, String> {
     private static final String ALGORITHM = "AES/ECB/PKCS5Padding";
 
     private static byte[] KEY;
+
     public TradingKeyEncryptor(@Value("${security.aes.encryption.key}") final String keystring){
         this.KEY = keystring.getBytes();
     }
