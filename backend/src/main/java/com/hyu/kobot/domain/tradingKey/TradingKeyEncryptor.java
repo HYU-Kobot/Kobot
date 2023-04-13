@@ -29,6 +29,7 @@ public class TradingKeyEncryptor implements AttributeConverter<String, String> {
             Cipher cipher = Cipher.getInstance(ALGORITHM);
             cipher.init(Cipher.ENCRYPT_MODE, key);
             byte[] encryptedBytes = cipher.doFinal(attribute.getBytes());
+
             return Base64.getEncoder().encodeToString(encryptedBytes);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -43,6 +44,7 @@ public class TradingKeyEncryptor implements AttributeConverter<String, String> {
             cipher.init(Cipher.DECRYPT_MODE, key);
             byte[] encryptedBytes = Base64.getDecoder().decode(dbData);
             byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
+
             return new String(decryptedBytes);
         } catch (Exception e) {
             throw new RuntimeException(e);

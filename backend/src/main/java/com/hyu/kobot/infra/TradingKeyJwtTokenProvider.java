@@ -27,9 +27,11 @@ public class TradingKeyJwtTokenProvider {
                 .setIssuedAt(now)
                 .setExpiration(validity)
                 .claim("nonce", UUID.randomUUID().toString());
+
         for(Map.Entry<String,Object>entry : claims.entrySet()){
             jwtBuilder.claim(entry.getKey(),entry.getValue());
         }
+
         return jwtBuilder.signWith(key, SignatureAlgorithm.HS256).compact();
     }
 

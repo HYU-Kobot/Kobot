@@ -39,6 +39,7 @@ public class TradingKeyService {
                 tradingKeyRequest.getSecretKey(),
                 tradingKeyRequest.getOther()
         );
+
         upbitClient.lookup(tradingKey);
 
         tradingKeyRepository.save(tradingKey);

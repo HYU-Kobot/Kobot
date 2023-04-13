@@ -13,18 +13,19 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 @Transactional
 @SpringBootTest
 class TradingKeyServiceTest {
+
     @Autowired
     private TradingKeyService tradingKeyService;
+
     @Autowired
     private MemberRepository memberRepository;
+
     @Autowired
     private TradingKeyRepository tradingKeyRepository;
 
@@ -48,6 +49,7 @@ class TradingKeyServiceTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("DB에서 유저네임을 조회할 수 없습니다.");
     }
+
     @Test
     void 이미_등록된_키값이면_예외가_발생한다() {
         Member member = new Member("정지혁", "jihyeok1234", "qwer1234", new Encryptor());
