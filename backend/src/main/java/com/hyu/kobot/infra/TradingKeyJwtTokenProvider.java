@@ -1,6 +1,11 @@
 package com.hyu.kobot.infra;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
@@ -19,7 +24,7 @@ public class TradingKeyJwtTokenProvider {
         this.validityInMilliseconds = 1800000;
     }
 
-    public String createToken(Map<String,Object> claims) {
+    public String createToken(Map<String, Object> claims) {
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
 
@@ -28,8 +33,8 @@ public class TradingKeyJwtTokenProvider {
                 .setExpiration(validity)
                 .claim("nonce", UUID.randomUUID().toString());
 
-        for(Map.Entry<String,Object>entry : claims.entrySet()){
-            jwtBuilder.claim(entry.getKey(),entry.getValue());
+        for (Map.Entry<String, Object> entry : claims.entrySet()) {
+            jwtBuilder.claim(entry.getKey(), entry.getValue());
         }
 
         return jwtBuilder.signWith(key, SignatureAlgorithm.HS256).compact();

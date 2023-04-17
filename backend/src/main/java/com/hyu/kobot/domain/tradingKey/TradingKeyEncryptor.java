@@ -1,14 +1,13 @@
 package com.hyu.kobot.domain.tradingKey;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
 import java.security.Key;
 import java.util.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 @Component
 @Converter
@@ -18,7 +17,7 @@ public class TradingKeyEncryptor implements AttributeConverter<String, String> {
 
     private static byte[] KEY;
 
-    public TradingKeyEncryptor(@Value("${security.aes.encryption.key}") final String keystring){
+    public TradingKeyEncryptor(@Value("${security.aes.encryption.key}") final String keystring) {
         this.KEY = keystring.getBytes();
     }
 
