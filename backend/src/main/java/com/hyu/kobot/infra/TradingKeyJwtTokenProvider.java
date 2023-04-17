@@ -1,45 +1,45 @@
 package com.hyu.kobot.infra;
 
-import com.hyu.kobot.application.TokenProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.Map;
+import java.util.UUID;
 import javax.crypto.SecretKey;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
-@Component
-public class JwtTokenProvider implements TokenProvider {
+public class TradingKeyJwtTokenProvider {
 
     private final SecretKey key;
 
     private final long validityInMilliseconds;
 
-    public JwtTokenProvider(@Value("${security.jwt.token.secret-key}") final String secretKey,
-                            @Value("${security.jwt.token.expire-length}") final long validityInMilliseconds) {
-        this.key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
-        this.validityInMilliseconds = validityInMilliseconds;
+    public TradingKeyJwtTokenProvider(String key) {
+        this.key = Keys.hmacShaKeyFor(key.getBytes(StandardCharsets.UTF_8));
+        this.validityInMilliseconds = 1800000;
     }
 
-    @Override
-    public String createToken(String payload) {
+    public String createToken(Map<String, Object> claims) {
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
 
-        return Jwts.builder()
-                .setSubject(payload)
+        JwtBuilder jwtBuilder = Jwts.builder()
                 .setIssuedAt(now)
                 .setExpiration(validity)
-                .signWith(key, SignatureAlgorithm.HS256)
-                .compact();
+                .claim("nonce", UUID.randomUUID().toString());
+
+        for (Map.Entry<String, Object> entry : claims.entrySet()) {
+            jwtBuilder.claim(entry.getKey(), entry.getValue());
+        }
+
+        return jwtBuilder.signWith(key, SignatureAlgorithm.HS256).compact();
     }
 
-    @Override
     public String getPayload(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -49,7 +49,6 @@ public class JwtTokenProvider implements TokenProvider {
                 .getSubject();
     }
 
-    @Override
     public boolean validateToken(String token) {
         try {
             Jws<Claims> claims = Jwts.parserBuilder()
