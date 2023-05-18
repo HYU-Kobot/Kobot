@@ -16,6 +16,7 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import * as React from "react";
 import Login from "../../../../../views/pages/authentication/authentication3/Login3";
 import Register from "../../../../../views/pages/authentication/authentication3/Register3";
+import ApiRegister from "../../../../../views/pages/authentication/authentication3/ApiRegister";
 
 // ==============================|| SIDEBAR MENU LIST ITEMS ||============================== //
 
@@ -26,9 +27,10 @@ const NavItem = ({ item, level }) => {
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
     const [loginOpen, setLoginOpen] = React.useState(false);
     const [registerOpen, setRegisterOpen] = React.useState(false);
+    const [apiRegisterOpen, setApiRegisterOpen] = React.useState(false);
 
 
-    const authenticationModalState = {loginOpen, setLoginOpen, registerOpen, setRegisterOpen};
+    const authenticationModalState = {loginOpen, setLoginOpen, registerOpen, setRegisterOpen, apiRegisterOpen, setApiRegisterOpen};
 
     const Icon = item.icon;
     const itemIcon = item?.icon ? (
@@ -64,6 +66,9 @@ const NavItem = ({ item, level }) => {
         }
         if(modal === 'login'){
             setLoginOpen(true);
+        }
+        if(modal === 'apiRegister'){
+            setApiRegisterOpen(true)
         }
 
         dispatch({ type: MENU_OPEN, id });
@@ -129,6 +134,9 @@ const NavItem = ({ item, level }) => {
             </AuthenticationContext.Provider>
             <AuthenticationContext.Provider value={authenticationModalState}>
                 <Register/>
+            </AuthenticationContext.Provider>
+            <AuthenticationContext.Provider value={authenticationModalState}>
+                <ApiRegister/>
             </AuthenticationContext.Provider>
         </>
     );

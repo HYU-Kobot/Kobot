@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom';
-
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import {Button, Dialog, Divider, Grid, Stack, Typography, useMediaQuery} from '@mui/material';
@@ -73,9 +71,9 @@ const Register = () => {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item xs={12} sx={{ m: 3, mt: 1 }}>
-                        <AuthFooter />
-                    </Grid>
+                    {/*<Grid item xs={12} sx={{ m: 3, mt: 1 }}>*/}
+                    {/*    <AuthFooter />*/}
+                    {/*</Grid>*/}
                 </Grid>
             </AuthWrapper1>
         </Dialog>
