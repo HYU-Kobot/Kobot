@@ -34,6 +34,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import Google from 'assets/images/icons/social-google.svg';
+import axios from "axios";
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
@@ -60,67 +61,16 @@ const FirebaseLogin = ({ ...others }) => {
     return (
         <>
             <Grid container direction="column" justifyContent="center" spacing={2}>
-                <Grid item xs={12}>
-                    <AnimateButton>
-                        <Button
-                            disableElevation
-                            fullWidth
-                            onClick={googleHandler}
-                            size="large"
-                            variant="outlined"
-                            sx={{
-                                color: 'grey.700',
-                                backgroundColor: theme.palette.grey[50],
-                                borderColor: theme.palette.grey[100]
-                            }}
-                        >
-                            <Box sx={{ mr: { xs: 1, sm: 2, width: 20 } }}>
-                                <img src={Google} alt="google" width={16} height={16} style={{ marginRight: matchDownSM ? 8 : 16 }} />
-                            </Box>
-                            Sign in with Google
-                        </Button>
-                    </AnimateButton>
-                </Grid>
-                <Grid item xs={12}>
-                    <Box
-                        sx={{
-                            alignItems: 'center',
-                            display: 'flex'
-                        }}
-                    >
-                        <Divider sx={{ flexGrow: 1 }} orientation="horizontal" />
-
-                        <Button
-                            variant="outlined"
-                            sx={{
-                                cursor: 'unset',
-                                m: 2,
-                                py: 0.5,
-                                px: 7,
-                                borderColor: `${theme.palette.grey[100]} !important`,
-                                color: `${theme.palette.grey[900]}!important`,
-                                fontWeight: 500,
-                                borderRadius: `${customization.borderRadius}px`
-                            }}
-                            disableRipple
-                            disabled
-                        >
-                            OR
-                        </Button>
-
-                        <Divider sx={{ flexGrow: 1 }} orientation="horizontal" />
-                    </Box>
-                </Grid>
                 <Grid item xs={12} container alignItems="center" justifyContent="center">
                     <Box sx={{ mb: 2 }}>
-                        <Typography variant="subtitle1">Sign in with Email address</Typography>
+                        <Typography variant="h4">로그인</Typography>
                     </Box>
                 </Grid>
             </Grid>
 
             <Formik
                 initialValues={{
-                    email: 'info@codedthemes.com',
+                    email: 'kobot@sample.com',
                     password: '123456',
                     submit: null
                 }}
@@ -130,6 +80,14 @@ const FirebaseLogin = ({ ...others }) => {
                 })}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
+                        axios.get('https://api.kobot.kro.kr/api/auth/member', {
+                            params: {
+                                username: values.email,
+                                password: values.password
+                            }
+                        }).then(function (response){
+                            console.log(response.data)
+                        })
                         if (scriptedRef.current) {
                             setStatus({ success: true });
                             setSubmitting(false);
@@ -200,22 +158,7 @@ const FirebaseLogin = ({ ...others }) => {
                                 </FormHelperText>
                             )}
                         </FormControl>
-                        <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1}>
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        checked={checked}
-                                        onChange={(event) => setChecked(event.target.checked)}
-                                        name="checked"
-                                        color="primary"
-                                    />
-                                }
-                                label="Remember me"
-                            />
-                            <Typography variant="subtitle1" color="secondary" sx={{ textDecoration: 'none', cursor: 'pointer' }}>
-                                Forgot Password?
-                            </Typography>
-                        </Stack>
+
                         {errors.submit && (
                             <Box sx={{ mt: 3 }}>
                                 <FormHelperText error>{errors.submit}</FormHelperText>
@@ -233,7 +176,7 @@ const FirebaseLogin = ({ ...others }) => {
                                     variant="contained"
                                     color="secondary"
                                 >
-                                    Sign in
+                                    로그인
                                 </Button>
                             </AnimateButton>
                         </Box>
