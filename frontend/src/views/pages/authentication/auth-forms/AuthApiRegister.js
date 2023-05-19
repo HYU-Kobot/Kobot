@@ -42,24 +42,18 @@ import * as React from "react";
 const AuthApiRegister = ({ ...others }) => {
     const theme = useTheme();
     const scriptedRef = useScriptRef();
-    const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
-    const customization = useSelector((state) => state.customization);
-    const [showPassword, setShowPassword] = useState(false);
-    const [checked, setChecked] = useState(true);
 
     const market_list = ["업비트", "빗썸", "바이낸스"];
 
-    const googleHandler = async () => {
-        console.error('Register');
-    };
 
-    const handleClickShowPassword = () => {
-        setShowPassword(!showPassword);
-    };
 
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
+    const initialValues = {
+            api_key: '',
+            secret_key: '',
+            other: '',
+            market: '',
+            submit: null
+    }
 
     return (
         <>
@@ -72,13 +66,7 @@ const AuthApiRegister = ({ ...others }) => {
             </Grid>
 
             <Formik
-                initialValues={{
-                    api_key: '',
-                    secret_key: '',
-                    other: '',
-                    market: '',
-                    submit: null
-                }}
+                initialValues={initialValues}
                 validationSchema={Yup.object().shape({
                     api_key: Yup.string().max(255).required('Api Key 는 필수 입력 사항입니다.'),
                     secret_key: Yup.string().max(255).required('Secret key 는 필수 입력 사항입니다.'),
@@ -107,11 +95,10 @@ const AuthApiRegister = ({ ...others }) => {
                         <FormControl fullWidth error={Boolean(touched.market && errors.market)} sx={{ ...theme.typography.customInput }}>
                             <Autocomplete
                                 id="market_select"
-                                aria-label={"rjf"}
                                 options={market_list}
                                 style={{textAlign:"right"}}
-                                onChange={(e, value) => setFieldValue("market", value)}
-                                renderInput={(params) => <TextField {...params} margin="normal" variant={"standard"} fullWidth required style={{textAlign:"center"}} />}
+                                onChange={(e, value) => setFieldValue("market", value !== null ? value : initialValues.market)}
+                                renderInput={(params) => <TextField {...params} margin="normal" variant={"standard"} label={"거래소를 선택해주세요."} fullWidth style={{textAlign:"center"}} />}
                             />
                             {touched.market && errors.market && (
                                 <FormHelperText error id="standard-weight-helper-text--register">
@@ -146,7 +133,7 @@ const AuthApiRegister = ({ ...others }) => {
                             <InputLabel htmlFor="outlined-adornment-secret_key-register">Secret Key 를 입력해주세요.</InputLabel>
                             <OutlinedInput
                                 id="outlined-adornment-secret_key-register"
-                                type={showPassword ? 'text' : 'secret_key'}
+                                type='secret_key'
                                 value={values.secret_key}
                                 name="secret_key"
                                 label="Password"
@@ -171,7 +158,7 @@ const AuthApiRegister = ({ ...others }) => {
                             <InputLabel htmlFor="outlined-adornment-other-register">추가 키를 입력해주세요.</InputLabel>
                             <OutlinedInput
                                 id="outlined-adornment-other-register"
-                                type={showPassword ? 'text' : 'other'}
+                                type='other'
                                 value={values.other}
                                 name="other"
                                 label="Password"
