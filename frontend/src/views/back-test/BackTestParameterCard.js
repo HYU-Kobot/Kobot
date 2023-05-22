@@ -2,7 +2,7 @@
 import {
     Box,
     Button,
-    Grid,
+    Grid, Input,
     InputAdornment,
     InputLabel,
     MenuItem,
@@ -33,6 +33,8 @@ const BackTestParameterCard = () => {
     const handleClose = () => {
         setPopOver(null);
     };
+
+
 
     const StrategyPopOver = (strategy) => {
         switch (strategy) {
@@ -107,6 +109,10 @@ const BackTestParameterCard = () => {
     const setPair = BackTestContextValue.setPair;
     const timeframe = BackTestContextValue.timeframe;
     const setTimeframe = BackTestContextValue.setTimeframe;
+    const startDate = BackTestContextValue.startDate;
+    const setStartDate = BackTestContextValue.setStartDate;
+    const endDate = BackTestContextValue.endDate;
+    const setEndDate = BackTestContextValue.setEndDate;
 
 
     return(
@@ -153,6 +159,42 @@ const BackTestParameterCard = () => {
                                 id="pair_select"
                                 options={coin_pair}
                                 renderInput={(params) => <TextField {...params} margin="normal" variant={"standard"} fullWidth required />}
+                            />
+                        </Grid>
+                    </Grid>
+
+                    <Grid xs={12} sm={12} container marginTop={"10px"}>
+                        <Grid xs={4.5} sm={4.5}>
+                            <Typography variant={"h4"} marginTop={"25px"}>시작일 선택</Typography>
+                        </Grid>
+                        <Grid xs={7.5} sm={7.5}>
+                            <TextField
+                                InputProps={{inputProps: { min: "2017-10-01"} }}
+                                type="date"
+                                value={startDate}
+                                onChange={(event, newValue) => {
+                                    setStartDate(newValue);
+                                }}
+                                fullWidth
+                                margin={"normal"}
+                            />
+                        </Grid>
+                    </Grid>
+
+                    <Grid xs={12} sm={12} container marginTop={"10px"}>
+                        <Grid xs={4.5} sm={4.5}>
+                            <Typography variant={"h4"} marginTop={"25px"}>마감일 선택</Typography>
+                        </Grid>
+                        <Grid xs={7.5} sm={7.5}>
+                            <TextField
+                                InputProps={{inputProps: { min: "2017-11-01"} }}
+                                type="date"
+                                value={endDate}
+                                onChange={(event, newValue) => {
+                                    setEndDate(newValue);
+                                }}
+                                fullWidth
+                                margin={"normal"}
                             />
                         </Grid>
                     </Grid>

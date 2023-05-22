@@ -3,7 +3,8 @@ import PlayCircleOutlineRoundedIcon from '@mui/icons-material/PlayCircleOutlineR
 
 import * as React from "react";
 import SubCard from "../../ui-component/cards/SubCard";
-import {useState} from "react";
+import {useContext, useState} from "react";
+import BackTestContext from "./BackTestContext";
 
 const StrategyParameterComponent = (strategy) => {
 
@@ -12,6 +13,21 @@ const StrategyParameterComponent = (strategy) => {
     const [bollinger_standardDeviation_buy, setBollinger_standardDeviation_buy] = useState(0.1);
     const [bollinger_standardDeviation_sell, setBollinger_standardDeviation_sell] = useState(0.1);
     const [bollinger_risk, setBollinger_risk] = useState(2);
+
+
+    const BackTestContextValue = useContext(BackTestContext);
+    const pair = BackTestContextValue.pair;
+    const setPair = BackTestContextValue.setPair;
+    const timeframe = BackTestContextValue.timeframe;
+    const setTimeframe = BackTestContextValue.setTimeframe;
+    const startDate = BackTestContextValue.startDate;
+    const setStartDate = BackTestContextValue.setStartDate;
+    const endDate = BackTestContextValue.endDate;
+    const setEndDate = BackTestContextValue.setEndDate;
+
+    const SetParameter = () => {
+        console.log(pair, timeframe, startDate, endDate, bollinger_period_buy, bollinger_period_sell, bollinger_standardDeviation_buy, bollinger_standardDeviation_sell, bollinger_risk)
+    }
 
     switch (strategy.strategy){
         case "볼린저밴드":
@@ -22,7 +38,7 @@ const StrategyParameterComponent = (strategy) => {
                     <SubCard title={"매수 기준"} secondary={"볼린저밴드 상단"} style={{backgroundColor:"rgba(0,200,83,0.2)"}}>
                         <Grid xs={12} sm={12} container>
                             <Grid xs={4.5} sm={4.5}>
-                                <Typography marginTop={"30px"}>기간 설정</Typography>
+                                <Typography marginTop={"30px"}>이동평균선 기간</Typography>
                             </Grid>
                             <Grid xs={7.5} sm={7.5}>
                                 <TextField
@@ -39,7 +55,7 @@ const StrategyParameterComponent = (strategy) => {
 
                         <Grid xs={12} sm={12} container>
                             <Grid xs={4.5} sm={4.5}>
-                                <Typography marginTop={"30px"}>표준 편차</Typography>
+                                <Typography marginTop={"30px"}>표준 편차 승수</Typography>
                             </Grid>
                             <Grid xs={7.5} sm={7.5}>
                                 <TextField
@@ -61,7 +77,7 @@ const StrategyParameterComponent = (strategy) => {
                     <SubCard title={"매도 기준"} secondary={"볼린저밴드 중단"} style={{backgroundColor:"rgba(216,67,21,0.2)"}}>
                         <Grid xs={12} sm={12} container>
                             <Grid xs={4.5} sm={4.5}>
-                                <Typography marginTop={"30px"}>기간 설정</Typography>
+                                <Typography marginTop={"30px"}>이동평균선 기간</Typography>
                             </Grid>
                             <Grid xs={7.5} sm={7.5}>
                                 <TextField
@@ -79,7 +95,7 @@ const StrategyParameterComponent = (strategy) => {
 
                         <Grid xs={12} sm={12} container>
                             <Grid xs={4.5} sm={4.5}>
-                                <Typography marginTop={"30px"}>표준 편차</Typography>
+                                <Typography marginTop={"30px"}>표준 편차 승수</Typography>
                             </Grid>
                             <Grid xs={7.5} sm={7.5}>
                                 <TextField
@@ -122,7 +138,11 @@ const StrategyParameterComponent = (strategy) => {
                     </Grid>
 
                     <Grid xs={12} sm={12}>
-                        <Button fullWidth variant={"contained"} style={{fontSize:"30px", backgroundColor:"rgba(0,150,80,0.8)"}} startIcon={<PlayCircleOutlineRoundedIcon style={{fontSize:"30px"}}/>}>
+                        <Button
+                            fullWidth variant={"contained"} style={{fontSize:"30px", backgroundColor:"rgba(0,150,80,0.8)"}}
+                            startIcon={<PlayCircleOutlineRoundedIcon style={{fontSize:"30px"}}/>}
+                            onClick={SetParameter}
+                        >
                             백테스트 실행
                         </Button>
                     </Grid>
