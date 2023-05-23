@@ -8,7 +8,7 @@ import { useTheme } from '@mui/material/styles';
 import { Avatar, Chip, ListItemButton, ListItemIcon, ListItemText, Typography, useMediaQuery } from '@mui/material';
 
 // project imports
-import { MENU_OPEN, SET_MENU } from 'store/actions';
+import {LOGIN_TOGGLE, MENU_OPEN, REGISTER_TOGGLE, SET_MENU} from 'store/actions';
 import AuthenticationContext from "../../../../../views/pages/authentication/AuthenticationContext";
 
 // assets
@@ -25,12 +25,22 @@ const NavItem = ({ item, level }) => {
     const dispatch = useDispatch();
     const customization = useSelector((state) => state.customization);
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
-    const [loginOpen, setLoginOpen] = React.useState(false);
-    const [registerOpen, setRegisterOpen] = React.useState(false);
+    // const [loginOpen, setLoginOpen] = React.useState(false);
+    // const [registerOpen, setRegisterOpen] = React.useState(false);
     const [apiRegisterOpen, setApiRegisterOpen] = React.useState(false);
 
+    const loginOpened = useSelector((state => state.customization.loginOpen));
+    const loginToggle = () => {
+        dispatch({type: LOGIN_TOGGLE, loginOpen: !loginOpened});
+    }
 
-    const authenticationModalState = {loginOpen, setLoginOpen, registerOpen, setRegisterOpen, apiRegisterOpen, setApiRegisterOpen};
+    const registerOpened = useSelector((state => state.customization.registerOpen));
+    const RegisterToggle = () => {
+        dispatch({type: REGISTER_TOGGLE, registerOpen: !registerOpened});
+    }
+    console.log(registerOpened);
+
+    const authenticationModalState = {apiRegisterOpen, setApiRegisterOpen};
 
     const Icon = item.icon;
     const itemIcon = item?.icon ? (
@@ -62,12 +72,12 @@ const NavItem = ({ item, level }) => {
 
     const itemHandler = (id, modal) => {
         if(modal === 'register'){
-            setRegisterOpen(true);
+            RegisterToggle();
         }
-        if(modal === 'login'){
-            setLoginOpen(true);
+        else if(modal === 'login'){
+            loginToggle();
         }
-        if(modal === 'apiRegister'){
+        else if(modal === 'apiRegister'){
             setApiRegisterOpen(true)
         }
 
@@ -129,12 +139,8 @@ const NavItem = ({ item, level }) => {
                     />
                 )}
             </ListItemButton>
-            <AuthenticationContext.Provider value={authenticationModalState}>
-                <Login/>
-            </AuthenticationContext.Provider>
-            <AuthenticationContext.Provider value={authenticationModalState}>
-                <Register/>
-            </AuthenticationContext.Provider>
+            {!loginOpened && <Login/>}
+            {!registerOpened && <Register/>}
             <AuthenticationContext.Provider value={authenticationModalState}>
                 <ApiRegister/>
             </AuthenticationContext.Provider>

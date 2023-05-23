@@ -23,7 +23,7 @@ import StrategyParameterComponent from "./StrategyParameterComponent";
 
 const BackTestParameterCard = () => {
 
-    const strategy = ["볼린저밴드", "역추세전략"];
+    const strategy = ["볼린저밴드", "KOBOT AI 전략"];
     const [selectedStrategy, setSelectedStrategy] = useState("볼린저밴드");
     const coin_pair = ["BTCKRW", "ETHKRW"];
 
@@ -61,7 +61,7 @@ const BackTestParameterCard = () => {
                     </Popover>
                 )
 
-            case "역추세전략":
+            case "KOBOT AI 전략":
                 return (
                     <Popover
                         id={id}
@@ -75,7 +75,7 @@ const BackTestParameterCard = () => {
                     >
                         <Typography sx={{p: 2}} display={"block"}>
                             <p>
-                                역추세전략
+                                KOBOT의 지리는 AI 전략입니다. (feat.권순우)
                             </p>
                         </Typography>
                     </Popover>

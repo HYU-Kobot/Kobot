@@ -11,63 +11,6 @@ import OrderHistoryTableCard from "./OrderHistoryTableCard";
 import {useState} from "react";
 import BackTestContext from "./BackTestContext";
 
-let plotData = [
-    {
-        "id": "japan",
-        "color": "hsl(139, 70%, 50%)",
-        "data": [
-            {
-                "x": "plane",
-                "y": 66
-            },
-            {
-                "x": "helicopter",
-                "y": 26
-            },
-            {
-                "x": "boat",
-                "y": 164
-            },
-            {
-                "x": "train",
-                "y": 273
-            },
-            {
-                "x": "subway",
-                "y": 204
-            },
-            {
-                "x": "bus",
-                "y": 173
-            },
-            {
-                "x": "car",
-                "y": 221
-            },
-            {
-                "x": "moto",
-                "y": 194
-            },
-            {
-                "x": "bicycle",
-                "y": 273
-            },
-            {
-                "x": "horse",
-                "y": 81
-            },
-            {
-                "x": "skateboard",
-                "y": 248
-            },
-            {
-                "x": "others",
-                "y": 255
-            }
-        ]
-    }
-];
-
 const BackTest = () => {
 
     const dateNow = new Date(); // Creating a new date object with the current date and time

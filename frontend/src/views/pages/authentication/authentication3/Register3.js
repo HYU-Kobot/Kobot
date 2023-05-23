@@ -10,6 +10,8 @@ import AuthRegister from '../auth-forms/AuthRegister';
 import AuthFooter from 'ui-component/cards/AuthFooter';
 import {useContext} from "react";
 import AuthenticationContext from "../AuthenticationContext";
+import {useDispatch, useSelector} from "react-redux";
+import {LOGIN_TOGGLE, REGISTER_TOGGLE} from "../../../../store/actions";
 
 // assets
 
@@ -27,16 +29,26 @@ const Register = () => {
     const setLoginOpen = AuthenticationContextValue.setLoginOpen;
 
 
-    const registerClose = () => setRegisterOpen(false);
+    const dispatch = useDispatch();
+    const loginOpened = useSelector((state => state.customization.loginOpen));
+    const loginToggle = () => {
+        dispatch({type: LOGIN_TOGGLE, loginOpen: !loginOpened});
+    }
+    const registerOpened = useSelector((state => state.customization.registerOpen));
+    const registerToggle = () => {
+        dispatch({type: REGISTER_TOGGLE, registerOpen: !registerOpened});
+    }
+
+    const registerClose = () => registerToggle();
 
     const registerCloseAndLoginOpen = () => {
         registerClose();
-        setLoginOpen(true);
+        loginToggle();
     }
 
     return (
         <Dialog
-            open={registerOpen}
+            open={registerOpened}
             onClose={registerClose}
         >
             <AuthWrapper1>

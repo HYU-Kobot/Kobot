@@ -12,33 +12,39 @@ import Logo from 'ui-component/Logo';
 import AuthFooter from 'ui-component/cards/AuthFooter';
 import {useContext} from "react";
 import AuthenticationContext from "../AuthenticationContext";
+import {useDispatch, useSelector} from "react-redux";
+import {LOGIN_TOGGLE, REGISTER_TOGGLE} from "../../../../store/actions";
 
 // assets
 
 // ================================|| AUTH3 - LOGIN ||================================ //
 
-const Login = () => {
+const Login = ({open}) => {
     const theme = useTheme();
     const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
-    const AuthenticationContextValue = useContext(AuthenticationContext);
-    const loginOpen = AuthenticationContextValue.loginOpen;
-    const setLoginOpen = AuthenticationContextValue.setLoginOpen;
-    const registerOpen = AuthenticationContextValue.registerOpen;
-    const setRegisterOpen = AuthenticationContextValue.setRegisterOpen;
 
 
-    const loginClose = () => setLoginOpen(false);
+    const dispatch = useDispatch();
+    const loginOpened = useSelector((state => state.customization.loginOpen));
+    const loginToggle = () => {
+        dispatch({type: LOGIN_TOGGLE, loginOpen: !loginOpened});
+    }
+    const registerOpened = useSelector((state => state.customization.registerOpen));
+    const registerToggle = () => {
+        dispatch({type: REGISTER_TOGGLE, registerOpen: !registerOpened});
+    }
+    const loginClose = () => loginToggle();
 
     const loginCloseAndRegisterOpen = () => {
         loginClose();
-        setRegisterOpen(true);
+        registerToggle();
     }
 
 
     return (
         <Dialog
-            open={loginOpen}
+            open={loginOpened}
             onClose={loginClose}
         >
             <AuthWrapper1>
