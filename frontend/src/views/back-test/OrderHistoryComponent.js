@@ -24,11 +24,11 @@ const OrderHistoryComponent = ({order}) => {
                                 <Grid container alignItems="center" justifyContent="space-between">
                                     <Grid item>
                                         <Typography variant="h5" color="inherit">
-                                            {order.coin_category}
+                                            {order.market}
                                         </Typography>
                                     </Grid>
                                     <Grid item>
-                                        <Typography variant="h5" color="success.dark">
+                                        <Typography variant="h5" color="inherit">
                                             {order.amount}
                                         </Typography>
                                     </Grid>
@@ -38,12 +38,12 @@ const OrderHistoryComponent = ({order}) => {
                                 <Grid container alignItems="center" justifyContent="space-between">
                                     <Grid item>
                                         <Typography variant="h5" color="inherit">
-                                            {order.trade_date}
+                                            {order.tradeDate}
                                         </Typography>
                                     </Grid>
                                     <Grid item>
                                         <Typography variant="h5" color="success.dark">
-                                            {order.category}
+                                            \ {order.price}
                                         </Typography>
                                     </Grid>
                                 </Grid>
@@ -71,11 +71,11 @@ const OrderHistoryComponent = ({order}) => {
                                 <Grid container alignItems="center" justifyContent="space-between">
                                     <Grid item>
                                         <Typography variant="h5" color="inherit">
-                                            {order.coin_category}
+                                            {order.market}
                                         </Typography>
                                     </Grid>
                                     <Grid item>
-                                        <Typography variant="h5" color="orange.dark">
+                                        <Typography variant="h5" color="inherit">
                                             {order.amount}
                                         </Typography>
                                     </Grid>
@@ -85,12 +85,12 @@ const OrderHistoryComponent = ({order}) => {
                                 <Grid container alignItems="center" justifyContent="space-between">
                                     <Grid item>
                                         <Typography variant="h5" color="inherit">
-                                            {order.trade_date}
+                                            {order.tradeDate}
                                         </Typography>
                                     </Grid>
                                     <Grid item>
                                         <Typography variant="h5" color="orange.dark">
-                                            {order.category}
+                                            \ {order.price}
                                         </Typography>
                                     </Grid>
                                 </Grid>

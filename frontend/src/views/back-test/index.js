@@ -33,8 +33,21 @@ const BackTest = () => {
     const [timeframe, setTimeframe] = useState("D");
     const [startDate, setStartDate] = useState("2017-10-01");
     const [endDate, setEndDate] = useState(materialDateInput);
+    const [statOpen, setStatOpen] = React.useState(false);
+    const [html, setHtml] = useState("<!doctype html>\n" +
+        "<html>\n" +
+        "    <head>\n" +
+        "        <title>example 1-2</title>\n" +
+        "    </head>\n" +
+        "    <body>\n" +
+        "        <H2>백테스트를 실행해주세요</H2>\n" +
+        "    </body>\n" +
+        "</html>");
+    const [orderList, setOrderList] = useState([
+        { id: 1, tradeDate: '백테스트를 실행해주세요', market: '', category: 'BUY', amount: '' , price: '' },
+    ]);
 
-    const backTestState = {market, setMarket, pair, setPair, timeframe, setTimeframe, startDate, setStartDate, endDate, setEndDate};
+    const backTestState = {market, setMarket, pair, setPair,statOpen, setStatOpen, timeframe, setTimeframe, startDate, setStartDate, endDate, setEndDate, html, setHtml, orderList, setOrderList};
 
     return (
         <Grid container spacing={gridSpacing}>
@@ -51,10 +64,10 @@ const BackTest = () => {
                         <Grid item xs={12} md={12}>
                             <CoinChartCard chartHeight={550} market={market} pair={pair} timeframe={timeframe} />
                         </Grid>
-                        <Grid item lg={6} md={6} sm={6} xs={12}>
-                            <ProfitChartCard/>
-                        </Grid>
-                        <Grid item lg={6} md={6} sm={6} xs={12}>
+                        {/*<Grid item lg={6} md={6} sm={6} xs={12}>*/}
+                        {/*    <ProfitChartCard/>*/}
+                        {/*</Grid>*/}
+                        <Grid item lg={12} md={12} sm={12} xs={12}>
                             <OrderHistoryTableCard/>
                         </Grid>
                     </Grid>

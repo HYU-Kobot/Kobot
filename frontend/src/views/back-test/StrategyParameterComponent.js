@@ -6,6 +6,7 @@ import SubCard from "../../ui-component/cards/SubCard";
 import {useContext, useState} from "react";
 import BackTestContext from "./BackTestContext";
 import axios from "axios";
+import StatModal from "./StatModal";
 
 const StrategyParameterComponent = (strategy) => {
 
@@ -25,44 +26,29 @@ const StrategyParameterComponent = (strategy) => {
     const setStartDate = BackTestContextValue.setStartDate;
     const endDate = BackTestContextValue.endDate;
     const setEndDate = BackTestContextValue.setEndDate;
-
-    let html = "<!DOCTYPE html>\n" +
-        "<html>\n" +
-        "<body>\n" +
-        "\n" +
-        "<h1>My First Heading</h1>\n" +
-        "\n" +
-        "<p>My first paragraph.</p>\n" +
-        "\n" +
-        "</body>\n" +
-        "</html>"
+    const html = BackTestContextValue.html;
+    const setHtml = BackTestContextValue.setHtml;
+    const orderList = BackTestContextValue.orderList;
+    const setOrderList = BackTestContextValue.setOrderList;
 
     const SetBollingerParameter = () => {
-        axios.get('http://172.17.71.161:8080/api/backtest', {
+        axios.get('https://backtest.kobot.kro.kr/api/backtest', {
             params: {
-                market: pair,
-                timeFrame: timeframe,
+                market: 'KRW_BTC',
                 startDate: startDate,
                 endDate: endDate,
                 upperMovingAverage: bollinger_period_sell,
                 lowerMovingAverage: bollinger_period_buy,
                 upperK: bollinger_standardDeviation_sell,
                 lowerK: bollinger_standardDeviation_buy,
-                riskRate: bollinger_risk/100
+                riskRate: bollinger_risk/100,
+                timeFrame: 'DAY'
             }
         }).then(function (response){
             console.log(response.data)
-            html = "<!DOCTYPE html>\n" +
-                "<html>\n" +
-                "<body>\n" +
-                "\n" +
-                "<h1>My Second Heading</h1>\n" +
-                "\n" +
-                "<p>My Second paragraph.</p>\n" +
-                "\n" +
-                "</body>\n" +
-                "</html>"
-            // html = response.data;
+            console.log(html)
+            setHtml(response.data.content)
+            setOrderList(response.data.orderList)
         })
         console.log(pair, timeframe, startDate, endDate, bollinger_period_buy, bollinger_period_sell, bollinger_standardDeviation_buy, bollinger_standardDeviation_sell, bollinger_risk)
     }
@@ -188,7 +174,6 @@ const StrategyParameterComponent = (strategy) => {
                             백테스트 실행
                         </Button>
                     </Grid>
-                    <div dangerouslySetInnerHTML={{__html: html}} />
 
                 </Grid>
             )

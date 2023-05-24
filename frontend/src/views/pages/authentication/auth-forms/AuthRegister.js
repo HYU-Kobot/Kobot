@@ -35,6 +35,7 @@ import { strengthColor, strengthIndicator } from 'utils/password-strength';
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import axios from "axios";
 
 // ===========================|| FIREBASE - REGISTER ||=========================== //
 
@@ -95,7 +96,13 @@ const FirebaseRegister = ({ ...others }) => {
                 })}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
-                        console.log(values)
+                        await axios.post("https://api.kobot.kro.kr/api/auth/member", {
+                            nickname: values.nickname,
+                            username: values.email,
+                            password: values.password
+                        }).then(function (response){
+                            console.log(response.data)
+                        })
                         if (scriptedRef.current) {
                             setStatus({ success: true });
                             setSubmitting(false);
