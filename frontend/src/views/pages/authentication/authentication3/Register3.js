@@ -23,32 +23,21 @@ const Register = () => {
 
 
     const AuthenticationContextValue = useContext(AuthenticationContext);
-    const registerOpen = AuthenticationContextValue.registerOpen;
-    const setRegisterOpen = AuthenticationContextValue.setRegisterOpen;
     const loginOpen = AuthenticationContextValue.loginOpen;
     const setLoginOpen = AuthenticationContextValue.setLoginOpen;
+    const registerOpen = AuthenticationContextValue.registerOpen;
+    const setRegisterOpen = AuthenticationContextValue.setRegisterOpen;
 
-
-    const dispatch = useDispatch();
-    const loginOpened = useSelector((state => state.customization.loginOpen));
-    const loginToggle = () => {
-        dispatch({type: LOGIN_TOGGLE, loginOpen: !loginOpened});
-    }
-    const registerOpened = useSelector((state => state.customization.registerOpen));
-    const registerToggle = () => {
-        dispatch({type: REGISTER_TOGGLE, registerOpen: !registerOpened});
-    }
-
-    const registerClose = () => registerToggle();
+    const registerClose = () => setRegisterOpen(false);
 
     const registerCloseAndLoginOpen = () => {
         registerClose();
-        loginToggle();
+        setLoginOpen(true);
     }
 
     return (
         <Dialog
-            open={registerOpened}
+            open={registerOpen}
             onClose={registerClose}
         >
             <AuthWrapper1>

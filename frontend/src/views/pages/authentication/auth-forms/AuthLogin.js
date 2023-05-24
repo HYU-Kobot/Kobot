@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useContext, useState} from 'react';
 import { useSelector } from 'react-redux';
 
 // material-ui
@@ -35,19 +35,16 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import Google from 'assets/images/icons/social-google.svg';
 import axios from "axios";
+import Context from "../../../../Context";
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
 const FirebaseLogin = ({ ...others }) => {
     const theme = useTheme();
     const scriptedRef = useScriptRef();
-    const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
-    const customization = useSelector((state) => state.customization);
-    const [checked, setChecked] = useState(true);
 
-    const googleHandler = async () => {
-        console.error('Login');
-    };
+    const ContextValue = useContext(Context);
+    const setLoginState = ContextValue.setLoginState;
 
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => {
@@ -70,13 +67,13 @@ const FirebaseLogin = ({ ...others }) => {
 
             <Formik
                 initialValues={{
-                    email: 'kobot@sample.com',
-                    password: '123456',
+                    email: '',
+                    password: '',
                     submit: null
                 }}
                 validationSchema={Yup.object().shape({
-                    email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-                    password: Yup.string().max(255).required('Password is required')
+                    email: Yup.string().email('Must be a valid email').max(255).required('아이디는 필수 입력 사항입니다.'),
+                    password: Yup.string().max(255).required('비밀번호는 필수 입력 사항입니다.')
                 })}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
@@ -87,6 +84,7 @@ const FirebaseLogin = ({ ...others }) => {
                             }
                         }).then(function (response){
                             console.log(response.data)
+                            setLoginState(true)
                         })
                         if (scriptedRef.current) {
                             setStatus({ success: true });
@@ -105,7 +103,7 @@ const FirebaseLogin = ({ ...others }) => {
                 {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
                     <form noValidate onSubmit={handleSubmit} {...others}>
                         <FormControl fullWidth error={Boolean(touched.email && errors.email)} sx={{ ...theme.typography.customInput }}>
-                            <InputLabel htmlFor="outlined-adornment-email-login">Email Address / Username</InputLabel>
+                            <InputLabel htmlFor="outlined-adornment-email-login">아이디를 입력해주세요. -Email 형식</InputLabel>
                             <OutlinedInput
                                 id="outlined-adornment-email-login"
                                 type="email"
@@ -128,7 +126,7 @@ const FirebaseLogin = ({ ...others }) => {
                             error={Boolean(touched.password && errors.password)}
                             sx={{ ...theme.typography.customInput }}
                         >
-                            <InputLabel htmlFor="outlined-adornment-password-login">Password</InputLabel>
+                            <InputLabel htmlFor="outlined-adornment-password-login">비밀번호를 입력해주세요.</InputLabel>
                             <OutlinedInput
                                 id="outlined-adornment-password-login"
                                 type={showPassword ? 'text' : 'password'}

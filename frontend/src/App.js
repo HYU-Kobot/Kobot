@@ -19,10 +19,9 @@ import Context from "./Context";
 const App = () => {
     const customization = useSelector((state) => state.customization);
 
-    const [loginState, setLoginState] = useState(null);
-    const [loginOpen, setLoginOpen] = useState(false);
+    const [loginState, setLoginState] = useState(false);
 
-    const contextValue = {loginState, setLoginState, loginOpen, setLoginOpen}
+    const contextValue = {loginState, setLoginState}
 
     return (
         <Context.Provider value={contextValue}>

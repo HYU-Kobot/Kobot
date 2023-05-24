@@ -89,7 +89,7 @@ const FirebaseRegister = ({ ...others }) => {
                     submit: null
                 }}
                 validationSchema={Yup.object().shape({
-                    email: Yup.string().email('Must be a valid email').max(255).required('이메일은 필수 입력 사항입니다.'),
+                    email: Yup.string().email('Must be a valid email').max(255).required('아이디는 필수 입력 사항입니다.'),
                     password: Yup.string().max(255).required('비밀번호는 필수 입력 사항입니다.'),
                     nickname: Yup.string().required('이름은 필수 입력 사항입니다.')
                 })}
@@ -114,7 +114,7 @@ const FirebaseRegister = ({ ...others }) => {
                     <form noValidate onSubmit={handleSubmit} {...others}>
 
                         <FormControl fullWidth error={Boolean(touched.email && errors.email)} sx={{ ...theme.typography.customInput }}>
-                            <InputLabel htmlFor="outlined-adornment-email-register">Email 을 입력해주세요.</InputLabel>
+                            <InputLabel htmlFor="outlined-adornment-email-register">아이디를 입력해주세요. -Email 형식</InputLabel>
                             <OutlinedInput
                                 id="outlined-adornment-email-register"
                                 type="email"

@@ -19,32 +19,31 @@ import {LOGIN_TOGGLE, REGISTER_TOGGLE} from "../../../../store/actions";
 
 // ================================|| AUTH3 - LOGIN ||================================ //
 
-const Login = ({open}) => {
+const Login = () => {
     const theme = useTheme();
     const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
 
+    const AuthenticationContextValue = useContext(AuthenticationContext);
+    const loginOpen = AuthenticationContextValue.loginOpen;
+    const setLoginOpen = AuthenticationContextValue.setLoginOpen;
+    const registerOpen = AuthenticationContextValue.registerOpen;
+    const setRegisterOpen = AuthenticationContextValue.setRegisterOpen;
 
-    const dispatch = useDispatch();
-    const loginOpened = useSelector((state => state.customization.loginOpen));
-    const loginToggle = () => {
-        dispatch({type: LOGIN_TOGGLE, loginOpen: !loginOpened});
+
+    const loginClose = () => {
+        setLoginOpen(false);
     }
-    const registerOpened = useSelector((state => state.customization.registerOpen));
-    const registerToggle = () => {
-        dispatch({type: REGISTER_TOGGLE, registerOpen: !registerOpened});
-    }
-    const loginClose = () => loginToggle();
 
     const loginCloseAndRegisterOpen = () => {
         loginClose();
-        registerToggle();
+        setRegisterOpen(true);
     }
 
 
     return (
         <Dialog
-            open={loginOpened}
+            open={loginOpen}
             onClose={loginClose}
         >
             <AuthWrapper1>

@@ -25,22 +25,12 @@ const NavItem = ({ item, level }) => {
     const dispatch = useDispatch();
     const customization = useSelector((state) => state.customization);
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
-    // const [loginOpen, setLoginOpen] = React.useState(false);
-    // const [registerOpen, setRegisterOpen] = React.useState(false);
+    const [loginOpen, setLoginOpen] = React.useState(false);
+    const [registerOpen, setRegisterOpen] = React.useState(false);
     const [apiRegisterOpen, setApiRegisterOpen] = React.useState(false);
 
-    const loginOpened = useSelector((state => state.customization.loginOpen));
-    const loginToggle = () => {
-        dispatch({type: LOGIN_TOGGLE, loginOpen: !loginOpened});
-    }
 
-    const registerOpened = useSelector((state => state.customization.registerOpen));
-    const RegisterToggle = () => {
-        dispatch({type: REGISTER_TOGGLE, registerOpen: !registerOpened});
-    }
-    console.log(registerOpened);
-
-    const authenticationModalState = {apiRegisterOpen, setApiRegisterOpen};
+    const authenticationModalState = {loginOpen, setLoginOpen, registerOpen, setRegisterOpen, apiRegisterOpen, setApiRegisterOpen};
 
     const Icon = item.icon;
     const itemIcon = item?.icon ? (
@@ -72,10 +62,10 @@ const NavItem = ({ item, level }) => {
 
     const itemHandler = (id, modal) => {
         if(modal === 'register'){
-            RegisterToggle();
+            setRegisterOpen(true);
         }
         else if(modal === 'login'){
-            loginToggle();
+            setLoginOpen(true);
         }
         else if(modal === 'apiRegister'){
             setApiRegisterOpen(true)
@@ -139,9 +129,9 @@ const NavItem = ({ item, level }) => {
                     />
                 )}
             </ListItemButton>
-            {!loginOpened && <Login/>}
-            {!registerOpened && <Register/>}
             <AuthenticationContext.Provider value={authenticationModalState}>
+                <Login/>
+                <Register/>
                 <ApiRegister/>
             </AuthenticationContext.Provider>
         </>

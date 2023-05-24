@@ -1,151 +1,103 @@
-import {useState, useRef, useEffect, useContext} from 'react';
 
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import {
     Avatar,
-    Box,
-    Card,
-    CardContent,
     Chip,
-    ClickAwayListener,
-    Divider,
-    Grid,
-    InputAdornment,
-    List,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    OutlinedInput,
-    Paper,
-    Popper,
-    Stack,
-    Switch,
-    Typography
 } from '@mui/material';
 
-// third-party
-import PerfectScrollbar from 'react-perfect-scrollbar';
 
 // project imports
-import MainCard from 'ui-component/cards/MainCard';
-import Transitions from 'ui-component/extended/Transitions';
-import UpgradePlanCard from './UpgradePlanCard';
 import User1 from 'assets/images/users/user-round.svg';
 
 // assets
-import { IconLogout, IconSearch, IconSettings, IconUser } from '@tabler/icons';
-import Context from "../../../../Context";
+import { IconSettings } from '@tabler/icons';
 import Login from "../../../../views/pages/authentication/authentication3/Login3";
+import AuthenticationContext from "../../../../views/pages/authentication/AuthenticationContext";
+import Register from "../../../../views/pages/authentication/authentication3/Register3";
+import * as React from "react";
+import {useContext} from "react";
+import Context from "../../../../Context";
 
 // ==============================|| PROFILE MENU ||============================== //
 
 const ProfileSection = () => {
     const theme = useTheme();
-    const customization = useSelector((state) => state.customization);
-    const navigate = useNavigate();
-
-    const [sdm, setSdm] = useState(true);
-    const [value, setValue] = useState('');
-    const [notification, setNotification] = useState(false);
-    const [selectedIndex, setSelectedIndex] = useState(-1);
-    const [open, setOpen] = useState(false);
-
-
-
 
     const ContextValue = useContext(Context);
-    const loginOpen = ContextValue.loginOpen;
-    const setLoginOpen = ContextValue.setLoginOpen;
+    const loginState = ContextValue.loginState;
 
+    const [loginOpen, setLoginOpen] = React.useState(false);
+    const [registerOpen, setRegisterOpen] = React.useState(false);
 
-    /**
-     * anchorRef is used on different componets and specifying one type leads to other components throwing an error
-     * */
-    const anchorRef = useRef(null);
-    const handleLogout = async () => {
-        console.log('Logout');
-    };
+    const authenticationModalState = {loginOpen, setLoginOpen, registerOpen, setRegisterOpen};
 
-    const handleClose = (event) => {
-        if (anchorRef.current && anchorRef.current.contains(event.target)) {
-            return;
-        }
-        setOpen(false);
-    };
-
-    const handleListItemClick = (event, index, route = '') => {
-        setSelectedIndex(index);
-        handleClose(event);
-
-        if (route && route !== '') {
-            navigate(route);
-        }
-    };
     const handleToggle = () => {
-        // setOpen((prevOpen) => !prevOpen);
         setLoginOpen(true);
     };
 
-    const prevOpen = useRef(open);
-    useEffect(() => {
-        if (prevOpen.current === true && open === false) {
-            anchorRef.current.focus();
-        }
 
-        prevOpen.current = open;
-    }, [open]);
-
-    return (
-        <>
-            <Chip
-                sx={{
-                    height: '48px',
-                    alignItems: 'center',
-                    borderRadius: '27px',
-                    transition: 'all .2s ease-in-out',
-                    borderColor: theme.palette.primary.light,
-                    backgroundColor: theme.palette.primary.light,
-                    '&[aria-controls="menu-list-grow"], &:hover': {
-                        borderColor: theme.palette.primary.main,
-                        background: `${theme.palette.primary.main}!important`,
-                        color: theme.palette.primary.light,
-                        '& svg': {
-                            stroke: theme.palette.primary.light
-                        }
-                    },
-                    '& .MuiChip-label': {
-                        lineHeight: 0
-                    }
-                }}
-                icon={
-                    <Avatar
-                        src={User1}
+    const HeaderChip = (loginState) => {
+        if(loginState === false){
+            return (
+                <>
+                    <Chip
                         sx={{
-                            ...theme.typography.mediumAvatar,
-                            margin: '8px 0 8px 8px !important',
-                            cursor: 'pointer'
+                            height: '48px',
+                            alignItems: 'center',
+                            borderRadius: '27px',
+                            transition: 'all .2s ease-in-out',
+                            borderColor: theme.palette.primary.light,
+                            backgroundColor: theme.palette.primary.light,
                         }}
-                        ref={anchorRef}
-                        aria-controls={open ? 'menu-list-grow' : undefined}
-                        aria-haspopup="true"
-                        color="inherit"
+                        label={"환영합니다!"}
+                        variant="outlined"
+                        color="primary"
                     />
-                }
-                label={<IconSettings stroke={1.5} size="1.5rem" color={theme.palette.primary.main} />}
-                variant="outlined"
-                ref={anchorRef}
-                aria-controls={open ? 'menu-list-grow' : undefined}
-                aria-haspopup="true"
-                onClick={handleToggle}
-                color="primary"
-            />
-            <Login/>
+                    <AuthenticationContext.Provider value={authenticationModalState}>
+                        <Login/>
+                        <Register/>
+                    </AuthenticationContext.Provider>
+                </>
+            );
+        }
+        else{
+            return (
+                <>
+                    <Chip
+                        sx={{
+                            height: '48px',
+                            alignItems: 'center',
+                            borderRadius: '27px',
+                            transition: 'all .2s ease-in-out',
+                            borderColor: theme.palette.primary.light,
+                            backgroundColor: theme.palette.primary.light
+                        }}
+                        
+                        label={"로그인 해주세욥"}
+                        variant="outlined"
+                        onClick={handleToggle}
+                        color="error"
+                    />
+                    <AuthenticationContext.Provider value={authenticationModalState}>
+                        <Login/>
+                        <Register/>
+                    </AuthenticationContext.Provider>
+                </>
+            );
+        }
+    }
+
+    return(
+        <>
+            {HeaderChip(loginState)}
         </>
-    );
+    )
+
+
+
 };
 
 export default ProfileSection;

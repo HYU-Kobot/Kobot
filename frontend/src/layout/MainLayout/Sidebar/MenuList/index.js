@@ -17,7 +17,7 @@ const MenuList = () => {
 
     let loginItemList = [];
 
-    if(loginState === null){ // log out
+    if(loginState === false){ // log out
         loginItemList = menuItem.items.slice(0,4);
 
     }

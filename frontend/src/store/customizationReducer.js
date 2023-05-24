@@ -9,8 +9,6 @@ export const initialState = {
     fontFamily: config.fontFamily,
     borderRadius: config.borderRadius,
     opened: true,
-    loginOpen: false,
-    registerOpen: false
 };
 
 // ==============================|| CUSTOMIZATION REDUCER ||============================== //
@@ -28,16 +26,6 @@ const customizationReducer = (state = initialState, action) => {
             return {
                 ...state,
                 opened: action.opened
-            };
-        case actionTypes.LOGIN_TOGGLE:
-            return {
-                ...state,
-                loginOpen: action.loginOpen
-            };
-        case actionTypes.REGISTER_TOGGLE:
-            return {
-                ...state,
-                registerOpen: action.registerOpen
             };
         case actionTypes.SET_FONT_FAMILY:
             return {
