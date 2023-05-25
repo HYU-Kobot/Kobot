@@ -40,7 +40,7 @@ const ProfileSection = () => {
 
 
     const HeaderChip = (loginState) => {
-        if(loginState === false){
+        if(loginState === true){
             return (
                 <>
                     <Chip
