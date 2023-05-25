@@ -12,6 +12,8 @@ import Logo from 'ui-component/Logo';
 import AuthFooter from 'ui-component/cards/AuthFooter';
 import {useContext} from "react";
 import AuthenticationContext from "../AuthenticationContext";
+import {useDispatch, useSelector} from "react-redux";
+import {LOGIN_TOGGLE, REGISTER_TOGGLE} from "../../../../store/actions";
 
 // assets
 
@@ -21,6 +23,7 @@ const Login = () => {
     const theme = useTheme();
     const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
+
     const AuthenticationContextValue = useContext(AuthenticationContext);
     const loginOpen = AuthenticationContextValue.loginOpen;
     const setLoginOpen = AuthenticationContextValue.setLoginOpen;
@@ -28,7 +31,9 @@ const Login = () => {
     const setRegisterOpen = AuthenticationContextValue.setRegisterOpen;
 
 
-    const loginClose = () => setLoginOpen(false);
+    const loginClose = () => {
+        setLoginOpen(false);
+    }
 
     const loginCloseAndRegisterOpen = () => {
         loginClose();

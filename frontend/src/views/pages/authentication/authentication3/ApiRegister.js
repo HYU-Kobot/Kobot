@@ -42,6 +42,9 @@ const ApiRegister = () => {
                                         <Grid item sx={{ mb: 3 }}>
                                             <Typography variant={"h1"}>KOBOT</Typography>
                                         </Grid>
+                                        <Grid item sx={{ mb: 3 }}>
+                                            <Typography variant={"h4"}>13.209.2.199로 아이피를 입력하고 등록해주세요.</Typography>
+                                        </Grid>
 
                                         <Grid item xs={12}>
                                             <AuthApiRegister />

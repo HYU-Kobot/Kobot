@@ -8,7 +8,7 @@ import { useTheme } from '@mui/material/styles';
 import { Avatar, Chip, ListItemButton, ListItemIcon, ListItemText, Typography, useMediaQuery } from '@mui/material';
 
 // project imports
-import { MENU_OPEN, SET_MENU } from 'store/actions';
+import {LOGIN_TOGGLE, MENU_OPEN, REGISTER_TOGGLE, SET_MENU} from 'store/actions';
 import AuthenticationContext from "../../../../../views/pages/authentication/AuthenticationContext";
 
 // assets
@@ -64,10 +64,10 @@ const NavItem = ({ item, level }) => {
         if(modal === 'register'){
             setRegisterOpen(true);
         }
-        if(modal === 'login'){
+        else if(modal === 'login'){
             setLoginOpen(true);
         }
-        if(modal === 'apiRegister'){
+        else if(modal === 'apiRegister'){
             setApiRegisterOpen(true)
         }
 
@@ -131,11 +131,7 @@ const NavItem = ({ item, level }) => {
             </ListItemButton>
             <AuthenticationContext.Provider value={authenticationModalState}>
                 <Login/>
-            </AuthenticationContext.Provider>
-            <AuthenticationContext.Provider value={authenticationModalState}>
                 <Register/>
-            </AuthenticationContext.Provider>
-            <AuthenticationContext.Provider value={authenticationModalState}>
                 <ApiRegister/>
             </AuthenticationContext.Provider>
         </>

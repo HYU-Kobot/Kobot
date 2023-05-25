@@ -11,70 +11,43 @@ import OrderHistoryTableCard from "./OrderHistoryTableCard";
 import {useState} from "react";
 import BackTestContext from "./BackTestContext";
 
-let plotData = [
-    {
-        "id": "japan",
-        "color": "hsl(139, 70%, 50%)",
-        "data": [
-            {
-                "x": "plane",
-                "y": 66
-            },
-            {
-                "x": "helicopter",
-                "y": 26
-            },
-            {
-                "x": "boat",
-                "y": 164
-            },
-            {
-                "x": "train",
-                "y": 273
-            },
-            {
-                "x": "subway",
-                "y": 204
-            },
-            {
-                "x": "bus",
-                "y": 173
-            },
-            {
-                "x": "car",
-                "y": 221
-            },
-            {
-                "x": "moto",
-                "y": 194
-            },
-            {
-                "x": "bicycle",
-                "y": 273
-            },
-            {
-                "x": "horse",
-                "y": 81
-            },
-            {
-                "x": "skateboard",
-                "y": 248
-            },
-            {
-                "x": "others",
-                "y": 255
-            }
-        ]
-    }
-];
-
 const BackTest = () => {
+
+    const dateNow = new Date(); // Creating a new date object with the current date and time
+    const year = dateNow.getFullYear(); // Getting current year from the created Date object
+    const monthWithOffset = dateNow.getMonth() + 1; // January is 0 by default in JS. Offsetting +1 to fix date for calendar.
+    const month = // Setting current Month number from current Date object
+        monthWithOffset.toString().length < 2 // Checking if month is < 10 and pre-prending 0 to adjust for date input.
+            ? `0${monthWithOffset}`
+            : monthWithOffset;
+    const date =
+        dateNow.getUTCDate().toString().length < 2 // Checking if date is < 10 and pre-prending 0 if not to adjust for date input.
+            ? `0${dateNow.getDate()}`
+            : dateNow.getDate();
+
+    const materialDateInput = `${year}-${month}-${date}`; // combining to format for defaultValue or value attribute of material <TextField>
+
 
     const [market, setMarket] = useState("UPBIT");
     const [pair, setPair] = useState("BTCKRW");
     const [timeframe, setTimeframe] = useState("D");
+    const [startDate, setStartDate] = useState("2017-10-01");
+    const [endDate, setEndDate] = useState(materialDateInput);
+    const [statOpen, setStatOpen] = React.useState(false);
+    const [html, setHtml] = useState("<!doctype html>\n" +
+        "<html>\n" +
+        "    <head>\n" +
+        "        <title>example 1-2</title>\n" +
+        "    </head>\n" +
+        "    <body>\n" +
+        "        <H2>백테스트를 실행해주세요</H2>\n" +
+        "    </body>\n" +
+        "</html>");
+    const [orderList, setOrderList] = useState([
+        { id: 1, tradeDate: '백테스트를 실행해주세요', market: '', category: 'BUY', amount: '' , price: '' },
+    ]);
 
-    const backTestState = {market, setMarket, pair, setPair, timeframe, setTimeframe};
+    const backTestState = {market, setMarket, pair, setPair,statOpen, setStatOpen, timeframe, setTimeframe, startDate, setStartDate, endDate, setEndDate, html, setHtml, orderList, setOrderList};
 
     return (
         <Grid container spacing={gridSpacing}>
@@ -91,10 +64,10 @@ const BackTest = () => {
                         <Grid item xs={12} md={12}>
                             <CoinChartCard chartHeight={550} market={market} pair={pair} timeframe={timeframe} />
                         </Grid>
-                        <Grid item lg={6} md={6} sm={6} xs={12}>
-                            <ProfitChartCard/>
-                        </Grid>
-                        <Grid item lg={6} md={6} sm={6} xs={12}>
+                        {/*<Grid item lg={6} md={6} sm={6} xs={12}>*/}
+                        {/*    <ProfitChartCard/>*/}
+                        {/*</Grid>*/}
+                        <Grid item lg={12} md={12} sm={12} xs={12}>
                             <OrderHistoryTableCard/>
                         </Grid>
                     </Grid>

@@ -8,7 +8,7 @@ const icons = {
 
 // ==============================|| EXTRA PAGES MENU ITEMS ||============================== //
 
-const authentication = {
+const loggedInAuthentication = {
     id: 'authentication',
     title: 'Authentication',
     type: 'group',
@@ -21,24 +21,16 @@ const authentication = {
 
             children: [
                 {
-                    id: 'login3',
-                    title: '로그인',
+                    id: 'api_register',
+                    title: 'API 등록',
                     type: 'item',
-                    url: '/authentication/login/login3',
+                    url: '/authentication/login/apiRegister',
                     target: true,
-                    modal: 'login'
-                },
-                {
-                    id: 'register3',
-                    title: '회원가입',
-                    type: 'item',
-                    url: '/authentication/register/register3',
-                    target: true,
-                    modal: 'register'
+                    modal: 'apiRegister'
                 }
             ]
         }
     ]
 };
 
-export default authentication;
+export default loggedInAuthentication;

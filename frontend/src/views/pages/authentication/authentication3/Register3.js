@@ -10,6 +10,8 @@ import AuthRegister from '../auth-forms/AuthRegister';
 import AuthFooter from 'ui-component/cards/AuthFooter';
 import {useContext} from "react";
 import AuthenticationContext from "../AuthenticationContext";
+import {useDispatch, useSelector} from "react-redux";
+import {LOGIN_TOGGLE, REGISTER_TOGGLE} from "../../../../store/actions";
 
 // assets
 
@@ -21,11 +23,10 @@ const Register = () => {
 
 
     const AuthenticationContextValue = useContext(AuthenticationContext);
-    const registerOpen = AuthenticationContextValue.registerOpen;
-    const setRegisterOpen = AuthenticationContextValue.setRegisterOpen;
     const loginOpen = AuthenticationContextValue.loginOpen;
     const setLoginOpen = AuthenticationContextValue.setLoginOpen;
-
+    const registerOpen = AuthenticationContextValue.registerOpen;
+    const setRegisterOpen = AuthenticationContextValue.setRegisterOpen;
 
     const registerClose = () => setRegisterOpen(false);
 
