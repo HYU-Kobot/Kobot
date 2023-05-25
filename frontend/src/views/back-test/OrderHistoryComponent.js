@@ -38,7 +38,7 @@ const OrderHistoryComponent = ({order}) => {
                                 <Grid container alignItems="center" justifyContent="space-between">
                                     <Grid item>
                                         <Typography variant="h5" color="inherit">
-                                            {order.tradeDate}
+                                            {order.trade_date}
                                         </Typography>
                                     </Grid>
                                     <Grid item>
@@ -85,7 +85,7 @@ const OrderHistoryComponent = ({order}) => {
                                 <Grid container alignItems="center" justifyContent="space-between">
                                     <Grid item>
                                         <Typography variant="h5" color="inherit">
-                                            {order.tradeDate}
+                                            {order.trade_date}
                                         </Typography>
                                     </Grid>
                                     <Grid item>

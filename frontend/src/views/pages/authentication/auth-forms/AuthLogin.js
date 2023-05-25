@@ -77,11 +77,9 @@ const FirebaseLogin = ({ ...others }) => {
                 })}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
-                        axios.get('https://api.kobot.kro.kr/api/auth/member', {
-                            params: {
-                                username: values.email,
-                                password: values.password
-                            }
+                        axios.post('https://api.kobot.kro.kr/api/auth/member', {
+                            username: values.email,
+                            password: values.password
                         }).then(function (response){
                             console.log(response.data)
                             setLoginState(true)

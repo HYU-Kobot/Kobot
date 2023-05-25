@@ -35,7 +35,7 @@ const Index = () => {
                     <Grid item xs={12} sm={3} align={'center'}>
                         <Grid>
                             <MuiTypography variant="h5" gutterBottom>
-                                Total Net Copy Amount
+                                예수금
                             </MuiTypography>
                         </Grid>
                         <Grid>
@@ -47,7 +47,7 @@ const Index = () => {
                     <Grid item xs={12} sm={3} align={'center'}>
                         <Grid>
                             <MuiTypography variant="h5" gutterBottom>
-                                Total Portfolio Margin Balance
+                                매수금액
                             </MuiTypography>
                         </Grid>
                         <Grid>
@@ -59,7 +59,7 @@ const Index = () => {
                     <Grid item xs={12} sm={3} align={'center'}>
                         <Grid>
                             <MuiTypography variant="h5" gutterBottom>
-                                Total Realized PNL
+                                평가금액
                             </MuiTypography>
                         </Grid>
                         <Grid>
@@ -71,7 +71,7 @@ const Index = () => {
                     <Grid item xs={12} sm={3} align={'center'}>
                         <Grid>
                             <MuiTypography variant="h5" gutterBottom>
-                                Net Profit
+                                순이익
                             </MuiTypography>
                         </Grid>
                         <Grid>

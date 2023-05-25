@@ -12,9 +12,9 @@ const StrategyParameterComponent = (strategy) => {
 
     const [bollinger_period_buy, setBollinger_period_buy] = useState(50);
     const [bollinger_period_sell, setBollinger_period_sell] = useState(50);
-    const [bollinger_standardDeviation_buy, setBollinger_standardDeviation_buy] = useState(0.1);
-    const [bollinger_standardDeviation_sell, setBollinger_standardDeviation_sell] = useState(0.1);
-    const [bollinger_risk, setBollinger_risk] = useState(2);
+    const [bollinger_standardDeviation_buy, setBollinger_standardDeviation_buy] = useState(0.2);
+    const [bollinger_standardDeviation_sell, setBollinger_standardDeviation_sell] = useState(0.2);
+    const [bollinger_risk, setBollinger_risk] = useState(10);
 
 
     const BackTestContextValue = useContext(BackTestContext);
@@ -30,8 +30,15 @@ const StrategyParameterComponent = (strategy) => {
     const setHtml = BackTestContextValue.setHtml;
     const orderList = BackTestContextValue.orderList;
     const setOrderList = BackTestContextValue.setOrderList;
+    const statOpen = BackTestContextValue.statOpen;
+    const setStatOpen = BackTestContextValue.setStatOpen;
+    const backTestLoading = BackTestContextValue.backTestLoading;
+    const setBackTestLoading = BackTestContextValue.setBackTestLoading;
+
+    console.log(backTestLoading)
 
     const SetBollingerParameter = () => {
+        setBackTestLoading(true);
         axios.get('https://backtest.kobot.kro.kr/api/backtest', {
             params: {
                 market: 'KRW_BTC',
@@ -45,10 +52,12 @@ const StrategyParameterComponent = (strategy) => {
                 timeFrame: 'DAY'
             }
         }).then(function (response){
+            setBackTestLoading(false);
             console.log(response.data)
             console.log(html)
             setHtml(response.data.content)
             setOrderList(response.data.orderList)
+            setStatOpen(true)
         })
         console.log(pair, timeframe, startDate, endDate, bollinger_period_buy, bollinger_period_sell, bollinger_standardDeviation_buy, bollinger_standardDeviation_sell, bollinger_risk)
     }

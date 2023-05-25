@@ -96,7 +96,7 @@ const FirebaseRegister = ({ ...others }) => {
                 })}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
-                        await axios.post("https://api.kobot.kro.kr/api/auth/member", {
+                        await axios.post("https://api.kobot.kro.kr/api/auth", {
                             nickname: values.nickname,
                             username: values.email,
                             password: values.password
