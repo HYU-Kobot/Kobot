@@ -15,6 +15,7 @@ import com.hyu.kobot.ui.dto.BotRequest;
 import com.hyu.kobot.ui.dto.ParameterRequest;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +42,7 @@ public class BotService {
         TradingKey tradingKey = tradingKeyRepository.findByMember(member)
                 .orElseThrow(() -> new IllegalArgumentException("트레이딩 키를 등록해주세요."));
 
+        // price가 tradingKey로 보유하고 있는 자산보다 적은지 확인
         upbitClient.lookup(tradingKey);
 
         List<String> NameOfParams = getNameOfParams(botRequest);
@@ -68,22 +70,17 @@ public class BotService {
                 .collect(Collectors.toList());
     }
 
-//    public List<Bot> getAll(AppMember appMember) {
-//        List<Bot> allBotInfo = botRepository.findAll();
-//        return allBotInfo;
-//    }
-//
-//    public void delete(AppMember appMember, Long botId) {
-//        Member member = memberRepository.findById(appMember.getPayload())
-//                .orElseThrow(() -> new EntityNotFoundException("DB에서 유저네임을 조회할 수 없습니다."));
-//
-//        Bot bot = botRepository.findById(botId)
-//                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 botId입니다"));
-//
-//        if (!bot.getMember().equals(member)) {
-//            throw new IllegalArgumentException("bot의 주인과 요청을 넣은 member가 일치하지 않습니다.");
-//        }
-//
-//        botRepository.deleteById(botId);
-//    }
+    public void delete(AppMember appMember, Long botId) {
+        Member member = memberRepository.findById(appMember.getPayload())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
+
+        Bot bot = botRepository.findById(botId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 봇입니다."));
+
+        if (!bot.isOwner(member)) {
+            throw new IllegalArgumentException("봇과 봇생성자가 일치하지 않습니다.");
+        }
+
+        botRepository.deleteById(botId);
+    }
 }

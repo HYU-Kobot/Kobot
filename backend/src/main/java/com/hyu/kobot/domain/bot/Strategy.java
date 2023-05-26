@@ -8,7 +8,6 @@ public enum Strategy {
     BOLLINGER_BAND("bollingerband", List.of("upperMovingAverage", "lowerMovingAverage", "upperK", "lowerK")),
     ;
 
-
     private String name;
     private List<String> params;
 

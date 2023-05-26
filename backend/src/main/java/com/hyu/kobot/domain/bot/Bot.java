@@ -35,7 +35,7 @@ public class Bot {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @JoinColumn(name = "strategy")
+    @Column(name = "strategy", nullable = false)
     @Enumerated(value = EnumType.STRING)
     private Strategy strategy;
 
@@ -55,5 +55,9 @@ public class Bot {
                 strategy,
                 balance
         );
+    }
+
+    public boolean isOwner(Member member) {
+        return this.member == member;
     }
 }

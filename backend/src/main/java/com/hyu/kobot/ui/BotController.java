@@ -29,16 +29,10 @@ public class BotController {
         return ResponseEntity.ok().build();
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<Bot>> getAll(@AuthenticationPrinciple AppMember appMember) {
-//        List<Bot> body = botService.getAll(appMember);
-//        return ResponseEntity.ok().body(body);
-//    }
-//
-//    @DeleteMapping("/{botId}")
-//    public ResponseEntity<Void> delete(@AuthenticationPrinciple AppMember appMember,
-//                                       @PathVariable Long botId) {
-//        botService.delete(appMember, botId);
-//        return ResponseEntity.ok().build();
-//    }
+    @DeleteMapping("/{botId}")
+    public ResponseEntity<Void> delete(@AuthenticationPrinciple AppMember appMember,
+                                       @PathVariable Long botId) {
+        botService.delete(appMember, botId);
+        return ResponseEntity.ok().build();
+    }
 }

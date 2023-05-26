@@ -24,10 +24,10 @@ public class Parameter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "value")
+    @Column(name = "value", nullable = false)
     private BigDecimal value;
 
     @ManyToOne(fetch = FetchType.LAZY)
