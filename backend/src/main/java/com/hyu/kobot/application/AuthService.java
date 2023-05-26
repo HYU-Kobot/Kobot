@@ -30,8 +30,7 @@ public class AuthService {
             throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
         }
         Member member = new Member(signUpRequest.getNickname(), signUpRequest.getUsername(),
-                signUpRequest.getPassword(),
-                encryptor);
+                signUpRequest.getPassword(), encryptor);
         memberRepository.save(member);
     }
 

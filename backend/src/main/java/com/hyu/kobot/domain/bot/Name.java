@@ -1,18 +1,18 @@
 package com.hyu.kobot.domain.bot;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
-public class BotName {
-    @Column(name = "nickname", nullable = false)
+public class Name {
+
+    @Column(name = "name", nullable = false)
     private String value;
 
-    public BotName(String value) {
+    public Name(String value) {
         validateNull(value);
         validateLength(value);
         this.value = value;
@@ -20,14 +20,14 @@ public class BotName {
 
     private void validateNull(String value) {
         if (value == null) {
-            throw new IllegalArgumentException("봇이름은 null일 수 없습니다.");
+            throw new IllegalArgumentException("봇 이름은 null일 수 없습니다.");
         }
     }
 
     private void validateLength(String value) {
         String trimmedValue = value.trim();
         if (trimmedValue.length() > 20 || trimmedValue.length() == 0) {
-            throw new IllegalArgumentException("봇이름의 길이는 0자 초과 20자 이하이어야합니다.");
+            throw new IllegalArgumentException("봇 이름의 길이는 0자 초과 20자 이하이어야합니다.");
         }
     }
 }

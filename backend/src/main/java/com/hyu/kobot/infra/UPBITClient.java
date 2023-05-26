@@ -47,7 +47,7 @@ public class UPBITClient {
 
         HttpEntity<Void> entity = new HttpEntity<>(header);
         ResponseEntity<List<AccountResponse>> response = restTemplate.exchange(UPBIT_URL, HttpMethod.GET, entity,
-                new ParameterizedTypeReference<List<AccountResponse>>() {
+                new ParameterizedTypeReference<>() {
                 });
 
         if (response.getStatusCode().equals(HttpStatus.BAD_REQUEST)) {

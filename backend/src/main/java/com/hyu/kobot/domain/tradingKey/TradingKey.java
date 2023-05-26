@@ -63,8 +63,4 @@ public class TradingKey {
                 other
         );
     }
-
-    public String getMarket() {
-        return market.name();
-    }
 }

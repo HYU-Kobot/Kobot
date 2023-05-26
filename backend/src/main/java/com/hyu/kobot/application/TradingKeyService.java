@@ -41,7 +41,6 @@ public class TradingKeyService {
         );
 
         upbitClient.lookup(tradingKey);
-
         tradingKeyRepository.save(tradingKey);
     }
 }
