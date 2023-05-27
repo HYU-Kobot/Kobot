@@ -13,6 +13,8 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -30,8 +32,9 @@ public class Parameter {
     @Column(name = "value", nullable = false)
     private BigDecimal value;
 
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bot_id")
+    @JoinColumn(name = "bot_id", nullable = false)
     private Bot bot;
 
     public Parameter(

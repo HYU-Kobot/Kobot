@@ -8,8 +8,6 @@ import com.hyu.kobot.repository.MemberRepository;
 import com.hyu.kobot.repository.TradingKeyRepository;
 import com.hyu.kobot.ui.dto.AppMember;
 import com.hyu.kobot.ui.dto.TradingKeyRequest;
-import java.util.HashMap;
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

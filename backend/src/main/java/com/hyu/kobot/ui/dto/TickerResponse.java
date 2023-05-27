@@ -1,6 +1,6 @@
 package com.hyu.kobot.ui.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -14,72 +14,72 @@ public class TickerResponse {
 
     private String market;
 
-    @JsonFormat(pattern = "trade_date")
+    @JsonProperty(value = "trade_date")
     private String tradeDate;
 
-    @JsonFormat(pattern = "trade_time")
+    @JsonProperty(value = "trade_time")
     private String tradeTime;
 
-    @JsonFormat(pattern = "trade_time_kst")
+    @JsonProperty(value = "trade_time_kst")
     private String tradeTimeKST;
 
-    @JsonFormat(pattern = "trade_timestamp")
-    private BigDecimal tradeTimeStamp;
+    @JsonProperty(value = "trade_timestamp")
+    private Long tradeTimeStamp;
 
-    @JsonFormat(pattern = "opening_price")
+    @JsonProperty(value = "opening_price")
     private BigDecimal openingPrice;
 
-    @JsonFormat(pattern = "high_price")
+    @JsonProperty(value = "high_price")
     private BigDecimal highPrice;
 
-    @JsonFormat(pattern = "low_price")
+    @JsonProperty(value = "low_price")
     private BigDecimal lowPrice;
 
-    @JsonFormat(pattern = "trade_price")
+    @JsonProperty(value = "trade_price")
     private BigDecimal tradePrice;
 
-    @JsonFormat(pattern = "prev_closing_price")
+    @JsonProperty(value = "prev_closing_price")
     private BigDecimal prevClosingPrice;
 
     private String change;
 
-    @JsonFormat(pattern = "change_price")
+    @JsonProperty(value = "change_price")
     private BigDecimal changePrice;
 
-    @JsonFormat(pattern = "change_rate")
+    @JsonProperty(value = "change_rate")
     private BigDecimal changeRate;
 
-    @JsonFormat(pattern = "signed_change_price")
+    @JsonProperty(value = "signed_change_price")
     private BigDecimal signedChangePrice;
 
-    @JsonFormat(pattern = "signed_change_rate")
+    @JsonProperty(value = "signed_change_rate")
     private BigDecimal signedChangeRate;
 
-    @JsonFormat(pattern = "trade_volume")
+    @JsonProperty(value = "trade_volume")
     private BigDecimal tradeVolume;
 
-    @JsonFormat(pattern = "acc_trade_price")
+    @JsonProperty(value = "acc_trade_price")
     private BigDecimal accTradePrice;
 
-    @JsonFormat(pattern = "acc_trade_price_24h")
+    @JsonProperty(value = "acc_trade_price_24h")
     private BigDecimal accTradePrice24h;
 
-    @JsonFormat(pattern = "acc_trade_volume")
+    @JsonProperty(value = "acc_trade_volume")
     private BigDecimal accTradeVolume;
 
-    @JsonFormat(pattern = "acc_trade_volume_24h")
+    @JsonProperty(value = "acc_trade_volume_24h")
     private BigDecimal accTradeVolume24h;
 
-    @JsonFormat(pattern = "highest_52_week_price")
+    @JsonProperty(value = "highest_52_week_price")
     private BigDecimal highest52WeekPrice;
 
-    @JsonFormat(pattern = "highest_52_week_date")
+    @JsonProperty(value = "highest_52_week_date")
     private String highest52WeekDate;
 
-    @JsonFormat(pattern = "lowest_52_week_price")
+    @JsonProperty(value = "lowest_52_week_price")
     private BigDecimal lowest52WeekPrice;
 
-    @JsonFormat(pattern = "lowest_52_week_date")
+    @JsonProperty(value = "lowest_52_week_date")
     private String lowest52WeekDate;
 
     private BigDecimal timeStamp;

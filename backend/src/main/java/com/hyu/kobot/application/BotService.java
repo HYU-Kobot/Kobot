@@ -21,6 +21,7 @@ import com.hyu.kobot.ui.dto.BotResponse;
 import com.hyu.kobot.ui.dto.BotsResponse;
 import com.hyu.kobot.ui.dto.OrderHistoryResponse;
 import com.hyu.kobot.ui.dto.ParameterRequest;
+import com.hyu.kobot.ui.dto.TickerResponse;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -101,14 +102,15 @@ public class BotService {
             List<OrderHistory> orderHistoryList = orderHistoryRepository.findByBot(bot);
             OrderHistories orderHistories = new OrderHistories(orderHistoryList);
             BigDecimal netProfit = orderHistories.calculateNetProfit(); // 순이익
-            BigDecimal nowTradePrice = upbitClient.getTicker(Market.KRW_BTC).getTradePrice();
+            TickerResponse ticker = upbitClient.getTicker(Market.KRW_BTC);
+            BigDecimal nowTradePrice = ticker.getTradePrice();
             BigDecimal marketValue = orderHistories.calculateCoinCount()
                     .multiply(nowTradePrice); // 미실현 수익 -> 현재 보유 코인 * 지금 현재 코인 가격
             BigDecimal total = bot.getBalance().add(netProfit); // 굴러간돈 -> 넣은돈 + 순이익
-            purchaseAmountSum.add(bot.getBalance());
-            netProfitSum.add(netProfit);
-            marketValueSum.add(marketValue);
-            totalSum.add(total);
+            purchaseAmountSum = purchaseAmountSum.add(bot.getBalance());
+            netProfitSum = netProfitSum.add(netProfit);
+            marketValueSum = marketValueSum.add(marketValue);
+            totalSum = totalSum.add(total);
             BotResponse botResponse = new BotResponse(
                     bot.getId(),
                     bot.getBalance(),

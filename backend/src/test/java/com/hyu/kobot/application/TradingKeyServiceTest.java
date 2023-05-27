@@ -2,13 +2,9 @@ package com.hyu.kobot.application;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import com.hyu.kobot.domain.candle.Market;
 import com.hyu.kobot.domain.member.Member;
-import com.hyu.kobot.domain.tradingKey.TradingKey;
-import com.hyu.kobot.infra.JwtTokenProvider;
 import com.hyu.kobot.infra.UPBITClient;
 import com.hyu.kobot.repository.MemberRepository;
-import com.hyu.kobot.repository.TradingKeyRepository;
 import com.hyu.kobot.ui.dto.LoginMember;
 import com.hyu.kobot.ui.dto.TradingKeyRequest;
 import com.hyu.kobot.util.Encryptor;

@@ -33,13 +33,14 @@ public class UPBITClient {
 
 
     public TickerResponse getTicker(Market market) {
-        ResponseEntity<TickerResponse> response = restTemplate.exchange(
+        ResponseEntity<List<TickerResponse>> response = restTemplate.exchange(
                 "https://api.upbit.com/v1/ticker?markets=KRW-BTC",
                 HttpMethod.GET,
                 new HttpEntity<>(new HttpHeaders()),
-                TickerResponse.class
+                new ParameterizedTypeReference<>() {
+                }
         );
-        return response.getBody();
+        return response.getBody().get(0);
     }
 
     public AccountResponse getAccount(TradingKey tradingKey) {
