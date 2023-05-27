@@ -2,7 +2,11 @@ package com.hyu.kobot.application;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import com.hyu.kobot.domain.candle.Market;
 import com.hyu.kobot.domain.member.Member;
+import com.hyu.kobot.domain.tradingKey.TradingKey;
+import com.hyu.kobot.infra.JwtTokenProvider;
+import com.hyu.kobot.infra.UPBITClient;
 import com.hyu.kobot.repository.MemberRepository;
 import com.hyu.kobot.repository.TradingKeyRepository;
 import com.hyu.kobot.ui.dto.LoginMember;
@@ -22,6 +26,9 @@ class TradingKeyServiceTest {
 
     @Autowired
     private MemberRepository memberRepository;
+
+    @Autowired
+    private UPBITClient upbitClient;
 
     @Test
     void 존재하지_않는_회원이면_예외가_발생한다() {

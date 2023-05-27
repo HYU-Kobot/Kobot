@@ -14,6 +14,7 @@ import com.hyu.kobot.repository.MemberRepository;
 import com.hyu.kobot.repository.OrderHistoryRepository;
 import com.hyu.kobot.repository.ParameterRepository;
 import com.hyu.kobot.repository.TradingKeyRepository;
+import com.hyu.kobot.ui.dto.AccountResponse;
 import com.hyu.kobot.ui.dto.AppMember;
 import com.hyu.kobot.ui.dto.BotRequest;
 import com.hyu.kobot.ui.dto.BotResponse;
@@ -52,16 +53,20 @@ public class BotService {
         TradingKey tradingKey = tradingKeyRepository.findByMember(member)
                 .orElseThrow(() -> new IllegalArgumentException("트레이딩 키를 등록해주세요."));
 
-        // price가 tradingKey로 보유하고 있는 자산보다 적은지 확인
-        upbitClient.lookup(tradingKey);
+        AccountResponse account = upbitClient.getAccount(tradingKey);
+        if (account.getBalance().compareTo(botRequest.getPrice()) < 0) {
+            throw new IllegalArgumentException("돈이 부족합니다.");
+        }
 
         List<String> NameOfParams = getNameOfParams(botRequest);
         Strategy strategy = Strategy.from(botRequest.getStrategy(), NameOfParams);
+        Market market = Market.of(botRequest.getMarket());
         Bot savedBot = botRepository.save(
                 new Bot(
                         botRequest.getName(),
                         member,
                         strategy,
+                        market,
                         botRequest.getPrice()
                 ));
         List<Parameter> params = getParams(botRequest, savedBot);
@@ -87,6 +92,11 @@ public class BotService {
 
         List<Bot> bots = botRepository.findAllByMember(member);
         List<BotResponse> botResponses = new ArrayList<>();
+        BigDecimal purchaseAmountSum = BigDecimal.ZERO;
+        BigDecimal netProfitSum = BigDecimal.ZERO;
+        BigDecimal marketValueSum = BigDecimal.ZERO;
+        BigDecimal totalSum = BigDecimal.ZERO;
+
         for (Bot bot : bots) {
             List<OrderHistory> orderHistoryList = orderHistoryRepository.findByBot(bot);
             OrderHistories orderHistories = new OrderHistories(orderHistoryList);
@@ -95,6 +105,10 @@ public class BotService {
             BigDecimal marketValue = orderHistories.calculateCoinCount()
                     .multiply(nowTradePrice); // 미실현 수익 -> 현재 보유 코인 * 지금 현재 코인 가격
             BigDecimal total = bot.getBalance().add(netProfit); // 굴러간돈 -> 넣은돈 + 순이익
+            purchaseAmountSum.add(bot.getBalance());
+            netProfitSum.add(netProfit);
+            marketValueSum.add(marketValue);
+            totalSum.add(total);
             BotResponse botResponse = new BotResponse(
                     bot.getId(),
                     bot.getBalance(),
@@ -105,7 +119,11 @@ public class BotService {
             );
             botResponses.add(botResponse);
         }
-        return new BotsResponse(botResponses);
+        TradingKey tradingKey = tradingKeyRepository.findByMember(member)
+                .orElseThrow(() -> new IllegalArgumentException("트레이딩 키를 등록해주세요."));
+        AccountResponse account = upbitClient.getAccount(tradingKey);
+        return new BotsResponse(account.getBalance(), purchaseAmountSum, netProfitSum, marketValueSum, totalSum,
+                botResponses);
     }
 
     public List<OrderHistoryResponse> getOrderHistoryResponse(List<OrderHistory> orderHistories) {

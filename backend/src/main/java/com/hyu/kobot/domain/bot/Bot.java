@@ -1,5 +1,6 @@
 package com.hyu.kobot.domain.bot;
 
+import com.hyu.kobot.domain.candle.Market;
 import com.hyu.kobot.domain.member.Member;
 import java.math.BigDecimal;
 import javax.persistence.Column;
@@ -39,6 +40,10 @@ public class Bot {
     @Enumerated(value = EnumType.STRING)
     private Strategy strategy;
 
+    @Column(name = "market", nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private Market market;
+
     @Column(name = "balance", nullable = false, precision = 30, scale = 10)
     private BigDecimal balance;
 
@@ -46,6 +51,7 @@ public class Bot {
             String name,
             Member member,
             Strategy strategy,
+            Market market,
             BigDecimal balance
     ) {
         this(
@@ -53,6 +59,7 @@ public class Bot {
                 new Name(name),
                 member,
                 strategy,
+                market,
                 balance
         );
     }

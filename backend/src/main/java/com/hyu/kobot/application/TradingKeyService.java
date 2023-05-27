@@ -43,7 +43,7 @@ public class TradingKeyService {
                 tradingKeyRequest.getOther()
         );
 
-        upbitClient.lookup(tradingKey);
+        upbitClient.getAccount(tradingKey);
         tradingKeyRepository.save(tradingKey);
     }
 }

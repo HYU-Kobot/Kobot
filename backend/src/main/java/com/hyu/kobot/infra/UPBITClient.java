@@ -13,7 +13,6 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,30 +31,6 @@ public class UPBITClient {
         this.restTemplate = restTemplate;
     }
 
-    public void lookup(TradingKey tradingKey) {
-        TokenProvider tradingKeyToken = new JwtTokenProvider(
-                tradingKey.getSecretKey(), 1800000);
-
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("access_key", tradingKey.getAccessKey());
-
-        String token = tradingKeyToken.createToken(claims);
-
-        HttpHeaders header = new HttpHeaders();
-        header.setBearerAuth(token);
-
-        HttpEntity<Void> entity = new HttpEntity<>(header);
-        ResponseEntity<List<AccountResponse>> response = restTemplate.exchange(UPBIT_URL, HttpMethod.GET, entity,
-                new ParameterizedTypeReference<>() {
-                });
-
-        if (response.getStatusCode().equals(HttpStatus.BAD_REQUEST)) {
-            throw new IllegalStateException("존재하지 않는 키입니다.");
-        }
-        if (response.getStatusCode().equals(HttpStatus.UNAUTHORIZED)) {
-            throw new IllegalStateException("허용된 IP가 아닙니다.");
-        }
-    }
 
     public TickerResponse getTicker(Market market) {
         ResponseEntity<TickerResponse> response = restTemplate.exchange(
@@ -65,5 +40,33 @@ public class UPBITClient {
                 TickerResponse.class
         );
         return response.getBody();
+    }
+
+    public AccountResponse getAccount(TradingKey tradingKey) {
+        String token = createToken(tradingKey);
+
+        HttpHeaders header = new HttpHeaders();
+        header.setBearerAuth(token);
+
+        HttpEntity<Void> entity = new HttpEntity<>(header);
+        ResponseEntity<List<AccountResponse>> response = restTemplate.exchange(
+                UPBIT_URL,
+                HttpMethod.GET,
+                entity,
+                new ParameterizedTypeReference<>() {
+                }
+        );
+        return response.getBody().get(0);
+    }
+
+    private String createToken(TradingKey tradingKey) {
+        TokenProvider tradingKeyToken = new JwtTokenProvider(
+                tradingKey.getSecretKey(), 1800000);
+
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("access_key", tradingKey.getAccessKey());
+
+        String token = tradingKeyToken.createToken(claims);
+        return token;
     }
 }
