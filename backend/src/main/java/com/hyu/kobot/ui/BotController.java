@@ -1,10 +1,9 @@
 package com.hyu.kobot.ui;
 
 import com.hyu.kobot.application.BotService;
-import com.hyu.kobot.domain.bot.Bot;
 import com.hyu.kobot.ui.dto.AppMember;
 import com.hyu.kobot.ui.dto.BotRequest;
-import java.util.List;
+import com.hyu.kobot.ui.dto.BotsResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,10 +28,16 @@ public class BotController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping
+    public ResponseEntity<BotsResponse> getAll(@AuthenticationPrinciple AppMember appMember) {
+        botService.getAll(appMember);
+        return ResponseEntity.ok().build();
+    }
+
     @DeleteMapping("/{botId}")
     public ResponseEntity<Void> delete(@AuthenticationPrinciple AppMember appMember,
                                        @PathVariable Long botId) {
         botService.delete(appMember, botId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

@@ -3,19 +3,27 @@ package com.hyu.kobot.application;
 import com.hyu.kobot.domain.bot.Bot;
 import com.hyu.kobot.domain.bot.Parameter;
 import com.hyu.kobot.domain.bot.Strategy;
+import com.hyu.kobot.domain.candle.Market;
 import com.hyu.kobot.domain.member.Member;
+import com.hyu.kobot.domain.order.OrderHistories;
+import com.hyu.kobot.domain.order.OrderHistory;
 import com.hyu.kobot.domain.tradingKey.TradingKey;
 import com.hyu.kobot.infra.UPBITClient;
 import com.hyu.kobot.repository.BotRepository;
 import com.hyu.kobot.repository.MemberRepository;
+import com.hyu.kobot.repository.OrderHistoryRepository;
 import com.hyu.kobot.repository.ParameterRepository;
 import com.hyu.kobot.repository.TradingKeyRepository;
 import com.hyu.kobot.ui.dto.AppMember;
 import com.hyu.kobot.ui.dto.BotRequest;
+import com.hyu.kobot.ui.dto.BotResponse;
+import com.hyu.kobot.ui.dto.BotsResponse;
+import com.hyu.kobot.ui.dto.OrderHistoryResponse;
 import com.hyu.kobot.ui.dto.ParameterRequest;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +40,8 @@ public class BotService {
     private final ParameterRepository parameterRepository;
 
     private final TradingKeyRepository tradingKeyRepository;
+
+    private final OrderHistoryRepository orderHistoryRepository;
 
     private final UPBITClient upbitClient;
 
@@ -67,6 +77,40 @@ public class BotService {
     private List<Parameter> getParams(BotRequest botRequest, Bot savedBot) {
         return botRequest.getParameters().stream()
                 .map(it -> new Parameter(it.getName(), it.getValue(), savedBot))
+                .collect(Collectors.toList());
+    }
+
+    public BotsResponse getAll(AppMember appMember) {
+        Member member = memberRepository.findById(appMember.getPayload())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
+
+        List<Bot> bots = botRepository.findAllByMember(member);
+        List<BotResponse> botResponses = new ArrayList<>();
+        for (Bot bot : bots) {
+            List<OrderHistory> orderHistoryList = orderHistoryRepository.findByBot(bot);
+            OrderHistories orderHistories = new OrderHistories(orderHistoryList);
+            BigDecimal netProfit = orderHistories.calculateNetProfit(); // 순이익
+            BigDecimal nowTradePrice = upbitClient.getTicker(Market.KRW_BTC).getTradePrice();
+            BigDecimal marketValue = orderHistories.calculateCoinCount()
+                    .multiply(nowTradePrice); // 미실현 수익 -> 현재 보유 코인 * 지금 현재 코인 가격
+            BigDecimal total = bot.getBalance().add(netProfit); // 굴러간돈 -> 넣은돈 + 순이익
+            BotResponse botResponse = new BotResponse(
+                    bot.getId(),
+                    bot.getBalance(),
+                    netProfit,
+                    marketValue,
+                    total,
+                    getOrderHistoryResponse(orderHistoryList)
+            );
+            botResponses.add(botResponse);
+        }
+        return new BotsResponse(botResponses);
+    }
+
+    public List<OrderHistoryResponse> getOrderHistoryResponse(List<OrderHistory> orderHistories) {
+        return orderHistories.stream()
+                .map(it -> new OrderHistoryResponse(it.getCategory().getValue(), it.getMarket().getValue(),
+                        it.getAmount(), it.getTradeDate(), it.getPrice()))
                 .collect(Collectors.toList());
     }
 

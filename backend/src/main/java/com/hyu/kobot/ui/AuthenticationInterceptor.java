@@ -49,7 +49,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
     private void validateAccessToken(String accessToken) {
         if (!jwtTokenProvider.validateToken(accessToken)) {
-            throw new IllegalArgumentException("유효하지 않습니다. 로그인 해주세요.");
+            throw new IllegalArgumentException("notValidToken");
         }
     }
 }

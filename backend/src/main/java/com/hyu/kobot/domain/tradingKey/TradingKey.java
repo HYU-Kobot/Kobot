@@ -1,5 +1,6 @@
 package com.hyu.kobot.domain.tradingKey;
 
+import com.hyu.kobot.domain.candle.Exchange;
 import com.hyu.kobot.domain.candle.Market;
 import com.hyu.kobot.domain.member.Member;
 import javax.persistence.Column;
@@ -28,9 +29,9 @@ public class TradingKey {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "market", nullable = false)
+    @Column(name = "exchange", nullable = false)
     @Enumerated(value = EnumType.STRING)
-    private Market market;
+    private Exchange exchange;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -48,7 +49,7 @@ public class TradingKey {
     private String other;
 
     public TradingKey(
-            String market,
+            String exchange,
             Member member,
             String accessKey,
             String secretKey,
@@ -56,7 +57,7 @@ public class TradingKey {
     ) {
         this(
                 null,
-                Market.of(market),
+                Exchange.of(exchange),
                 member,
                 accessKey,
                 secretKey,

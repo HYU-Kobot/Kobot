@@ -1,8 +1,10 @@
 package com.hyu.kobot.infra;
 
 import com.hyu.kobot.config.RestTemplateConfig;
+import com.hyu.kobot.domain.candle.Market;
 import com.hyu.kobot.domain.tradingKey.TradingKey;
 import com.hyu.kobot.ui.dto.AccountResponse;
+import com.hyu.kobot.ui.dto.TickerResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,5 +58,15 @@ public class UPBITClient {
         if (response.getStatusCode().equals(HttpStatus.UNAUTHORIZED)) {
             throw new IllegalStateException("허용된 IP가 아닙니다.");
         }
+    }
+
+    public TickerResponse getTicker(Market market) {
+        ResponseEntity<TickerResponse> response = restTemplate.exchange(
+                "https://api.upbit.com/v1/ticker?markets=KRW-BTC",
+                HttpMethod.GET,
+                new HttpEntity<>(new HttpHeaders()),
+                TickerResponse.class
+        );
+        return response.getBody();
     }
 }
