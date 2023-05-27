@@ -80,6 +80,7 @@ public class BotService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public BotsResponse getAll(AppMember appMember) {
         Member member = memberRepository.findById(appMember.getPayload())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));

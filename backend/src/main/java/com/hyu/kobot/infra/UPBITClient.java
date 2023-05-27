@@ -1,5 +1,6 @@
 package com.hyu.kobot.infra;
 
+import com.hyu.kobot.application.TokenProvider;
 import com.hyu.kobot.domain.candle.Market;
 import com.hyu.kobot.domain.tradingKey.TradingKey;
 import com.hyu.kobot.ui.dto.AccountResponse;
@@ -32,8 +33,8 @@ public class UPBITClient {
     }
 
     public void lookup(TradingKey tradingKey) {
-        TradingKeyJwtTokenProvider tradingKeyToken = new TradingKeyJwtTokenProvider(
-                tradingKey.getSecretKey());
+        TokenProvider tradingKeyToken = new JwtTokenProvider(
+                tradingKey.getSecretKey(), 1800000);
 
         Map<String, Object> claims = new HashMap<>();
         claims.put("access_key", tradingKey.getAccessKey());

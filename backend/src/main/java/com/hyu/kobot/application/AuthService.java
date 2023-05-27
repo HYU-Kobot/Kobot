@@ -34,6 +34,7 @@ public class AuthService {
         memberRepository.save(member);
     }
 
+    @Transactional(readOnly = true)
     public AccessTokenResponse login(SignInRequest signInRequest) {
         Member member = memberRepository.findByUsername(new Username(signInRequest.getUsername()))
                 .orElseThrow(() -> new IllegalStateException("아이디를 확인해주세요."));
