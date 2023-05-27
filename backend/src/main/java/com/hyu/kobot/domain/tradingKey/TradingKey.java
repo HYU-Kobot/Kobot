@@ -1,7 +1,6 @@
 package com.hyu.kobot.domain.tradingKey;
 
 import com.hyu.kobot.domain.candle.Exchange;
-import com.hyu.kobot.domain.candle.Market;
 import com.hyu.kobot.domain.member.Member;
 import javax.persistence.Column;
 import javax.persistence.Convert;

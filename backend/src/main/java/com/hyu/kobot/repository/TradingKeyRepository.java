@@ -1,7 +1,6 @@
 package com.hyu.kobot.repository;
 
 import com.hyu.kobot.domain.candle.Exchange;
-import com.hyu.kobot.domain.candle.Market;
 import com.hyu.kobot.domain.member.Member;
 import com.hyu.kobot.domain.tradingKey.TradingKey;
 import java.util.Optional;

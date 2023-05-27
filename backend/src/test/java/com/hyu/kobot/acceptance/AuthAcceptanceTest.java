@@ -22,7 +22,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
                 .when()
                 .post("/api/auth")
                 .then().log().all()
-                .statusCode(HttpStatus.OK.value());
+                .statusCode(HttpStatus.CREATED.value());
     }
 
     @Test
@@ -34,7 +34,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
                 .when()
                 .post("/api/auth")
                 .then().log().all()
-                .statusCode(HttpStatus.OK.value());
+                .statusCode(HttpStatus.CREATED.value());
 
         AccessTokenResponse accessTokenResponse = RestAssured
                 .given().log().all()
@@ -59,7 +59,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
                 .when()
                 .post("/api/auth")
                 .then().log().all()
-                .statusCode(HttpStatus.OK.value());
+                .statusCode(HttpStatus.CREATED.value());
 
         ErrorMessageResponse response = RestAssured
                 .given().log().all()
@@ -84,7 +84,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
                 .when()
                 .post("/api/auth")
                 .then().log().all()
-                .statusCode(HttpStatus.OK.value());
+                .statusCode(HttpStatus.CREATED.value());
 
         ErrorMessageResponse response = RestAssured
                 .given().log().all()

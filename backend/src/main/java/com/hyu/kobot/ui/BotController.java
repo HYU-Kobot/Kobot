@@ -5,6 +5,7 @@ import com.hyu.kobot.ui.dto.AppMember;
 import com.hyu.kobot.ui.dto.BotRequest;
 import com.hyu.kobot.ui.dto.BotsResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,13 +26,12 @@ public class BotController {
     public ResponseEntity<Void> create(@AuthenticationPrinciple AppMember appMember,
                                        @RequestBody BotRequest botRequest) {
         botService.create(appMember, botRequest);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping
     public ResponseEntity<BotsResponse> getAll(@AuthenticationPrinciple AppMember appMember) {
-        botService.getAll(appMember);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(botService.getAll(appMember));
     }
 
     @DeleteMapping("/{botId}")

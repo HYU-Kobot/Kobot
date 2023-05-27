@@ -1,6 +1,5 @@
 package com.hyu.kobot.infra;
 
-import com.hyu.kobot.config.RestTemplateConfig;
 import com.hyu.kobot.domain.candle.Market;
 import com.hyu.kobot.domain.tradingKey.TradingKey;
 import com.hyu.kobot.ui.dto.AccountResponse;
@@ -27,12 +26,9 @@ public class UPBITClient {
 
     private final RestTemplate restTemplate;
 
-    private final RestTemplateConfig upbitConfig;
-
     @Autowired
-    public UPBITClient(RestTemplate restTemplate, RestTemplateConfig upbitConfig) {
+    public UPBITClient(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
-        this.upbitConfig = upbitConfig;
     }
 
     public void lookup(TradingKey tradingKey) {
