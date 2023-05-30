@@ -11,7 +11,7 @@ import themes from 'themes';
 
 // project imports
 import NavigationScroll from 'layout/NavigationScroll';
-import {useState} from "react";
+import {useState, Component, useEffect} from "react";
 import Context from "./Context";
 
 // ==============================|| APP ||============================== //
@@ -22,6 +22,15 @@ const App = () => {
     const [loginState, setLoginState] = useState(false);
 
     const contextValue = {loginState, setLoginState}
+
+    useEffect(() => {
+        if(localStorage.getItem('loginToken') === null){
+            setLoginState(false)
+        }
+        else{
+            setLoginState(true)
+        }
+    })
 
     return (
         <Context.Provider value={contextValue}>

@@ -1,4 +1,15 @@
-import {Avatar, Button, Card, Divider, Grid, TextField, Typography} from "@mui/material";
+import {
+    Avatar, Box,
+    Button,
+    Card,
+    Divider,
+    FormControl, FormHelperText,
+    Grid, IconButton, InputAdornment,
+    InputLabel,
+    OutlinedInput,
+    TextField,
+    Typography
+} from "@mui/material";
 import PlayCircleOutlineRoundedIcon from '@mui/icons-material/PlayCircleOutlineRounded';
 
 import * as React from "react";
@@ -7,14 +18,23 @@ import {useContext, useState} from "react";
 import BackTestContext from "./BackTestContext";
 import axios from "axios";
 import StatModal from "./StatModal";
+import * as Yup from "yup";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import AnimateButton from "../../ui-component/extended/AnimateButton";
+import {Formik} from "formik";
+import useScriptRef from "../../hooks/useScriptRef";
+import {useTheme} from "@mui/material/styles";
 
-const StrategyParameterComponent = (strategy) => {
+const StrategyParameterComponent = ({strategy}) => {
+    const theme = useTheme();
+    const scriptedRef = useScriptRef();
 
-    const [bollinger_period_buy, setBollinger_period_buy] = useState(50);
-    const [bollinger_period_sell, setBollinger_period_sell] = useState(50);
-    const [bollinger_standardDeviation_buy, setBollinger_standardDeviation_buy] = useState(0.2);
-    const [bollinger_standardDeviation_sell, setBollinger_standardDeviation_sell] = useState(0.2);
-    const [bollinger_risk, setBollinger_risk] = useState(10);
+    // const [lowerMovingAverage, setLowerMovingAverage] = useState(50);
+    // const [upperMovingAverage, setUpperMovingAverage] = useState(50);
+    // const [upperK, setUpperK] = useState(0.2);
+    // const [lowerK, setLowerK] = useState(0.2);
+    // const [riskRate, setRiskRate] = useState(10);
 
 
     const BackTestContextValue = useContext(BackTestContext);
@@ -37,153 +57,239 @@ const StrategyParameterComponent = (strategy) => {
 
     console.log(backTestLoading)
 
-    const SetBollingerParameter = () => {
-        setBackTestLoading(true);
-        axios.get('https://backtest.kobot.kro.kr/api/backtest', {
-            params: {
-                market: 'KRW_BTC',
-                startDate: startDate,
-                endDate: endDate,
-                upperMovingAverage: bollinger_period_sell,
-                lowerMovingAverage: bollinger_period_buy,
-                upperK: bollinger_standardDeviation_sell,
-                lowerK: bollinger_standardDeviation_buy,
-                riskRate: bollinger_risk/100,
-                timeFrame: 'DAY'
-            }
-        }).then(function (response){
-            setBackTestLoading(false);
-            console.log(response.data)
-            console.log(html)
-            setHtml(response.data.content)
-            setOrderList(response.data.orderList)
-            setStatOpen(true)
-        })
-        console.log(pair, timeframe, startDate, endDate, bollinger_period_buy, bollinger_period_sell, bollinger_standardDeviation_buy, bollinger_standardDeviation_sell, bollinger_risk)
-    }
 
-    const SetAIParameter = () => {
-        console.log(pair, timeframe, startDate, endDate, bollinger_period_buy, bollinger_period_sell, bollinger_standardDeviation_buy, bollinger_standardDeviation_sell, bollinger_risk)
-    }
-
-    switch (strategy.strategy){
+    switch (strategy){
         case "볼린저밴드":
             return(
                 <Grid xs={12} sm={12}>
                     <Divider sx={{ my: 1.5 }} />
 
-                    <SubCard title={"매수 기준"} secondary={"볼린저밴드 상단"} style={{backgroundColor:"rgba(0,200,83,0.2)"}}>
-                        <Grid xs={12} sm={12} container>
-                            <Grid xs={4.5} sm={4.5}>
-                                <Typography marginTop={"30px"}>이동평균선 기간</Typography>
-                            </Grid>
-                            <Grid xs={7.5} sm={7.5}>
-                                <TextField
-                                    style={{textAlign:"right"}}
-                                    value={bollinger_period_buy}
-                                    fullWidth
-                                    type={"number"}
-                                    inputProps={{style:{textAlign:"right"}}}
-                                    margin={"normal"}
-                                    onChange={(e)=>{setBollinger_period_buy(e.target.value)}}
-                                />
-                            </Grid>
-                        </Grid>
+                    <Formik
+                        initialValues={{
+                            lowerMovingAverage: 50,
+                            upperMovingAverage: 50,
+                            lowerK: 0.2,
+                            upperK : 0.2,
+                            riskRate: 10,
+                        }}
+                        validationSchema={Yup.object().shape({
+                            lowerMovingAverage: Yup.number().min(2,'이동평균선 기간은 2 에서 300 사이의 수입니다.').max(300,'이동평균선 기간은 2 에서 300 사이의 수입니다.').required('필수 입력 사항입니다.'),
+                            upperMovingAverage: Yup.number().min(2,'이동평균선 기간은 2 에서 300 사이의 수입니다.').max(300,'이동평균선 기간은 2 에서 300 사이의 수입니다.').required('필수 입력 사항입니다.'),
+                            lowerK: Yup.number().min(0,'표준편차승수는 0 에서 3 사이의 수입니다.').max(3,'표준편차승수는 0 에서 3 사이의 수입니다.').required('필수 입력 사항입니다.'),
+                            upperK: Yup.number().min(0,'표준편차승수는 0 에서 3 사이의 수입니다.').max(3,'표준편차승수는 0 에서 3 사이의 수입니다.').required('필수 입력 사항입니다.'),
+                            riskRate: Yup.number().min(0,'거래당 최대 손실은 0 에서 50 사이의 수입니다.').max(50,'거래당 최대 손실은 0 에서 50 사이의 수입니다.').required('필수 입력 사항입니다.'),
+                        })}
+                        onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+                            try {
+                                setBackTestLoading(true);
+                                axios.get('https://backtest.kobot.kro.kr/api/backtest', {
+                                    params: {
+                                        market: 'KRW_BTC',
+                                        startDate: startDate,
+                                        endDate: endDate,
+                                        upperMovingAverage: values.upperMovingAverage,
+                                        lowerMovingAverage: values.lowerMovingAverage,
+                                        upperK: values.lowerK,
+                                        lowerK: values.upperK,
+                                        riskRate: values.riskRate/100,
+                                        timeFrame: 'DAY'
+                                    }
+                                }).catch(function (err){
+                                    console.log(err.response.data.message);
+                                    alert(err.response.data.message);
+                                }).then(function (response){
+                                    setBackTestLoading(false);
+                                    setHtml(response.data.content)
+                                    setOrderList(response.data.orderList)
+                                    setStatOpen(true)
+                                })
+                                console.log(pair, timeframe, startDate, endDate, values.lowerMovingAverage, values.upperMovingAverage, values.upperK, values.lowerK, values.riskRate)
+                                if (scriptedRef.current) {
+                                    setStatus({ success: true });
+                                    setSubmitting(false);
+                                }
+                            } catch (err) {
+                                console.error(err);
+                                if (scriptedRef.current) {
+                                    setStatus({ success: false });
+                                    setErrors({ submit: err.message });
+                                    setSubmitting(false);
+                                }
+                            }
+                        }}
+                    >
+                        {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
+                            <form noValidate onSubmit={handleSubmit}>
 
-                        <Grid xs={12} sm={12} container>
-                            <Grid xs={4.5} sm={4.5}>
-                                <Typography marginTop={"30px"}>표준 편차 승수</Typography>
-                            </Grid>
-                            <Grid xs={7.5} sm={7.5}>
-                                <TextField
-                                    value={bollinger_standardDeviation_buy}
-                                    fullWidth
-                                    type={"number"}
-                                    inputProps={{step:0.1, style:{textAlign:"right"}}}
-                                    margin={"normal"}
-                                    onChange={(e)=>{setBollinger_standardDeviation_buy(e.target.value)}}
-                                />
-                            </Grid>
-                        </Grid>
-                    </SubCard>
+                                <SubCard title={"매수 기준"} secondary={"볼린저밴드 하단"} style={{backgroundColor:"rgba(0,200,83,0.2)"}}>
+                                    <Grid xs={12} sm={12} container>
+                                        <Grid xs={4.5} sm={4.5}>
+                                            <Typography marginTop={"30px"}>이동평균선 기간</Typography>
+                                        </Grid>
+                                        <Grid xs={7.5} sm={7.5}>
+                                            <FormControl fullWidth error={Boolean(touched.lowerMovingAverage && errors.lowerMovingAverage)} sx={{ ...theme.typography.customInput }}>
+                                                <InputLabel>백테스트 기간의 20% 안쪽으로 설정해주세요</InputLabel>
+                                                <OutlinedInput
+                                                    id="outlined-adornment-lowerMovingAverage-login"
+                                                    type="lowerMovingAverage"
+                                                    value={values.lowerMovingAverage}
+                                                    name="lowerMovingAverage"
+                                                    onBlur={handleBlur}
+                                                    onChange={handleChange}
+                                                    label="Email Address / Username"
+                                                    inputProps={{style:{textAlign:"right"}}}
+                                                />
+                                                {touched.lowerMovingAverage && errors.lowerMovingAverage && (
+                                                    <FormHelperText error id="standard-weight-helper-text-lowerMovingAverage-login">
+                                                        {errors.lowerMovingAverage}
+                                                    </FormHelperText>
+                                                )}
+                                            </FormControl>
+                                        </Grid>
+                                    </Grid>
 
-                    <Grid xs={12} sm={12}>
-                        <br/>
-                    </Grid>
+                                    <Grid xs={12} sm={12} container>
+                                        <Grid xs={4.5} sm={4.5}>
+                                            <Typography marginTop={"30px"}>표준 편차 승수</Typography>
+                                        </Grid>
+                                        <Grid xs={7.5} sm={7.5}>
+                                            <FormControl fullWidth error={Boolean(touched.lowerK && errors.lowerK)} sx={{ ...theme.typography.customInput }}>
+                                                <InputLabel>0 에서 1을 권장합니다</InputLabel>
+                                                <OutlinedInput
+                                                    id="outlined-adornment-lowerK-login"
+                                                    type="lowerK"
+                                                    value={values.lowerK}
+                                                    name="lowerK"
+                                                    onBlur={handleBlur}
+                                                    onChange={handleChange}
+                                                    label="Email Address / Username"
+                                                    inputProps={{style:{textAlign:"right"}}}
+                                                />
+                                                {touched.lowerK && errors.lowerK && (
+                                                    <FormHelperText error id="standard-weight-helper-text-lowerK-login">
+                                                        {errors.lowerK}
+                                                    </FormHelperText>
+                                                )}
+                                            </FormControl>
+                                        </Grid>
+                                    </Grid>
+                                </SubCard>
 
-                    <SubCard title={"매도 기준"} secondary={"볼린저밴드 중단"} style={{backgroundColor:"rgba(216,67,21,0.2)"}}>
-                        <Grid xs={12} sm={12} container>
-                            <Grid xs={4.5} sm={4.5}>
-                                <Typography marginTop={"30px"}>이동평균선 기간</Typography>
-                            </Grid>
-                            <Grid xs={7.5} sm={7.5}>
-                                <TextField
-                                    style={{textAlign:"right"}}
-                                    value={bollinger_period_sell}
-                                    fullWidth
-                                    inputProps={{style:{textAlign:"right"}}}
-                                    type={"number"}
-                                    margin={"normal"}
-                                    onChange={(e)=>{setBollinger_period_sell(e.target.value)}}
-                                />
-                            </Grid>
-                        </Grid>
+                                <Grid xs={12} sm={12}>
+                                    <br/>
+                                </Grid>
+
+                                <SubCard title={"매도 기준"} secondary={"볼린저밴드 상단"} style={{backgroundColor:"rgba(216,67,21,0.2)"}}>
+                                    <Grid xs={12} sm={12} container>
+                                        <Grid xs={4.5} sm={4.5}>
+                                            <Typography marginTop={"30px"}>이동평균선 기간</Typography>
+                                        </Grid>
+                                        <Grid xs={7.5} sm={7.5}>
+                                            <FormControl fullWidth error={Boolean(touched.upperMovingAverage && errors.upperMovingAverage)} sx={{ ...theme.typography.customInput }}>
+                                                <InputLabel>백테스트 기간의 20% 안쪽으로 설정해주세요</InputLabel>
+                                                <OutlinedInput
+                                                    id="outlined-adornment-upperMovingAverage-login"
+                                                    type="upperMovingAverage"
+                                                    value={values.upperMovingAverage}
+                                                    name="upperMovingAverage"
+                                                    onBlur={handleBlur}
+                                                    onChange={handleChange}
+                                                    label="Email Address / Username"
+                                                    inputProps={{style:{textAlign:"right"}}}
+                                                />
+                                                {touched.upperMovingAverage && errors.upperMovingAverage && (
+                                                    <FormHelperText error id="standard-weight-helper-text-upperMovingAverage-login">
+                                                        {errors.upperMovingAverage}
+                                                    </FormHelperText>
+                                                )}
+                                            </FormControl>
+                                        </Grid>
+                                    </Grid>
 
 
-                        <Grid xs={12} sm={12} container>
-                            <Grid xs={4.5} sm={4.5}>
-                                <Typography marginTop={"30px"}>표준 편차 승수</Typography>
-                            </Grid>
-                            <Grid xs={7.5} sm={7.5}>
-                                <TextField
-                                    value={bollinger_standardDeviation_sell}
-                                    fullWidth
-                                    type={"number"}
-                                    inputProps={{step:0.1, style:{textAlign:"right"}}}
-                                    margin={"normal"}
-                                    onChange={(e)=>{setBollinger_standardDeviation_sell(e.target.value)}}
-                                />
-                            </Grid>
-                        </Grid>
-                    </SubCard>
+                                    <Grid xs={12} sm={12} container>
+                                        <Grid xs={4.5} sm={4.5}>
+                                            <Typography marginTop={"30px"}>표준 편차 승수</Typography>
+                                        </Grid>
+                                        <Grid xs={7.5} sm={7.5}>
+                                            <FormControl fullWidth error={Boolean(touched.upperK && errors.upperK)} sx={{ ...theme.typography.customInput }}>
+                                                <InputLabel>0 에서 1을 권장합니다</InputLabel>
+                                                <OutlinedInput
+                                                    id="outlined-adornment-upperK-login"
+                                                    type="upperK"
+                                                    value={values.upperK}
+                                                    name="upperK"
+                                                    onBlur={handleBlur}
+                                                    onChange={handleChange}
+                                                    label="Email Address / Username"
+                                                    inputProps={{style:{textAlign:"right"}}}
+                                                />
+                                                {touched.upperK && errors.upperK && (
+                                                    <FormHelperText error id="standard-weight-helper-text-upperK-login">
+                                                        {errors.upperK}
+                                                    </FormHelperText>
+                                                )}
+                                            </FormControl>
+                                        </Grid>
+                                    </Grid>
+                                </SubCard>
 
+                                <Grid xs={12} sm={12}>
+                                    <br/>
+                                </Grid>
 
-                    <Grid xs={12} sm={12}>
-                        <br/>
-                    </Grid>
+                                <SubCard title={"리스크 비율"} style={{backgroundColor:"rgba(32,47,73,0.2)"}}>
+                                    <Grid xs={12} sm={12} container>
+                                        <Grid xs={6} sm={6}>
+                                            <Typography marginTop={"30px"}>거래당 최대 손실 (%)</Typography>
+                                        </Grid>
+                                        <Grid xs={6} sm={6}>
+                                            <FormControl fullWidth error={Boolean(touched.riskRate && errors.riskRate)} sx={{ ...theme.typography.customInput }}>
+                                                <InputLabel>5 이상일 경우 레버리지를 사용해야 합니다.</InputLabel>
+                                                <OutlinedInput
+                                                    id="outlined-adornment-riskRate-login"
+                                                    type="riskRate"
+                                                    value={values.riskRate}
+                                                    name="riskRate"
+                                                    onBlur={handleBlur}
+                                                    onChange={handleChange}
+                                                    label="Email Address / Username"
+                                                    inputProps={{style:{textAlign:"right"}}}
+                                                />
+                                                {touched.riskRate && errors.riskRate && (
+                                                    <FormHelperText error id="standard-weight-helper-text-riskRate-login">
+                                                        {errors.riskRate}
+                                                    </FormHelperText>
+                                                )}
+                                            </FormControl>
+                                        </Grid>
+                                    </Grid>
+                                </SubCard>
 
-                    <SubCard title={"리스크 비율"} style={{backgroundColor:"rgba(32,47,73,0.2)"}}>
-                        <Grid xs={12} sm={12} container>
-                            <Grid xs={6} sm={6}>
-                                <Typography marginTop={"30px"}>거래당 최대 손실 (%)</Typography>
-                            </Grid>
-                            <Grid xs={6} sm={6}>
-                                <TextField
-                                    value={bollinger_risk}
-                                    fullWidth
-                                    type={"number"}
-                                    inputProps={{step:0.1, style:{textAlign:"right"}}}
-                                    margin={"normal"}
-                                    onChange={(e)=>{setBollinger_risk(e.target.value)}}
-                                />
-                            </Grid>
-                        </Grid>
-                    </SubCard>
+                                <Grid xs={12} sm={12}>
+                                    <br/>
+                                </Grid>
 
-                    <Grid xs={12} sm={12}>
-                        <br/>
-                    </Grid>
-
-                    <Grid xs={12} sm={12}>
-                        <Button
-                            fullWidth variant={"contained"} style={{fontSize:"30px", backgroundColor:"rgba(0,150,80,0.8)"}}
-                            startIcon={<PlayCircleOutlineRoundedIcon style={{fontSize:"30px"}}/>}
-                            onClick={SetBollingerParameter}
-                        >
-                            백테스트 실행
-                        </Button>
-                    </Grid>
-
+                                {errors.submit && (
+                                    <Box sx={{ mt: 3 }}>
+                                        <FormHelperText error>{errors.submit}</FormHelperText>
+                                    </Box>
+                                )}
+                                <Box sx={{ mt: 2 }}>
+                                    <AnimateButton>
+                                        <Button
+                                            fullWidth variant={"contained"} style={{fontSize:"30px", backgroundColor:"rgba(0,150,80,0.8)"}}
+                                            startIcon={<PlayCircleOutlineRoundedIcon style={{fontSize:"30px"}}/>}
+                                            disableElevation type={"submit"}
+                                            disabled={isSubmitting}
+                                        >
+                                            백테스트 실행
+                                        </Button>
+                                    </AnimateButton>
+                                </Box>
+                            </form>
+                        )}
+                    </Formik>
                 </Grid>
             )
 
@@ -192,37 +298,102 @@ const StrategyParameterComponent = (strategy) => {
                 <Grid xs={12} sm={12}>
                     <Divider sx={{ my: 1.5 }} />
 
-                    <SubCard title={"리스크 비율"} style={{backgroundColor:"rgba(32,47,73,0.2)"}}>
-                        <Grid xs={12} sm={12} container>
-                            <Grid xs={6} sm={6}>
-                                <Typography marginTop={"30px"}>거래당 최대 손실 (%)</Typography>
-                            </Grid>
-                            <Grid xs={6} sm={6}>
-                                <TextField
-                                    value={bollinger_risk}
-                                    fullWidth
-                                    type={"number"}
-                                    inputProps={{step:0.1, style:{textAlign:"right"}}}
-                                    margin={"normal"}
-                                    onChange={(e)=>{setBollinger_risk(e.target.value)}}
-                                />
-                            </Grid>
-                        </Grid>
-                    </SubCard>
+                    <Formik
+                        initialValues={{
+                            riskRate: 10,
+                        }}
+                        validationSchema={Yup.object().shape({
+                            riskRate: Yup.number().min(0,'거래당 최대 손실은 0 에서 50 사이의 수입니다.').max(50,'거래당 최대 손실은 0 에서 50 사이의 수입니다.').required('필수 입력 사항입니다.'),
+                        })}
+                        onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+                            try {
+                                setBackTestLoading(true);
+                                axios.get('https://backtest.kobot.kro.kr/api/backtest', {
+                                    params: {
+                                        market: 'KRW_BTC',
+                                        startDate: startDate,
+                                        endDate: endDate,
+                                        riskRate: values.riskRate/100,
+                                        timeFrame: 'DAY'
+                                    }
+                                }).catch(function (err){
+                                    console.log(err.response.data.message);
+                                    alert(err.response.data.message);
+                                }).then(function (response){
+                                    setBackTestLoading(false);
+                                    setHtml(response.data.content)
+                                    setOrderList(response.data.orderList)
+                                    setStatOpen(true)
+                                })
+                                if (scriptedRef.current) {
+                                    setStatus({ success: true });
+                                    setSubmitting(false);
+                                }
+                            } catch (err) {
+                                console.error(err);
+                                if (scriptedRef.current) {
+                                    setStatus({ success: false });
+                                    setErrors({ submit: err.message });
+                                    setSubmitting(false);
+                                }
+                            }
+                        }}
+                    >
+                        {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
+                            <form noValidate onSubmit={handleSubmit}>
 
-                    <Grid xs={12} sm={12}>
-                        <br/>
-                    </Grid>
+                                <SubCard title={"리스크 비율"} style={{backgroundColor:"rgba(32,47,73,0.2)"}}>
+                                    <Grid xs={12} sm={12} container>
+                                        <Grid xs={6} sm={6}>
+                                            <Typography marginTop={"30px"}>거래당 최대 손실 (%)</Typography>
+                                        </Grid>
+                                        <Grid xs={6} sm={6}>
+                                            <FormControl fullWidth error={Boolean(touched.riskRate && errors.riskRate)} sx={{ ...theme.typography.customInput }}>
+                                                <InputLabel>5 이상일 경우 레버리지를 사용해야 합니다.</InputLabel>
+                                                <OutlinedInput
+                                                    id="outlined-adornment-riskRate-login"
+                                                    type="riskRate"
+                                                    value={values.riskRate}
+                                                    name="riskRate"
+                                                    onBlur={handleBlur}
+                                                    onChange={handleChange}
+                                                    label="Email Address / Username"
+                                                    inputProps={{style:{textAlign:"right"}}}
+                                                />
+                                                {touched.riskRate && errors.riskRate && (
+                                                    <FormHelperText error id="standard-weight-helper-text-riskRate-login">
+                                                        {errors.riskRate}
+                                                    </FormHelperText>
+                                                )}
+                                            </FormControl>
+                                        </Grid>
+                                    </Grid>
+                                </SubCard>
 
-                    <Grid xs={12} sm={12}>
-                        <Button
-                            fullWidth variant={"contained"} style={{fontSize:"30px", backgroundColor:"rgba(0,150,80,0.8)"}}
-                            startIcon={<PlayCircleOutlineRoundedIcon style={{fontSize:"30px"}}/>}
-                            onClick={SetAIParameter}
-                        >
-                            백테스트 실행
-                        </Button>
-                    </Grid>
+                                <Grid xs={12} sm={12}>
+                                    <br/>
+                                </Grid>
+
+                                {errors.submit && (
+                                    <Box sx={{ mt: 3 }}>
+                                        <FormHelperText error>{errors.submit}</FormHelperText>
+                                    </Box>
+                                )}
+                                <Box sx={{ mt: 2 }}>
+                                    <AnimateButton>
+                                        <Button
+                                            fullWidth variant={"contained"} style={{fontSize:"30px", backgroundColor:"rgba(0,150,80,0.8)"}}
+                                            startIcon={<PlayCircleOutlineRoundedIcon style={{fontSize:"30px"}}/>}
+                                            disableElevation type={"submit"}
+                                            disabled={isSubmitting}
+                                        >
+                                            백테스트 실행
+                                        </Button>
+                                    </AnimateButton>
+                                </Box>
+                            </form>
+                        )}
+                    </Formik>
 
                 </Grid>
             )

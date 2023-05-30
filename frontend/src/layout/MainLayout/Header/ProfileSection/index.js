@@ -28,6 +28,7 @@ const ProfileSection = () => {
 
     const ContextValue = useContext(Context);
     const loginState = ContextValue.loginState;
+    const setLoginState = ContextValue.setLoginState;
 
     const [loginOpen, setLoginOpen] = React.useState(false);
     const [registerOpen, setRegisterOpen] = React.useState(false);
@@ -38,6 +39,11 @@ const ProfileSection = () => {
         setLoginOpen(true);
     };
 
+    const LogOut = () => {
+        localStorage.removeItem('loginToken')
+        setLoginState(false)
+        alert('로그아웃 되었습니다.')
+    }
 
     const HeaderChip = (loginState) => {
         if(loginState === true){
@@ -55,6 +61,20 @@ const ProfileSection = () => {
                         label={"환영합니다!"}
                         variant="outlined"
                         color="primary"
+                    />
+                    <Chip
+                        sx={{
+                            height: '48px',
+                            alignItems: 'center',
+                            borderRadius: '27px',
+                            transition: 'all .2s ease-in-out',
+                            borderColor: theme.palette.error.light,
+                            backgroundColor: theme.palette.error.light,
+                        }}
+                        label={"로그아웃"}
+                        variant="outlined"
+                        color="error"
+                        onClick={LogOut}
                     />
                     <AuthenticationContext.Provider value={authenticationModalState}>
                         <Login/>
@@ -76,7 +96,7 @@ const ProfileSection = () => {
                             backgroundColor: theme.palette.primary.light
                         }}
                         
-                        label={"로그인 해주세욥"}
+                        label={"로그인 해주세요"}
                         variant="outlined"
                         onClick={handleToggle}
                         color="error"
