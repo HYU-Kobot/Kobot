@@ -56,7 +56,7 @@ const Index = () => {
             {loginState &&
             <MainCard>
                 <Grid container spacing={gridSpacing}>
-                    <Grid item xs={12} sm={2.4} align={'center'}>
+                    <Grid item xs={12} sm={3} align={'center'}>
                         <Grid>
                             <MuiTypography variant="h5" gutterBottom>
                                 총자산
@@ -68,19 +68,7 @@ const Index = () => {
                             </MuiTypography>
                         </Grid>
                     </Grid>
-                    <Grid item xs={12} sm={2.4} align={'center'}>
-                        <Grid>
-                            <MuiTypography variant="h5" gutterBottom>
-                                예수금
-                            </MuiTypography>
-                        </Grid>
-                        <Grid>
-                            <MuiTypography variant="h2">
-                                ￦ {balance.moneyOnHand}
-                            </MuiTypography>
-                        </Grid>
-                    </Grid>
-                    <Grid item xs={12} sm={2.4} align={'center'}>
+                    <Grid item xs={12} sm={3} align={'center'}>
                         <Grid>
                             <MuiTypography variant="h5" gutterBottom>
                                 봇 투자금
@@ -92,7 +80,7 @@ const Index = () => {
                             </MuiTypography>
                         </Grid>
                     </Grid>
-                    <Grid item xs={12} sm={2.4} align={'center'}>
+                    <Grid item xs={12} sm={3} align={'center'}>
                         <Grid>
                             <MuiTypography variant="h5" gutterBottom>
                                 미실현수익
@@ -104,7 +92,7 @@ const Index = () => {
                             </MuiTypography>
                         </Grid>
                     </Grid>
-                    <Grid item xs={12} sm={2.4} align={'center'}>
+                    <Grid item xs={12} sm={3} align={'center'}>
                         <Grid>
                             <MuiTypography variant="h5" gutterBottom>
                                 순이익
@@ -122,7 +110,7 @@ const Index = () => {
             {!loginState &&
             <MainCard>
                 <Grid container spacing={gridSpacing}>
-                    <Grid item xs={12} sm={2.4} align={'center'}>
+                    <Grid item xs={12} sm={3} align={'center'}>
                         <Grid>
                             <MuiTypography variant="h5" gutterBottom>
                                 총자산
@@ -134,19 +122,7 @@ const Index = () => {
                             </MuiTypography>
                         </Grid>
                     </Grid>
-                    <Grid item xs={12} sm={2.4} align={'center'}>
-                        <Grid>
-                            <MuiTypography variant="h5" gutterBottom>
-                                예수금
-                            </MuiTypography>
-                        </Grid>
-                        <Grid>
-                            <MuiTypography variant="h2">
-                                0
-                            </MuiTypography>
-                        </Grid>
-                    </Grid>
-                    <Grid item xs={12} sm={2.4} align={'center'}>
+                    <Grid item xs={12} sm={3} align={'center'}>
                         <Grid>
                             <MuiTypography variant="h5" gutterBottom>
                                 봇 투자금
@@ -158,7 +134,7 @@ const Index = () => {
                             </MuiTypography>
                         </Grid>
                     </Grid>
-                    <Grid item xs={12} sm={2.4} align={'center'}>
+                    <Grid item xs={12} sm={3} align={'center'}>
                         <Grid>
                             <MuiTypography variant="h5" gutterBottom>
                                 미실현수익
@@ -170,7 +146,7 @@ const Index = () => {
                             </MuiTypography>
                         </Grid>
                     </Grid>
-                    <Grid item xs={12} sm={2.4} align={'center'}>
+                    <Grid item xs={12} sm={3} align={'center'}>
                         <Grid>
                             <MuiTypography variant="h5" gutterBottom>
                                 순이익
