@@ -19,6 +19,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtTokenProvider implements TokenProvider {
 
+    private static final int SECRET_KEY_BIT_LENGTH = 256;
+
     private final SecretKey key;
 
     private final long validityInMilliseconds;

@@ -3,6 +3,7 @@ package com.hyu.kobot.application;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import com.hyu.kobot.domain.member.Member;
+import com.hyu.kobot.domain.tradingKey.TradingKey;
 import com.hyu.kobot.infra.UPBITClient;
 import com.hyu.kobot.repository.MemberRepository;
 import com.hyu.kobot.ui.dto.LoginMember;
@@ -43,5 +44,11 @@ class TradingKeyServiceTest {
         assertThatThrownBy(() -> tradingKeyService.register(loginMember, tradingKeyRequest))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("존재하지 않는 유저입니다.");
+    }
+
+    @Test
+    void test() {
+        upbitClient.getAccount(new TradingKey("UPBIT", null, "XU0V9uMGegWVRxjxfErD6v2RIx2MN9QI9IvI4Pjk",
+                "GdWQOYxaBpInHVqM19CxQFf7yNpDhfMzxa0LOZLf", null));
     }
 }

@@ -1,9 +1,11 @@
 package com.hyu.kobot.application;
 
 import com.hyu.kobot.domain.bot.Bot;
+import com.hyu.kobot.domain.bot.Name;
 import com.hyu.kobot.domain.bot.Parameter;
 import com.hyu.kobot.domain.bot.Strategy;
 import com.hyu.kobot.domain.candle.Market;
+import com.hyu.kobot.domain.candle.TimeUnit;
 import com.hyu.kobot.domain.member.Member;
 import com.hyu.kobot.domain.order.OrderHistories;
 import com.hyu.kobot.domain.order.OrderHistory;
@@ -25,6 +27,7 @@ import com.hyu.kobot.ui.dto.TickerResponse;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -54,6 +57,11 @@ public class BotService {
         TradingKey tradingKey = tradingKeyRepository.findByMember(member)
                 .orElseThrow(() -> new IllegalArgumentException("트레이딩 키를 등록해주세요."));
 
+        boolean isExist = botRepository.existsByMemberAndName(member, new Name(botRequest.getName()));
+        if (isExist) {
+            throw new IllegalArgumentException("이미 존재하는 봇 이름입니다.");
+        }
+
         AccountResponse account = upbitClient.getAccount(tradingKey);
         if (account.getBalance().compareTo(botRequest.getPrice()) < 0) {
             throw new IllegalArgumentException("돈이 부족합니다.");
@@ -62,13 +70,16 @@ public class BotService {
         List<String> NameOfParams = getNameOfParams(botRequest);
         Strategy strategy = Strategy.from(botRequest.getStrategy(), NameOfParams);
         Market market = Market.of(botRequest.getMarket());
+        TimeUnit timeUnit = TimeUnit.of(botRequest.getTimeFrame());
         Bot savedBot = botRepository.save(
                 new Bot(
                         botRequest.getName(),
                         member,
                         strategy,
                         market,
-                        botRequest.getPrice()
+                        timeUnit,
+                        botRequest.getPrice(),
+                        botRequest.getRiskRate()
                 ));
         List<Parameter> params = getParams(botRequest, savedBot);
         parameterRepository.saveAll(params);
@@ -111,8 +122,17 @@ public class BotService {
             netProfitSum = netProfitSum.add(netProfit);
             marketValueSum = marketValueSum.add(marketValue);
             totalSum = totalSum.add(total);
+            List<Parameter> parameters = parameterRepository.findByBot(bot);
+            Map<String, BigDecimal> parameterMap = parameters.stream()
+                    .collect(Collectors.toMap(Parameter::getName, Parameter::getValue));
             BotResponse botResponse = new BotResponse(
                     bot.getId(),
+                    bot.getName().getValue(),
+                    bot.getStrategy().getName(),
+                    bot.getMarket().name(),
+                    bot.getTimeUnit().getUnit(),
+                    parameterMap,
+                    bot.getRiskRate(),
                     bot.getBalance(),
                     netProfit,
                     marketValue,
