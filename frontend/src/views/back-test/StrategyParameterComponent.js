@@ -308,7 +308,7 @@ const StrategyParameterComponent = ({strategy}) => {
                         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                             try {
                                 setBackTestLoading(true);
-                                axios.get('https://backtest.kobot.kro.kr/api/backtest', {
+                                axios.get('https://backtest.kobot.kro.kr/api/kobotAI', {
                                     params: {
                                         market: 'KRW_BTC',
                                         startDate: startDate,
