@@ -84,7 +84,7 @@ const AuthApiRegister = ({ ...others }) => {
                 })}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
-                        axios.post('http://172.17.70.55:8080/api/key', {
+                        axios.post('https://api.kobot.kro.kr/api/key', {
                             accessKey: values.accessKey,
                             secretKey: values.secretKey,
                             other: values.other,

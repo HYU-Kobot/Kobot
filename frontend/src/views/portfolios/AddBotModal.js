@@ -78,13 +78,13 @@ const AddBotModal = () => {
                                         market: pair,
                                         strategy: 'bollingerband',
                                         parameters : [{name: "upperMovingAverage", values: values.upperMovingAverage},
-                                            {name: "upperMovingAverage", values: values.lowerMovingAverage},
-                                            {name: "upperMovingAverage", values: values.upperK},
-                                            {name: "upperMovingAverage", values: values.lowerK}
+                                            {name: "lowerMovingAverage", values: values.lowerMovingAverage},
+                                            {name: "upperK", values: values.upperK},
+                                            {name: "lowerK", values: values.lowerK}
                                         ],
                                         price: price,
                                         riskRate: values.riskRate,
-                                        timeframe: timeframe
+                                        timeFrame: timeframe
                                     },{
                                         headers: {
                                             Authorization: 'Bearer ' + localStorage.getItem('loginToken')
