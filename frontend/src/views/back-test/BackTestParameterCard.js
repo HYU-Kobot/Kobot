@@ -172,8 +172,8 @@ const BackTestParameterCard = () => {
                                 InputProps={{inputProps: { min: "2017-10-01"} }}
                                 type="date"
                                 value={startDate}
-                                onChange={(event, newValue) => {
-                                    setStartDate(newValue);
+                                onChange={(event) => {
+                                    setStartDate(event.target.value);
                                 }}
                                 fullWidth
                                 margin={"normal"}
@@ -190,8 +190,8 @@ const BackTestParameterCard = () => {
                                 InputProps={{inputProps: { min: "2017-11-01"} }}
                                 type="date"
                                 value={endDate}
-                                onChange={(event, newValue) => {
-                                    setEndDate(newValue);
+                                onChange={(event) => {
+                                    setEndDate(event.target.value);
                                 }}
                                 fullWidth
                                 margin={"normal"}
