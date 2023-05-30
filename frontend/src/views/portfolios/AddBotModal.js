@@ -107,6 +107,7 @@ const AddBotModal = () => {
                                     }).then(function (response){
                                         console.log(response.data)
                                         alert('자동매매 봇 등록이 완료되었습니다!')
+                                        setOpen(false)
                                     })
                                     console.log(pair, timeframe, values.lowerMovingAverage, values.upperMovingAverage, values.upperK, values.lowerK, values.riskRate)
                                     if (scriptedRef.current) {
@@ -386,6 +387,7 @@ const AddBotModal = () => {
                                                     name="price"
                                                     onBlur={handleBlur}
                                                     fullWidth
+                                                    type={'number'}
                                                     onChange={(e)=>{setPrice(e.target.value)}}
                                                     inputProps={{style:{textAlign:"right"}}}
                                                 />
