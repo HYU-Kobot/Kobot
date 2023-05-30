@@ -6,12 +6,9 @@ import com.hyu.kobot.domain.member.Member;
 import com.hyu.kobot.domain.tradingKey.TradingKey;
 import com.hyu.kobot.infra.UPBITClient;
 import com.hyu.kobot.repository.MemberRepository;
-import com.hyu.kobot.repository.TradingKeyRepository;
 import com.hyu.kobot.ui.dto.LoginMember;
 import com.hyu.kobot.ui.dto.TradingKeyRequest;
 import com.hyu.kobot.util.Encryptor;
-import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,7 +25,7 @@ class TradingKeyServiceTest {
     private MemberRepository memberRepository;
 
     @Autowired
-    private TradingKeyRepository tradingKeyRepository;
+    private UPBITClient upbitClient;
 
     @Test
     void 존재하지_않는_회원이면_예외가_발생한다() {
@@ -46,38 +43,12 @@ class TradingKeyServiceTest {
 
         assertThatThrownBy(() -> tradingKeyService.register(loginMember, tradingKeyRequest))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("DB에서 유저네임을 조회할 수 없습니다.");
+                .hasMessage("존재하지 않는 유저입니다.");
     }
 
-//    @Test
-//    void 이미_등록된_키값이면_예외가_발생한다() {
-//        Member member = new Member("정지혁", "jihyeok1234", "qwer1234", new Encryptor());
-//        memberRepository.save(member);
-//
-//        LoginMember loginMember = new LoginMember(member.getId());
-//        TradingKeyRequest tradingKeyRequest = new TradingKeyRequest("KRW_BTC",
-//                "XU0V9uMGegWVRxjxfErD6v2RIx2MN9QI9IvI4Pjk", "GdWQOYxaBpInHVqM19CxQFf7yNpDhfMzxa0LOZLf", null);
-//
-//        tradingKeyService.register(loginMember, tradingKeyRequest);
-//
-//        assertThatThrownBy(() -> tradingKeyService.register(loginMember, tradingKeyRequest))
-//                .isInstanceOf(IllegalStateException.class)
-//                .hasMessage("이미 등록된 키입니다");
-//    }
-//
-//    @Test
-//    void 존재하는_회원의_올바른_키값을_주면_DB에_저장한다() {
-//        Member member = new Member("정지혁", "jihyeok1234", "qwer1234", new Encryptor());
-//        memberRepository.save(member);
-//
-//        LoginMember loginMember = new LoginMember(member.getId());
-//        TradingKeyRequest tradingKeyRequest = new TradingKeyRequest("KRW_BTC",
-//                "XU0V9uMGegWVRxjxfErD6v2RIx2MN9QI9IvI4Pjk", "GdWQOYxaBpInHVqM19CxQFf7yNpDhfMzxa0LOZLf", null);
-//
-//        tradingKeyService.register(loginMember, tradingKeyRequest);
-//
-//        List<TradingKey> tradingKeys = tradingKeyRepository.findAll();
-//
-//        Assertions.assertThat(tradingKeys).hasSize(1);
-//    }
+    @Test
+    void test() {
+        upbitClient.getAccount(new TradingKey("UPBIT", null, "XU0V9uMGegWVRxjxfErD6v2RIx2MN9QI9IvI4Pjk",
+                "GdWQOYxaBpInHVqM19CxQFf7yNpDhfMzxa0LOZLf", null));
+    }
 }

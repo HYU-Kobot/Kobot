@@ -1,10 +1,16 @@
 package com.hyu.kobot.domain.candle;
 
 import java.util.Arrays;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@AllArgsConstructor
+@Getter
 public enum Market {
 
-    KRW_BTC;
+    KRW_BTC("BTCKRW");
+
+    private final String value;
 
     public static Market of(String market) {
         return Arrays.stream(values())

@@ -22,7 +22,7 @@ public class AccountResponse {
     private BigDecimal avgBuyPrice;
 
     @JsonFormat(pattern = "avg_buy_price_modified")
-    private boolean avgBuyPriceModified;
+    private Boolean avgBuyPriceModified;
 
     @JsonFormat(pattern = "unit_currency")
     private String unitCurrency;

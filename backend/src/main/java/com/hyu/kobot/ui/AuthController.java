@@ -5,8 +5,8 @@ import com.hyu.kobot.ui.dto.AccessTokenResponse;
 import com.hyu.kobot.ui.dto.SignInRequest;
 import com.hyu.kobot.ui.dto.SignUpRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,13 +19,13 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping("/member")
+    @PostMapping
     public ResponseEntity<Void> signUp(@RequestBody SignUpRequest signUpRequest) {
         authService.create(signUpRequest);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping("/member")
+    @PostMapping("/member")
     public ResponseEntity<AccessTokenResponse> signIn(@RequestBody SignInRequest signInRequest) {
         AccessTokenResponse response = authService.login(signInRequest);
         return ResponseEntity.ok(response);

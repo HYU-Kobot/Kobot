@@ -4,6 +4,7 @@ import com.hyu.kobot.application.TradingKeyService;
 import com.hyu.kobot.ui.dto.AppMember;
 import com.hyu.kobot.ui.dto.TradingKeyRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +22,6 @@ public class TradingKeyController {
     public ResponseEntity<Void> addTradingKey(@AuthenticationPrinciple AppMember appMember,
                                               @RequestBody TradingKeyRequest tradingKeyRequest) {
         tradingKeyService.register(appMember, tradingKeyRequest);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

@@ -1,8 +1,10 @@
 package com.hyu.kobot.infra;
 
-import com.hyu.kobot.config.RestTemplateConfig;
+import com.hyu.kobot.application.TokenProvider;
+import com.hyu.kobot.domain.candle.Market;
 import com.hyu.kobot.domain.tradingKey.TradingKey;
 import com.hyu.kobot.ui.dto.AccountResponse;
+import com.hyu.kobot.ui.dto.TickerResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +13,6 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,36 +26,48 @@ public class UPBITClient {
 
     private final RestTemplate restTemplate;
 
-    private final RestTemplateConfig upbitConfig;
-
     @Autowired
-    public UPBITClient(RestTemplate restTemplate, RestTemplateConfig upbitConfig) {
+    public UPBITClient(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
-        this.upbitConfig = upbitConfig;
     }
 
-    public void lookup(TradingKey tradingKey) {
-        TradingKeyJwtTokenProvider tradingKeyToken = new TradingKeyJwtTokenProvider(
-                tradingKey.getSecretKey());
 
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("access_key", tradingKey.getAccessKey());
+    public TickerResponse getTicker(Market market) {
+        ResponseEntity<List<TickerResponse>> response = restTemplate.exchange(
+                "https://api.upbit.com/v1/ticker?markets=KRW-BTC",
+                HttpMethod.GET,
+                new HttpEntity<>(new HttpHeaders()),
+                new ParameterizedTypeReference<>() {
+                }
+        );
+        return response.getBody().get(0);
+    }
 
-        String token = tradingKeyToken.createToken(claims);
+    public AccountResponse getAccount(TradingKey tradingKey) {
+        String token = createToken(tradingKey);
 
         HttpHeaders header = new HttpHeaders();
         header.setBearerAuth(token);
 
         HttpEntity<Void> entity = new HttpEntity<>(header);
-        ResponseEntity<List<AccountResponse>> response = restTemplate.exchange(UPBIT_URL, HttpMethod.GET, entity,
-                new ParameterizedTypeReference<List<AccountResponse>>() {
-                });
+        ResponseEntity<List<AccountResponse>> response = restTemplate.exchange(
+                UPBIT_URL,
+                HttpMethod.GET,
+                entity,
+                new ParameterizedTypeReference<>() {
+                }
+        );
+        return response.getBody().get(0);
+    }
 
-        if (response.getStatusCode().equals(HttpStatus.BAD_REQUEST)) {
-            throw new IllegalStateException("존재하지 않는 키입니다.");
-        }
-        if (response.getStatusCode().equals(HttpStatus.UNAUTHORIZED)) {
-            throw new IllegalStateException("허용된 IP가 아닙니다.");
-        }
+    private String createToken(TradingKey tradingKey) {
+        TokenProvider tradingKeyToken = new JwtTokenProvider(
+                tradingKey.getSecretKey(), 1800000);
+
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("access_key", tradingKey.getAccessKey());
+
+        String token = tradingKeyToken.createToken(claims);
+        return token;
     }
 }

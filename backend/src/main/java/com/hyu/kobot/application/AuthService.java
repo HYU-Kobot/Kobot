@@ -30,11 +30,11 @@ public class AuthService {
             throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
         }
         Member member = new Member(signUpRequest.getNickname(), signUpRequest.getUsername(),
-                signUpRequest.getPassword(),
-                encryptor);
+                signUpRequest.getPassword(), encryptor);
         memberRepository.save(member);
     }
 
+    @Transactional(readOnly = true)
     public AccessTokenResponse login(SignInRequest signInRequest) {
         Member member = memberRepository.findByUsername(new Username(signInRequest.getUsername()))
                 .orElseThrow(() -> new IllegalStateException("아이디를 확인해주세요."));

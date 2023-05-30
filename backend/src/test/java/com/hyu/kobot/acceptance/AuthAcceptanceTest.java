@@ -20,9 +20,9 @@ public class AuthAcceptanceTest extends AcceptanceTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(new SignUpRequest("조형래", "chohyeongrae", "qwer1234"))
                 .when()
-                .post("/api/auth/member")
+                .post("/api/auth")
                 .then().log().all()
-                .statusCode(HttpStatus.OK.value());
+                .statusCode(HttpStatus.CREATED.value());
     }
 
     @Test
@@ -32,16 +32,16 @@ public class AuthAcceptanceTest extends AcceptanceTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(new SignUpRequest("조형래", "chohyeongrae", "qwer1234"))
                 .when()
-                .post("/api/auth/member")
+                .post("/api/auth")
                 .then().log().all()
-                .statusCode(HttpStatus.OK.value());
+                .statusCode(HttpStatus.CREATED.value());
 
         AccessTokenResponse accessTokenResponse = RestAssured
                 .given().log().all()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(new SignInRequest("chohyeongrae", "qwer1234"))
                 .when()
-                .get("/api/auth/member")
+                .post("/api/auth/member")
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
                 .extract()
@@ -57,16 +57,16 @@ public class AuthAcceptanceTest extends AcceptanceTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(new SignUpRequest("조형래", "chohyeongrae", "qwer1234"))
                 .when()
-                .post("/api/auth/member")
+                .post("/api/auth")
                 .then().log().all()
-                .statusCode(HttpStatus.OK.value());
+                .statusCode(HttpStatus.CREATED.value());
 
         ErrorMessageResponse response = RestAssured
                 .given().log().all()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(new SignInRequest("aaaa1111", "qwer1234"))
                 .when()
-                .get("/api/auth/member")
+                .post("/api/auth/member")
                 .then().log().all()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
                 .extract()
@@ -82,16 +82,16 @@ public class AuthAcceptanceTest extends AcceptanceTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(new SignUpRequest("조형래", "chohyeongrae", "qwer1234"))
                 .when()
-                .post("/api/auth/member")
+                .post("/api/auth")
                 .then().log().all()
-                .statusCode(HttpStatus.OK.value());
+                .statusCode(HttpStatus.CREATED.value());
 
         ErrorMessageResponse response = RestAssured
                 .given().log().all()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(new SignInRequest("chohyeongrae", "qwer1233"))
                 .when()
-                .get("/api/auth/member")
+                .post("/api/auth/member")
                 .then().log().all()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
                 .extract()
