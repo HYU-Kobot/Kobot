@@ -19,210 +19,7 @@ import Context from "../../Context";
 
 const Index = () => {
 
-    const [balance, setBalance] = React.useState({
-        "moneyOnHand": 10000,
-        "purchaseAmountSum": 20000,
-        "netProfitSum": 30000,
-        "marketValueSum": 40000,
-        "totalSum": 50000,
-        "bot" : [
-            {
-                "botId": 1,
-                "botName" : "bot1",
-                "purchaseAmount": 60000,
-                "netProfit": -800,
-                "marketValue": 80000,
-                "total": 90000,
-                "strategy": 'bollinger',
-                "upperMovingAverage": 50,
-                "lowerMovingAverage": 20,
-                "upperK": 0.3,
-                "lowerK": 0.5,
-                "riskRate": 0.02,
-                "timeFrame": 'DAY',
-                "coinPair": 'KRW_BTC',
-                "orderHistory":[{
-                    "category":"BUY",
-                    "market":'KRW_BTC',
-                    "amount": 30000,
-                    "tradeDate": '2017-01-27',
-                    "price": 40000,
-                },{
-                    "category":"SELL",
-                    "market":'KRW_BTC',
-                    "amount": 3000,
-                    "tradeDate": '2027-02-30',
-                    "price": 4000,
-                }]
-            },
-            {
-                "botId": 1,
-                "botName" : "bot1",
-                "purchaseAmount": 60000,
-                "netProfit": -800,
-                "marketValue": 80000,
-                "total": 90000,
-                "strategy": 'bollinger',
-                "upperMovingAverage": 50,
-                "lowerMovingAverage": 20,
-                "upperK": 0.3,
-                "lowerK": 0.5,
-                "riskRate": 0.02,
-                "timeFrame": 'DAY',
-                "coinPair": 'KRW_BTC',
-                "orderHistory":[{
-                    "category":"BUY",
-                    "market":20000,
-                    "amount": 30000,
-                    "tradeDate": '2017-01-27',
-                    "price": 40000,
-                },{
-                    "category":"SELL",
-                    "market":2000,
-                    "amount": 3000,
-                    "tradeDate": '2027-02-30',
-                    "price": 4000,
-                }]
-            },
-            {
-                "botId": 1,
-                "botName" : "bot1",
-                "purchaseAmount": 60000,
-                "netProfit": -800,
-                "marketValue": 80000,
-                "total": 90000,
-                "strategy": 'bollinger',
-                "upperMovingAverage": 50,
-                "lowerMovingAverage": 20,
-                "upperK": 0.3,
-                "lowerK": 0.5,
-                "riskRate": 0.02,
-                "timeFrame": 'DAY',
-                "coinPair": 'KRW_BTC',
-                "orderHistory":[{
-                    "category":"BUY",
-                    "market":20000,
-                    "amount": 30000,
-                    "tradeDate": '2017-01-27',
-                    "price": 40000,
-                },{
-                    "category":"SELL",
-                    "market":2000,
-                    "amount": 3000,
-                    "tradeDate": '2027-02-30',
-                    "price": 4000,
-                },{
-                    "category":"SELL",
-                    "market":2000,
-                    "amount": 3000,
-                    "tradeDate": '2027-02-30',
-                    "price": 4000,
-                },{
-                    "category":"SELL",
-                    "market":2000,
-                    "amount": 3000,
-                    "tradeDate": '2027-02-30',
-                    "price": 4000,
-                },{
-                    "category":"SELL",
-                    "market":2000,
-                    "amount": 3000,
-                    "tradeDate": '2027-02-30',
-                    "price": 4000,
-                },{
-                    "category":"SELL",
-                    "market":2000,
-                    "amount": 3000,
-                    "tradeDate": '2027-02-30',
-                    "price": 4000,
-                },{
-                    "category":"SELL",
-                    "market":2000,
-                    "amount": 3000,
-                    "tradeDate": '2027-02-30',
-                    "price": 4000,
-                },{
-                    "category":"SELL",
-                    "market":2000,
-                    "amount": 3000,
-                    "tradeDate": '2027-02-30',
-                    "price": 4000,
-                },{
-                    "category":"SELL",
-                    "market":2000,
-                    "amount": 3000,
-                    "tradeDate": '2027-02-30',
-                    "price": 4000,
-                },{
-                    "category":"SELL",
-                    "market":2000,
-                    "amount": 3000,
-                    "tradeDate": '2027-02-30',
-                    "price": 4000,
-                },{
-                    "category":"SELL",
-                    "market":2000,
-                    "amount": 3000,
-                    "tradeDate": '2027-02-30',
-                    "price": 4000,
-                },{
-                    "category":"SELL",
-                    "market":2000,
-                    "amount": 3000,
-                    "tradeDate": '2027-02-30',
-                    "price": 4000,
-                },{
-                    "category":"SELL",
-                    "market":2000,
-                    "amount": 3000,
-                    "tradeDate": '2027-02-30',
-                    "price": 4000,
-                },{
-                    "category":"SELL",
-                    "market":2000,
-                    "amount": 3000,
-                    "tradeDate": '2027-02-30',
-                    "price": 4000,
-                },{
-                    "category":"SELL",
-                    "market":2000,
-                    "amount": 3000,
-                    "tradeDate": '2027-02-30',
-                    "price": 4000,
-                },{
-                    "category":"SELL",
-                    "market":2000,
-                    "amount": 3000,
-                    "tradeDate": '2027-02-30',
-                    "price": 4000,
-                },{
-                    "category":"SELL",
-                    "market":2000,
-                    "amount": 3000,
-                    "tradeDate": '2027-02-30',
-                    "price": 4000,
-                },{
-                    "category":"SELL",
-                    "market":2000,
-                    "amount": 3000,
-                    "tradeDate": '2027-02-30',
-                    "price": 4000,
-                },{
-                    "category":"SELL",
-                    "market":2000,
-                    "amount": 3000,
-                    "tradeDate": '2027-02-30',
-                    "price": 4000,
-                },{
-                    "category":"SELL",
-                    "market":2000,
-                    "amount": 3000,
-                    "tradeDate": '2027-02-30',
-                    "price": 4000,
-                }]
-            }
-        ],
-    });
+    const [balance, setBalance] = React.useState({});
 
     const ContextValue = useContext(Context);
     const loginState = ContextValue.loginState;
@@ -252,7 +49,7 @@ const Index = () => {
                 setBalance(response.data)
             })
         }
-    }, [])
+    })
 
     return(
         <div>
@@ -392,7 +189,7 @@ const Index = () => {
             {loginState &&
             <MainCard title="봇 리스트" secondary={<AddBotModal/>}>
                 <Grid container spacing={gridSpacing}>
-                    {balance &&
+                    {balance.totalSum &&
                     balance.bot.map((botInfo, index) => {
                             return(<BotTemplate bot={botInfo} key={index}/>)
                         }
