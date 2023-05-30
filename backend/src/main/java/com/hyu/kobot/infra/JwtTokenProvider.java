@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtTokenProvider implements TokenProvider {
 
-    private static final int SECRET_KEY_BIT_LENGTH = 256;
+    private static final int MAX_SECRET_KEY_LENGTH = 32;
 
     private final SecretKey key;
 
@@ -27,8 +27,16 @@ public class JwtTokenProvider implements TokenProvider {
 
     public JwtTokenProvider(@Value("${security.jwt.token.secret-key}") final String secretKey,
                             @Value("${security.jwt.token.expire-length}") final long validityInMilliseconds) {
+        validateSecretKey(secretKey);
         this.key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
         this.validityInMilliseconds = validityInMilliseconds;
+    }
+
+    private void validateSecretKey(String secretKey) {
+        int byteLength = secretKey.getBytes().length;
+        if (byteLength < MAX_SECRET_KEY_LENGTH) {
+            throw new IllegalArgumentException("시크릿 키는 32바이트 이상입니다.");
+        }
     }
 
     @Override
