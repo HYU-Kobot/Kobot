@@ -36,6 +36,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Google from 'assets/images/icons/social-google.svg';
 import axios from "axios";
 import Context from "../../../../Context";
+import AuthenticationContext from "../AuthenticationContext";
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
@@ -45,6 +46,11 @@ const FirebaseLogin = ({ ...others }) => {
 
     const ContextValue = useContext(Context);
     const setLoginState = ContextValue.setLoginState;
+
+
+    const AuthenticationContextValue = useContext(AuthenticationContext);
+    const loginOpen = AuthenticationContextValue.loginOpen;
+    const setLoginOpen = AuthenticationContextValue.setLoginOpen;
 
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => {
@@ -72,26 +78,30 @@ const FirebaseLogin = ({ ...others }) => {
                     submit: null
                 }}
                 validationSchema={Yup.object().shape({
-                    email: Yup.string().email('Must be a valid email').max(255).required('아이디는 필수 입력 사항입니다.'),
-                    password: Yup.string().max(255).required('비밀번호는 필수 입력 사항입니다.')
+                    email: Yup.string().email('아이디는 이메일 형식이어야 합니다.').max(255).required('아이디는 필수 입력 사항입니다.'),
+                    password: Yup.string().min(8, '비밀번호는 8자 이상 20자 이하입니다.').max(20, '비밀번호는 8자 이상 20자 이하입니다.').required('비밀번호는 필수 입력 사항입니다.')
                 })}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
-                        axios.get('https://api.kobot.kro.kr/api/auth/member', {
-                            params: {
-                                username: values.email,
-                                password: values.password
-                            }
+                        axios.post('https://api.kobot.kro.kr/api/auth/member', {
+                            username: values.email,
+                            password: values.password
+                        }).catch(function (err){
+                            console.log(err.response.data.message);
+                            alert(err.response.data.message);
                         }).then(function (response){
                             console.log(response.data)
+                            localStorage.setItem('loginToken', response.data.accessToken)
                             setLoginState(true)
+                            setLoginOpen(false)
+                            alert('로그인 되었습니다!')
                         })
                         if (scriptedRef.current) {
                             setStatus({ success: true });
                             setSubmitting(false);
                         }
                     } catch (err) {
-                        console.error(err);
+                        console.log(err.response);
                         if (scriptedRef.current) {
                             setStatus({ success: false });
                             setErrors({ submit: err.message });

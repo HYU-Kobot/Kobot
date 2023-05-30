@@ -4,7 +4,7 @@ import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutl
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 import {useTheme} from "@mui/material/styles";
 
-const OrderHistoryComponent = ({order}) => {
+const PortfolioOrderHistory = ({order}) => {
 
     switch (order.category){
         case "BUY":
@@ -19,15 +19,21 @@ const OrderHistoryComponent = ({order}) => {
                             </Grid>
                         </Grid>
                         <Divider orientation="vertical" flexItem/>
-                        <Grid container direction="column" xs={9} md={9}>
+                        <Grid textAlign={'center'} container direction="column" xs={9} md={9}>
                             <Grid item>
                                 <Grid container alignItems="center" justifyContent="space-between">
-                                    <Grid item>
+                                    <Grid item xs={6} marginBottom={'5px'}>
+                                        <Typography variant="subtitle2" color="inherit">
+                                            코인 페어
+                                        </Typography>
                                         <Typography variant="h5" color="inherit">
                                             {order.market}
                                         </Typography>
                                     </Grid>
-                                    <Grid item>
+                                    <Grid item xs={6}>
+                                        <Typography variant="subtitle2" color="inherit">
+                                            코인 갯수
+                                        </Typography>
                                         <Typography variant="h5" color="inherit">
                                             {order.amount}
                                         </Typography>
@@ -36,12 +42,18 @@ const OrderHistoryComponent = ({order}) => {
                             </Grid>
                             <Grid item>
                                 <Grid container alignItems="center" justifyContent="space-between">
-                                    <Grid item>
+                                    <Grid item xs={6}>
+                                        <Typography variant="subtitle2" color="inherit">
+                                            거래 일시
+                                        </Typography>
                                         <Typography variant="h5" color="inherit">
-                                            {order.trade_date}
+                                            {order.tradeDate}
                                         </Typography>
                                     </Grid>
-                                    <Grid item>
+                                    <Grid item xs={6}>
+                                        <Typography variant="subtitle2" color="inherit">
+                                            코인 가격
+                                        </Typography>
                                         <Typography variant="h5" color="success.dark">
                                             \ {order.price}
                                         </Typography>
@@ -66,15 +78,21 @@ const OrderHistoryComponent = ({order}) => {
                             </Grid>
                         </Grid>
                         <Divider orientation="vertical" flexItem/>
-                        <Grid container direction="column" xs={9} md={9}>
-                            <Grid item>
+                        <Grid textAlign={"center"} container direction="column" xs={9} md={9}>
+                            <Grid item marginBottom={'5px'}>
                                 <Grid container alignItems="center" justifyContent="space-between">
-                                    <Grid item>
+                                    <Grid item xs={6}>
+                                        <Typography variant="subtitle2" color="inherit">
+                                            코인 페어
+                                        </Typography>
                                         <Typography variant="h5" color="inherit">
                                             {order.market}
                                         </Typography>
                                     </Grid>
-                                    <Grid item>
+                                    <Grid item xs={6}>
+                                        <Typography variant="subtitle2" color="inherit">
+                                            코인 갯수
+                                        </Typography>
                                         <Typography variant="h5" color="inherit">
                                             {order.amount}
                                         </Typography>
@@ -83,12 +101,18 @@ const OrderHistoryComponent = ({order}) => {
                             </Grid>
                             <Grid item>
                                 <Grid container alignItems="center" justifyContent="space-between">
-                                    <Grid item>
+                                    <Grid item xs={6}>
+                                        <Typography variant="subtitle2" color="inherit">
+                                            거래 일시
+                                        </Typography>
                                         <Typography variant="h5" color="inherit">
-                                            {order.trade_date}
+                                            {order.tradeDate}
                                         </Typography>
                                     </Grid>
-                                    <Grid item>
+                                    <Grid item xs={6}>
+                                        <Typography variant="subtitle2" color="inherit">
+                                            코인 가격
+                                        </Typography>
                                         <Typography variant="h5" color="orange.dark">
                                             \ {order.price}
                                         </Typography>
@@ -105,4 +129,4 @@ const OrderHistoryComponent = ({order}) => {
 
 }
 
-export default OrderHistoryComponent
+export default PortfolioOrderHistory

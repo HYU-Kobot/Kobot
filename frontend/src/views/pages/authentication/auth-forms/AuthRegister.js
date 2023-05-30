@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect, useContext} from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -36,6 +36,7 @@ import { strengthColor, strengthIndicator } from 'utils/password-strength';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import axios from "axios";
+import AuthenticationContext from "../AuthenticationContext";
 
 // ===========================|| FIREBASE - REGISTER ||=========================== //
 
@@ -49,6 +50,11 @@ const FirebaseRegister = ({ ...others }) => {
 
     const [strength, setStrength] = useState(0);
     const [level, setLevel] = useState();
+
+
+    const AuthenticationContextValue = useContext(AuthenticationContext);
+    const registerOpen = AuthenticationContextValue.registerOpen;
+    const setRegisterOpen = AuthenticationContextValue.setRegisterOpen;
 
     const googleHandler = async () => {
         console.error('Register');
@@ -90,18 +96,23 @@ const FirebaseRegister = ({ ...others }) => {
                     submit: null
                 }}
                 validationSchema={Yup.object().shape({
-                    email: Yup.string().email('Must be a valid email').max(255).required('아이디는 필수 입력 사항입니다.'),
-                    password: Yup.string().max(255).required('비밀번호는 필수 입력 사항입니다.'),
-                    nickname: Yup.string().required('이름은 필수 입력 사항입니다.')
+                    email: Yup.string().email('아이디는 이메일 형식이어야 합니다.').max(255).required('아이디는 필수 입력 사항입니다.'),
+                    password: Yup.string().max(20, '비밀번호는 8자 이상 20자 이하입니다.').required('비밀번호는 필수 입력 사항입니다.').min(8, '비밀번호는 8자 이상 20자 이하입니다.'),
+                    nickname: Yup.string().required('이름은 필수 입력 사항입니다.').min(1,'이름 1자 이상 20자 이하입니다.').max(20,'이름 1자 이상 20자 이하입니다.')
                 })}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
-                        await axios.post("https://api.kobot.kro.kr/api/auth/member", {
+                        await axios.post("https://api.kobot.kro.kr/api/auth", {
                             nickname: values.nickname,
                             username: values.email,
                             password: values.password
+                        }).catch(function (err){
+                            console.log(err.response.data.message);
+                            alert(err.response.data.message);
                         }).then(function (response){
                             console.log(response.data)
+                            setRegisterOpen(false)
+                            alert('회원가입이 완료되었습니다!')
                         })
                         if (scriptedRef.current) {
                             setStatus({ success: true });

@@ -10,6 +10,7 @@ import ProfitChartCard from "./ProfitChartCard";
 import OrderHistoryTableCard from "./OrderHistoryTableCard";
 import {useState} from "react";
 import BackTestContext from "./BackTestContext";
+import Loading from "./Loading";
 
 const BackTest = () => {
 
@@ -44,10 +45,11 @@ const BackTest = () => {
         "    </body>\n" +
         "</html>");
     const [orderList, setOrderList] = useState([
-        { id: 1, tradeDate: '백테스트를 실행해주세요', market: '', category: 'BUY', amount: '' , price: '' },
+        { id: 1, trade_date: '백테스트를 실행해주세요', market: '', category: 'BUY', amount: '' , price: '' },
     ]);
+    const [backTestLoading, setBackTestLoading] = useState(false);
 
-    const backTestState = {market, setMarket, pair, setPair,statOpen, setStatOpen, timeframe, setTimeframe, startDate, setStartDate, endDate, setEndDate, html, setHtml, orderList, setOrderList};
+    const backTestState = {backTestLoading, setBackTestLoading, market, setMarket, pair, setPair,statOpen, setStatOpen, timeframe, setTimeframe, startDate, setStartDate, endDate, setEndDate, html, setHtml, orderList, setOrderList};
 
     return (
         <Grid container spacing={gridSpacing}>
@@ -72,6 +74,7 @@ const BackTest = () => {
                         </Grid>
                     </Grid>
                 </Grid>
+                <Loading/>
             </BackTestContext.Provider>
         </Grid>
     );
