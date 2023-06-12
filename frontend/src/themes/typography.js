@@ -1,5 +1,5 @@
 /**
- * Typography used in theme
+ * Index used in theme
  * @param {JsonObject} theme theme customization object
  */
 

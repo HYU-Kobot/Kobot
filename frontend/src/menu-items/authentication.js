@@ -8,10 +8,9 @@ const icons = {
 
 // ==============================|| EXTRA PAGES MENU ITEMS ||============================== //
 
-const pages = {
-    id: 'pages',
-    title: 'Pages',
-    caption: 'Pages Caption',
+const authentication = {
+    id: 'authentication',
+    title: 'Authentication',
     type: 'group',
     children: [
         {
@@ -23,21 +22,23 @@ const pages = {
             children: [
                 {
                     id: 'login3',
-                    title: 'Login',
+                    title: '로그인',
                     type: 'item',
-                    url: '/pages/login/login3',
-                    target: true
+                    url: '/authentication/login/login3',
+                    target: true,
+                    modal: 'login'
                 },
                 {
                     id: 'register3',
-                    title: 'Register',
+                    title: '회원가입',
                     type: 'item',
-                    url: '/pages/register/register3',
-                    target: true
+                    url: '/authentication/register/register3',
+                    target: true,
+                    modal: 'register'
                 }
             ]
         }
     ]
 };
 
-export default pages;
+export default authentication;

@@ -1,12 +1,13 @@
 import dashboard from './dashboard';
-import pages from './pages';
+import authentication from './authentication';
 import portfolio from './portfolio';
 import backtest from './backtest';
+import loggedInAuthentication from "./loggedInAuthentication";
 
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = {
-    items: [dashboard, pages, portfolio, backtest]
+    items: [dashboard, portfolio, backtest, authentication, loggedInAuthentication]
 };
 
 export default menuItems;

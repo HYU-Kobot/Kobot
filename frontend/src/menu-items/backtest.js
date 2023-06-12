@@ -15,9 +15,9 @@ const backtest = {
             id: 'backtest',
             title: 'Back Test',
             type: 'item',
-            url: '/sample-page',
+            url: '/back-test',
             icon: icons.IconChartInfographic,
-            breadcrumbs: false
+            breadcrumbs: false,
         }
     ]
 };
